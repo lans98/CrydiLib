@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/crydi3_div_criteria_bin.dir/test/div_criteria_test.cc.o  -o crydi3_div_criteria_bin -Wl,-rpath,/home/kevin/Documents/Programacion/Discretas3/Libreria/build libcrydi3.so -lntl 
