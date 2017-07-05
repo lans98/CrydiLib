@@ -30,12 +30,29 @@
 
 namespace crydi {
 
+using ps_flag = uint8_t;
+
+const ps_flag PRINT_IT  = 0x01;
+const ps_flag REG_SIEVE = 0x02;
+const ps_flag SEG_SIEVE = 0x04;
+
+enum seg_sieve {
+	PRIMES = 0,
+	SEGMENT = 1
+};
+
 class PrimesSieve {
  private:
 	BitArray<> *barray;
+	uintmax_t   limit;
+	ps_flag			flags = 0;
 
  public:
-	PrimesSieve(uintmax_t limit); 
+	PrimesSieve() = default;
+	PrimesSieve(uintmax_t limit, bool printit = true); 
+
+	void RegularSieve();
+	void SegmentedSieve();
 };
 
 }

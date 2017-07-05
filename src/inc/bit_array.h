@@ -30,6 +30,12 @@
 namespace crydi {
 
 template <class T>
+BitArray<T>::BitArray(BitArray<T>&& barr) {
+	bits = barr.bits;
+	wasted = barr.wasted;
+}
+
+template <class T>
 BitArray<T>::BitArray(const size_t& size) {
 	bits = vector<T>(ceil(size/(double)container_size));
 	wasted = container_size - (size % container_size);
@@ -39,6 +45,12 @@ template <class T>
 BitArray<T>::BitArray(const size_t& size, T fill_with) {
 	bits = vector<T>(ceil(size/(double)container_size), fill_with);
 	wasted = container_size - (size % container_size);
+}
+
+template <class T>
+void BitArray<T>::operator=(BitArray<T>&& barr) {
+	bits = barr.bits;
+	wasted = barr.wasted;
 }
 
 template <class T>
@@ -69,6 +81,11 @@ void BitArray<T>::Set(const size_t& index, T state) {
 		state |= 1;
 		container &= ~(state << container_size - bit_position - 1);
 	}
+}
+
+template <class T>
+void BitArray<T>::Fill(T state) {
+	fill(bits.begin(), bits.end(), state);
 }
 
 template <class T>

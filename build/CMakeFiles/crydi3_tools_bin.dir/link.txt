@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o  -o crydi3_tools_bin -Wl,-rpath,/home/kevin/Documents/Programacion/Discretas3/Libreria/build libcrydi3.so -lntl 

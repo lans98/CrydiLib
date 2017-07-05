@@ -30,6 +30,6 @@ NTL_CLIENT
 #undef NDEBUG 
 
 int main() {
-	crydi::PrimesSieve psieve(1000000000);
+	crydi::PrimesSieve psieve(10000);
 	return 0;
 }

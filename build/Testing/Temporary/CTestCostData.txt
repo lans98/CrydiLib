@@ -1,9 +1,0 @@
-crydi3_tools_test 10 0.000623083
-crydi3_keylist_test 15 9.64642e-05
-crydi3_cesar_crypto_test 15 9.47317e-05
-crydi3_afin_crypto_test 15 9.64006e-05
-crydi3_dynamic_int_test 15 9.16004e-05
-crydi3_bit_array_test 15 9.15209e-05
-crydi3_primes_sieve_test 15 4.25291
-crydi3_div_criteria_test 15 0.000108798
----

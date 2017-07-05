@@ -38,14 +38,18 @@ class BitArray {
 
  public:
 	BitArray() = default;
+	BitArray(BitArray<T>&& barr);
 	BitArray(const size_t& size);
 	BitArray(const size_t& size, T fill_with);
 	~BitArray() = default;
+
+	void operator=(BitArray<T>&& barr);
 
 	bool operator[](const size_t& index);
 	bool At(const size_t& index);
 
 	void Set(const size_t& index, T state);
+	void Fill(T state);
 
 	size_t Size();
 };
