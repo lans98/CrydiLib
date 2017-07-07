@@ -28,7 +28,10 @@ namespace crydi {
 
 PrimesSieve::PrimesSieve(uintmax_t limit, bool printit):
     limit(limit) {
-			if (printit) flags |= PRINT_IT;
+			if (printit) {
+				flags |= PRINT_IT;
+				file_out = new ofstream("primes.dat");
+			}
 		}
 
 void PrimesSieve::RegularSieve() {
@@ -60,13 +63,10 @@ void PrimesSieve::RegularSieve() {
 	// Si es que la criba fue creada para imprimir los números (default)
 	// Recorremos el array imprimimos y contamos cuantos primos hay.
 	if (!(flags & PRINT_IT)) return;
-	uintmax_t	count = 0;
 	for (uintmax_t i = 2; i <= limit; ++i) {
 		if (!barray->At(i)) continue;
-		cout << i << endl;
-		count += 1;
+		(*file_out) << i << " ";
 	}
-	cout << "Numeros primos encontrados: " << count << endl;
 }
 
 void PrimesSieve::SegmentedSieve() {

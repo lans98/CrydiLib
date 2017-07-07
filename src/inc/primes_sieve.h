@@ -46,6 +46,7 @@ class PrimesSieve {
 	BitArray<> *barray;
 	uintmax_t   limit;
 	ps_flag			flags = 0;
+	ofstream   *file_out;
 
  public:
 	PrimesSieve() = default;

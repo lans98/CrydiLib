@@ -197,9 +197,9 @@ T CharToNumber(const char digit) {
  * @param k times to test
  * @return true if n is a probable prime and false if it's composite
  */
-bool FermatTest(const int &n, uintmax_t k = 10);
-bool FermatTest(const long &n, uintmax_t k = 10);
-bool FermatTest(const ZZ &n, uintmax_t k = 10);
+bool FermatTest(const int &n, uintmax_t k = 25);
+bool FermatTest(const long &n, uintmax_t k = 25);
+bool FermatTest(const ZZ &n, uintmax_t k = 25);
 
 /**
  * Find if a number is prime using Euler Theorem
@@ -209,9 +209,9 @@ bool FermatTest(const ZZ &n, uintmax_t k = 10);
  * @param k times to test
  * @retur true if n is a probable prime and false if it's composite
  */
-bool EulerTest(const int &n, uintmax_t k = 10);
-bool EulerTest(const long &n, uintmax_t k = 10);
-bool EulerTest(const ZZ &n, uintmax_t k = 10);
+bool EulerTest(const int &n, uintmax_t k = 25);
+bool EulerTest(const long &n, uintmax_t k = 25);
+bool EulerTest(const ZZ &n, uintmax_t k = 25);
 
 /**
  * Find if a number is prime using Miller-Rabin Test 
@@ -221,9 +221,9 @@ bool EulerTest(const ZZ &n, uintmax_t k = 10);
  * @param k times to test
  * @return true if n is a probable prime and false if it's composite
  */
-bool MillerRabinTest(const int &n, uintmax_t k = 10);
-bool MillerRabinTest(const long &n, uintmax_t k = 10);
-bool MillerRabinTest(const ZZ &n, uintmax_t k = 10);
+bool MillerRabinTest(const int &n, uintmax_t k = 25);
+bool MillerRabinTest(const long &n, uintmax_t k = 25);
+bool MillerRabinTest(const ZZ &n, uintmax_t k = 25);
 
 /**
  * Find if a number is prime using different methods,
@@ -231,10 +231,26 @@ bool MillerRabinTest(const ZZ &n, uintmax_t k = 10);
  * @param n odd number to test
  * @return true if n is a probable prime and false if it's composite
  */
-bool IsPrime(const int &n, prim_test_flag flag = MILLER_RABIN_TEST, uintmax_t k = 10);
-bool IsPrime(const long &n, prim_test_flag flag = MILLER_RABIN_TEST, uintmax_t k = 10);
-bool IsPrime(const ZZ  &n, prim_test_flag flag = MILLER_RABIN_TEST, uintmax_t k = 10);
+bool IsPrime(const int &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
+bool IsPrime(const long &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
+bool IsPrime(const ZZ  &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
 
+/**
+ * Generate a random prime with minimal value 
+ * And test it with Miller-Rabin with 'k' times
+ * @param min, minimal value for generated prime
+ * @param k, test k times Miller-Rabin
+ */
+int  GenRandomIntPrime(int min, uintmax_t k = 25);
+long GenRandomLongPrime(long min, uintmax_t k = 25);
+
+/**
+ * Generate a random prime with number of bits
+ * And test it with Miller-Rabin with 'k' times 
+ * @param num_bits, number of bits 
+ * @param k, test k times Miller-Rabin
+ */
+ZZ	 GenRandomZZPrime(long num_bits, uintmax_t k = 25);
 }
 
 #endif 

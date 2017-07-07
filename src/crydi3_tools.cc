@@ -553,7 +553,7 @@ bool MillerRabinTest(const ZZ &n, uintmax_t k) {
 	return true;
 }
 
-bool IsPrime(const int &n, prim_test_flag flag, uintmax_t k) {
+bool IsPrime(const int &n, uintmax_t k, prim_test_flag flag) {
 	if (flag & MILLER_RABIN_TEST)
 		return MillerRabinTest(n, k);
 	if (flag & EULER_TEST)
@@ -563,7 +563,7 @@ bool IsPrime(const int &n, prim_test_flag flag, uintmax_t k) {
 	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
 }
 
-bool IsPrime(const long &n, prim_test_flag flag, uintmax_t k) {
+bool IsPrime(const long &n, uintmax_t k, prim_test_flag flag) {
 	if (flag & MILLER_RABIN_TEST)
 		return MillerRabinTest(n, k);
 	if (flag & EULER_TEST)
@@ -573,7 +573,7 @@ bool IsPrime(const long &n, prim_test_flag flag, uintmax_t k) {
 	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
 }
 
-bool IsPrime(const ZZ &n, prim_test_flag flag, uintmax_t k) {
+bool IsPrime(const ZZ &n, uintmax_t k, prim_test_flag flag) {
 	if (flag & MILLER_RABIN_TEST)
 		return MillerRabinTest(n, k);
 	if (flag & EULER_TEST)
@@ -581,6 +581,30 @@ bool IsPrime(const ZZ &n, prim_test_flag flag, uintmax_t k) {
 	if (flag & FERMAT_TEST)
 		return FermatTest(n, k);
 	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
+}
+
+int GenRandomIntPrime(int min, uintmax_t k) {
+	int random_num = RandomInt(min, numeric_limits<int>::max());
+	cout << random_num << endl;
+	while (!MillerRabinTest(random_num, k))  {
+		random_num = RandomInt(min, numeric_limits<int>::max());
+		cout << random_num << endl;
+	}
+	return random_num;
+}
+
+long GenRandomLongPrime(long min, uintmax_t k) {
+	long random_num = RandomLong(min, numeric_limits<long>::max());
+	while (!MillerRabinTest(random_num, k))
+		random_num = RandomLong(min, numeric_limits<long>::max());
+	return random_num;
+}
+
+ZZ GenRandomZZPrime(long num_bits, uintmax_t k) {
+	ZZ random_num = RandomLen_ZZ(num_bits);
+	while (!MillerRabinTest(random_num, k))
+		random_num = RandomLen_ZZ(num_bits);
+	return random_num;
 }
 
 }
