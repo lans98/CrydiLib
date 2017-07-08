@@ -3,27 +3,27 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-                                                                      
+
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-                                                                      
+
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// ========================================================================= 
+// =========================================================================
 
-// ========================================================================= 
+// =========================================================================
 // Disclaimer notes:
 //  This library is not intended to be a viable option for use in situations
-//  of reliability and robustness, several of these algorithms need to be 
+//  of reliability and robustness, several of these algorithms need to be
 //  better implemented, this library serves to demonstrate certain algorithms
-//  applied to the theory of numbers, also serves as an example as a basis 
+//  applied to the theory of numbers, also serves as an example as a basis
 //  for creating a library (quite simple).
-// ========================================================================= 
+// =========================================================================
 
 #ifndef CRYDI3_CRYDI3_TOOLS_H
-#define CRYDI3_CRYDI3_TOOLS_H 
+#define CRYDI3_CRYDI3_TOOLS_H
 
 #include <NTL/ZZ.h>
 #include <ctime>
@@ -43,7 +43,7 @@
 
 namespace crydi {
 
-// Defined macro by ntl lib 
+// Defined macro by ntl lib
 NTL_CLIENT
 
 enum gcd_flag {
@@ -57,11 +57,13 @@ enum prim_test_flag {
 	MILLER_RABIN_TEST = 0x04
 };
 
+static uintmax_t seeds[2];
+
 /**
  * Compute time for two clock_t define your start clock before calling
  * whatever you want to test and define your end clock after it, then
  * call this function.
- * @param start 
+ * @param start
  * @param end
  * @return diff time in miliseconds
  */
@@ -101,7 +103,7 @@ ZZ   SteinGcd(ZZ  a, ZZ  b);
 
 /**
  * Wrapper for gcd algoritthms, calculate gcd of a and b, by
- * default it uses Stein's Gcd (see gcd_flag) 
+ * default it uses Stein's Gcd (see gcd_flag)
  * @param a
  * @param b
  * @param algorithm
@@ -114,10 +116,10 @@ ZZ   Gcd(ZZ  a, ZZ  b, gcd_flag algorithm = EUCLID_GCD);
 /**
  * Compute the gcd, and also find two values (x and y) that satisfy
  * Bezout's Identity (using Extended Euclid's Algorithm)
- * @param a 
+ * @param a
  * @param b
  * @reference mcd
- * @reference x 
+ * @reference x
  * @reference y
  */
 void EuclidExtendedGcd(int a, int b, int &mcd, int &x, int &y);
@@ -125,7 +127,7 @@ void EuclidExtendedGcd(long a, long b, long &mcd, long &x, long &y);
 void EuclidExtendedGcd(ZZ  a, ZZ  b, ZZ  &mcd, ZZ  &x, ZZ  &y);
 
 /**
- * Compute the modular multiplicative inverse for a in modulus b, used 
+ * Compute the modular multiplicative inverse for a in modulus b, used
  * on Afin Cipher, RSA, this can be only calculated if gcd(a,b) = 1
  * @param a
  * @param b
@@ -140,7 +142,7 @@ ZZ   FindModularInverse(ZZ  a, ZZ  b);
  * @param a
  * @param b
  * @return random number
- */ 
+ */
 int  RandomInt(int a, int b);
 long RandomLong(long a, long b);
 
@@ -190,6 +192,47 @@ T CharToNumber(const char digit) {
 	return digit - '0';
 }
 
+static bool already_init_seed = false;
+
+/**
+ * Start "random" seeds, actually it creates an short int and we take
+ * its address memory, that may be random
+ */
+void InitSeeds();
+
+/**
+ * Generate Random Int/Long using Linear Congruence, seed is taken from
+ * address memory.
+ * @param n range to generate (using modulus n)
+ */
+int  GenRandomInt(int max);
+long GenRandomLong(long max);
+
+/**
+ * Generate Random ZZ using Linear Congruence, seed is taken from
+ * address memory, we generate different random longs and then
+ * we concatenate them as string, for getting a bigger number.
+ * Here modulus is random.
+ */
+ZZ GenRandomZZ(ZZ max);
+
+/**
+ * Generate a random prime with minimal value
+ * And test it with Miller-Rabin with 'k' times
+ * @param min, minimal value for generated prime
+ * @param k, test k times Miller-Rabin
+ */
+int  GenRandomIntPrime(int min, uintmax_t k = 25);
+long GenRandomLongPrime(long min, uintmax_t k = 25);
+
+/**
+ * Generate a random prime with number of bits
+ * And test it with Miller-Rabin with 'k' times
+ * @param num_bits, number of bits
+ * @param k, test k times Miller-Rabin
+ */
+ZZ	 GenRandomZZPrime(long num_bits, uintmax_t k = 25);
+
 /**
  * Find if a number is prime using Fermat Theorem
  * It will fail with absolute Fermat pseudoprimes
@@ -214,7 +257,7 @@ bool EulerTest(const long &n, uintmax_t k = 25);
 bool EulerTest(const ZZ &n, uintmax_t k = 25);
 
 /**
- * Find if a number is prime using Miller-Rabin Test 
+ * Find if a number is prime using Miller-Rabin Test
  * This theorem also has some pseudoprimes in specific bases 'a'
  * But testing with different bases (10 times) gives real results.
  * @param n odd number to test
@@ -235,22 +278,6 @@ bool IsPrime(const int &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_
 bool IsPrime(const long &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
 bool IsPrime(const ZZ  &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
 
-/**
- * Generate a random prime with minimal value 
- * And test it with Miller-Rabin with 'k' times
- * @param min, minimal value for generated prime
- * @param k, test k times Miller-Rabin
- */
-int  GenRandomIntPrime(int min, uintmax_t k = 25);
-long GenRandomLongPrime(long min, uintmax_t k = 25);
-
-/**
- * Generate a random prime with number of bits
- * And test it with Miller-Rabin with 'k' times 
- * @param num_bits, number of bits 
- * @param k, test k times Miller-Rabin
- */
-ZZ	 GenRandomZZPrime(long num_bits, uintmax_t k = 25);
 }
 
-#endif 
+#endif

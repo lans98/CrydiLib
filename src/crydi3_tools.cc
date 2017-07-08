@@ -3,29 +3,29 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-                                                                      
+
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-                                                                      
+
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// ========================================================================= 
+// =========================================================================
 
-// ========================================================================= 
+// =========================================================================
 // Disclaimer notes:
 //  This library is not intended to be a viable option for use in situations
-//  of reliability and robustness, several of these algorithms need to be 
+//  of reliability and robustness, several of these algorithms need to be
 //  better implemented, this library serves to demonstrate certain algorithms
-//  applied to the theory of numbers, also serves as an example as a basis 
+//  applied to the theory of numbers, also serves as an example as a basis
 //  for creating a library (quite simple).
-// ========================================================================= 
+// =========================================================================
 
-#include "inc/crydi3_tools.h" 
+#include "inc/crydi3_tools.h"
 
 namespace crydi {
-	
+
 int EuclidGcd(int a, int b) {
 	int mod;
 	while (b > 0) {
@@ -34,7 +34,7 @@ int EuclidGcd(int a, int b) {
 		b = mod;
 	}
 	return a;
-}	
+}
 
 long EuclidGcd(long a, long b) {
 	long mod;
@@ -64,16 +64,16 @@ int SteinGcd(int a, int b) {
 		b >>= 1;
 		shift <<= 1;
 	}
-	
+
 	while (a != 0) {
 		if ((a & 1) == 0) {
 			a >>= 1;
 		} else if ((b & 1) == 0) {
 			b >>= 1;
 		} else {
-			if (a >= b) 
+			if (a >= b)
 				a = (a - b) >> 1;
-			else 
+			else
 				b = (b - a) >> 1;
 		}
 	}
@@ -95,9 +95,9 @@ long SteinGcd(long a, long b) {
 		} else if ((b & 1) == 0) {
 			b >>= 1;
 		} else {
-			if (a >= b) 
+			if (a >= b)
 				a = (a - b) >> 1;
-			else 
+			else
 				b = (b - a) >> 1;
 		}
 	}
@@ -106,22 +106,22 @@ long SteinGcd(long a, long b) {
 
 ZZ SteinGcd(ZZ a, ZZ b) {
 	ZZ shift {1};
-	
+
 	while ((a & b & 1) == 0) {
 		a >>= 1;
 		b >>= 1;
 		shift <<= 1;
 	}
-	
+
 	while (a != 0) {
 		if ((a & 1) == 0) {
 			a >>= 1;
 		} else if ((a & 1) == 0) {
-			b >>= 1;	
+			b >>= 1;
 		} else {
 			if (a >= b)
 				a = (a - b) >> 1;
-			else 
+			else
 				b = (b - a) >> 1;
 		}
 	}
@@ -129,7 +129,7 @@ ZZ SteinGcd(ZZ a, ZZ b) {
 }
 
 int Gcd(int a, int b, gcd_flag algorithm) {
-	if (algorithm & STEIN_GCD) 
+	if (algorithm & STEIN_GCD)
 		return SteinGcd(a, b);
 	if (algorithm & EUCLID_GCD)
 		return EuclidGcd(a, b);
@@ -266,7 +266,7 @@ int ModularExp(int base, int exp, int mod) {
 	int result = 1;
 
 	while (exp != 0) {
-		if (exp & 1) 
+		if (exp & 1)
 			result = Mod(result * base, mod);
 		base = Mod(base * base, mod);
 		exp >>= 1;
@@ -296,12 +296,68 @@ ZZ ModularExp(ZZ base, ZZ exp, ZZ mod) {
 		base = Mod(base * base, mod);
 		exp >>= 1;
 	}
-	
+
 	return result;
 }
 
+void InitSeeds() {
+    if (already_init_seed) return;
+    short *rand_obj = new short;
+    seeds[0] = reinterpret_cast<uintmax_t>(rand_obj) | 1UL;
+    seeds[1] = reinterpret_cast<uintmax_t>(&rand_obj) | 1UL;
+
+    delete rand_obj;
+    already_init_seed = true;
+}
+
+int GenRandomInt(int max) {
+    if (!already_init_seed) InitSeeds();
+    int rand_num = static_cast<int>(
+        Mod(static_cast<int>(seeds[0] * seeds[1] + ((seeds[0] - seeds[1]) << 8)), max)
+    );
+    uintmax_t temp = seeds[0];
+    seeds[0] = static_cast<uintmax_t>(rand_num) ^ 1UL;
+    seeds[1] = ~(temp >> Mod(seeds[0], 8UL) );
+    return rand_num;
+}
+
+long GenRandomLong(long max) {
+    if (!already_init_seed) InitSeeds();
+    long rand_num = static_cast<long>(
+        Mod(static_cast<long>(seeds[0] * seeds[1] + (seeds[0] >> 16)), max)
+    );
+    uintmax_t temp = seeds[0];
+    seeds[0] = static_cast<uintmax_t>(rand_num) ^ 1UL;
+    seeds[1] = ~(temp >> Mod(seeds[0], 8UL));
+    return rand_num;
+}
+
+int GenRandomIntPrime(int min, uintmax_t k) {
+	int random_num = RandomInt(min, numeric_limits<int>::max());
+	cout << random_num << endl;
+	while (!MillerRabinTest(random_num, k))  {
+		random_num = RandomInt(min, numeric_limits<int>::max());
+		cout << random_num << endl;
+	}
+	return random_num;
+}
+
+long GenRandomLongPrime(long min, uintmax_t k) {
+	long random_num = RandomLong(min, numeric_limits<long>::max());
+	while (!MillerRabinTest(random_num, k))
+		random_num = RandomLong(min, numeric_limits<long>::max());
+	return random_num;
+}
+
+ZZ GenRandomZZPrime(long num_bits, uintmax_t k) {
+	ZZ random_num = RandomLen_ZZ(num_bits);
+	while (!MillerRabinTest(random_num, k))
+		random_num = RandomLen_ZZ(num_bits);
+	return random_num;
+}
+
 bool FermatTest(const int &n, uintmax_t k) {
-	if ((n & 1) == 0) 
+	if ((n & 1) == 0)
 		return false;
 	if (n == 2)
 		return true;
@@ -384,7 +440,7 @@ bool EulerTest(const int &n, uintmax_t k) {
 			(find(used_bases.begin(), used_bases.end(), a) != used_bases.end())
 		);
 		used_bases.push_back(a);
-		
+
 		a = ModularExp(a, (n - 1) >> 1, n);
 		if (a != 1 && a != n - 1) return false;
 	}
@@ -394,7 +450,7 @@ bool EulerTest(const int &n, uintmax_t k) {
 bool EulerTest(const long &n, uintmax_t k) {
 	if ((n & 1) == 0)
 		return false;
-	if (n == 2) 
+	if (n == 2)
 		return true;
 
 	long a;
@@ -428,7 +484,7 @@ bool EulerTest(const ZZ &n, uintmax_t k) {
 			a = Mod(a , n);
 		} while (
 			(a < 3)	||
-			(Gcd(n, a) != 1) || 
+			(Gcd(n, a) != 1) ||
 			(find(used_bases.begin(), used_bases.end(), a) != used_bases.end())
 		);
 		used_bases.push_back(a);
@@ -461,7 +517,7 @@ bool MillerRabinTest(const int &n, uintmax_t k) {
 			(Gcd(n, a) != 1)	||
 			(find(used_bases.begin(), used_bases.end(), a) != used_bases.end())
 		);
-		used_bases.push_back(a);	
+		used_bases.push_back(a);
 
 		a = ModularExp(a, m, n);
 		if (a == 1 || a == n - 1) continue;
@@ -491,7 +547,7 @@ bool MillerRabinTest(const long &n, uintmax_t k) {
 
 	long a;
 	vector<long> used_bases;
-	
+
 	for (uintmax_t i = 0; i < k; ++i) {
 		do {
 			a = RandomLong(2, n);
@@ -581,30 +637,6 @@ bool IsPrime(const ZZ &n, uintmax_t k, prim_test_flag flag) {
 	if (flag & FERMAT_TEST)
 		return FermatTest(n, k);
 	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
-}
-
-int GenRandomIntPrime(int min, uintmax_t k) {
-	int random_num = RandomInt(min, numeric_limits<int>::max());
-	cout << random_num << endl;
-	while (!MillerRabinTest(random_num, k))  {
-		random_num = RandomInt(min, numeric_limits<int>::max());
-		cout << random_num << endl;
-	}
-	return random_num;
-}
-
-long GenRandomLongPrime(long min, uintmax_t k) {
-	long random_num = RandomLong(min, numeric_limits<long>::max());
-	while (!MillerRabinTest(random_num, k))
-		random_num = RandomLong(min, numeric_limits<long>::max());
-	return random_num;
-}
-
-ZZ GenRandomZZPrime(long num_bits, uintmax_t k) {
-	ZZ random_num = RandomLen_ZZ(num_bits);
-	while (!MillerRabinTest(random_num, k))
-		random_num = RandomLen_ZZ(num_bits);
-	return random_num;
 }
 
 }
