@@ -26,6 +26,10 @@ if (NTLLIB_FOUND)
     target_link_libraries(crydi3_random_bin crydi3 ntl)
     add_test(crydi3_random_test crydi3_random_bin)
 
+    add_executable(crydi3_rsa_bin test/rsa_test.cc)
+    target_link_libraries(crydi3_rsa_bin crydi3 ntl)
+    add_test(crydi3_rsa_test crydi3_rsa_bin)
+
 	endif(CRYDI3_TEST)
 endif(NTLLIB_FOUND)
 

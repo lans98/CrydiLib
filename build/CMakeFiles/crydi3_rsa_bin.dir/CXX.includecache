@@ -136,7 +136,7 @@ crydi3_tools.h
 crypto.h
 /home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/test/random_ints.cc
+/home/kevin/Documents/Programacion/Discretas3/CrydiLib/test/rsa_test.cc
 ../src/inc/crydi3.h
 /home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3.h
 

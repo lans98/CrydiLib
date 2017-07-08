@@ -300,11 +300,21 @@ ZZ ModularExp(ZZ base, ZZ exp, ZZ mod) {
 	return result;
 }
 
+__random__ random;
+
 void InitSeeds() {
     if (already_init_seed) return;
     short *rand_obj = new short;
-    seeds[0] = reinterpret_cast<uintmax_t>(rand_obj) | 1UL;
-    seeds[1] = reinterpret_cast<uintmax_t>(&rand_obj) | 1UL;
+    random.seed = reinterpret_cast<intmax_t>(rand_obj) | 1L;
+
+    milliseconds time_ms {
+      duration_cast<milliseconds>(
+        system_clock::now().time_since_epoch()
+      )
+    };
+
+    random.c = reinterpret_cast<intmax_t>((random.seed >> 11) ^ (time_ms.count() << 7)) | 1L;
+    random.a = reinterpret_cast<intmax_t>((random.seed << 11) ^ (time_ms.count() >> 7)) | 1L;
 
     delete rand_obj;
     already_init_seed = true;
@@ -312,47 +322,50 @@ void InitSeeds() {
 
 int GenRandomInt(int max) {
     if (!already_init_seed) InitSeeds();
-    int rand_num = static_cast<int>(
-        Mod(static_cast<int>(seeds[0] * seeds[1] + ((seeds[0] - seeds[1]) << 8)), max)
-    );
-    uintmax_t temp = seeds[0];
-    seeds[0] = static_cast<uintmax_t>(rand_num) ^ 1UL;
-    seeds[1] = ~(temp >> Mod(seeds[0], 8UL) );
+    int a = Mod(random.a, (intmax_t) max);
+    int c = Mod(random.c, (intmax_t) max);
+    int rand_num = Mod(a * random.seed + c, (intmax_t) max);
+    random.seed = rand_num;
     return rand_num;
 }
 
 long GenRandomLong(long max) {
     if (!already_init_seed) InitSeeds();
-    long rand_num = static_cast<long>(
-        Mod(static_cast<long>(seeds[0] * seeds[1] + (seeds[0] >> 16)), max)
-    );
-    uintmax_t temp = seeds[0];
-    seeds[0] = static_cast<uintmax_t>(rand_num) ^ 1UL;
-    seeds[1] = ~(temp >> Mod(seeds[0], 8UL));
+    long rand_num = Mod(random.a * random.seed + random.c, max);
+    random.seed = rand_num;
     return rand_num;
 }
 
 int GenRandomIntPrime(int min, uintmax_t k) {
-	int random_num = RandomInt(min, numeric_limits<int>::max());
-	cout << random_num << endl;
+  int random_num = RandomInt(min, numeric_limits<int>::max());
 	while (!MillerRabinTest(random_num, k))  {
-		random_num = RandomInt(min, numeric_limits<int>::max());
-		cout << random_num << endl;
+    if (random_num & 1)
+      random_num += 2;
+    else
+      random_num += 1;
 	}
 	return random_num;
 }
 
 long GenRandomLongPrime(long min, uintmax_t k) {
 	long random_num = RandomLong(min, numeric_limits<long>::max());
-	while (!MillerRabinTest(random_num, k))
-		random_num = RandomLong(min, numeric_limits<long>::max());
+	while (!MillerRabinTest(random_num, k)) {
+    if (random_num & 1)
+      random_num += 2;
+    else
+      random_num += 1;
+  }
 	return random_num;
 }
 
 ZZ GenRandomZZPrime(long num_bits, uintmax_t k) {
 	ZZ random_num = RandomLen_ZZ(num_bits);
-	while (!MillerRabinTest(random_num, k))
-		random_num = RandomLen_ZZ(num_bits);
+	while (!MillerRabinTest(random_num, k)) {
+    if ((random_num & 1) == 1)
+      random_num += 2;
+    else
+      random_num += 1;
+  }
 	return random_num;
 }
 

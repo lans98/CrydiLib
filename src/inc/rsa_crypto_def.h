@@ -22,19 +22,39 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#include "../src/inc/crydi3.h"
+#ifndef CRYDI3_RSA_CRYPTO_DEF_H
+#define CRYDI3_RSA_CRYPTO_DEF_H
 
-using namespace std;
+#include "crydi3_tools.h"
+#include "crypto.h"
 
-int main(int argc, char *argv[]) {
-  //int prime_int = crydi::GenRandomIntPrime(10000);
-  //cout << prime_int << endl;
+namespace crydi {
 
-  //long prime_long = crydi::GenRandomLongPrime(10000000);
-  //cout << prime_long << endl;
+const size_t PUBLIC  = 0;
+const size_t PRIVATE = 1;
+const size_t MODULUS = 2;
 
-  NTL::ZZ prime_zz = crydi::GenRandomZZPrime(512);
-  cout << prime_zz << endl;
+KeyList<ZZ> GenKeys(long num_bits);
 
-  return 0;
+template <class T>
+class RSACrypto : public Crypto<T> {
+public:
+  string MsgToNumericalForm(string msg);
+
+  RSACrypto();
+  RSACrypto(const KeyList<T> &keys);
+  RSACrypto(const string &alpha);
+  RSACrypto(const string &alpha, const KeyList<T> &keys);
+  ~RSACrypto() = default;
+
+  T GetPublicKey();
+  T GetPrivateKey();
+  T GetModulus();
+
+  string Encrypt(string msg);
+  string Decrypt(string msg);
+};
+
 }
+
+#endif

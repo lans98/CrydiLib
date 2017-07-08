@@ -113,17 +113,6 @@ test/fast: test
 
 .PHONY : test/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -134,6 +123,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -181,19 +181,6 @@ gen_primes/fast:
 .PHONY : gen_primes/fast
 
 #=============================================================================
-# Target rules for targets named crydi3_random_bin
-
-# Build rule for target.
-crydi3_random_bin: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 crydi3_random_bin
-.PHONY : crydi3_random_bin
-
-# fast build rule for target.
-crydi3_random_bin/fast:
-	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
-.PHONY : crydi3_random_bin/fast
-
-#=============================================================================
 # Target rules for targets named crydi3
 
 # Build rule for target.
@@ -205,6 +192,32 @@ crydi3: cmake_check_build_system
 crydi3/fast:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/build
 .PHONY : crydi3/fast
+
+#=============================================================================
+# Target rules for targets named crydi3_rsa_bin
+
+# Build rule for target.
+crydi3_rsa_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_rsa_bin
+.PHONY : crydi3_rsa_bin
+
+# fast build rule for target.
+crydi3_rsa_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/build
+.PHONY : crydi3_rsa_bin/fast
+
+#=============================================================================
+# Target rules for targets named crydi3_random_bin
+
+# Build rule for target.
+crydi3_random_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_random_bin
+.PHONY : crydi3_random_bin
+
+# fast build rule for target.
+crydi3_random_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
+.PHONY : crydi3_random_bin/fast
 
 primes/gen_primes.o: primes/gen_primes.cc.o
 
@@ -341,6 +354,33 @@ test/random_ints.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.s
 .PHONY : test/random_ints.cc.s
 
+test/rsa_test.o: test/rsa_test.cc.o
+
+.PHONY : test/rsa_test.o
+
+# target to build an object file
+test/rsa_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/test/rsa_test.cc.o
+.PHONY : test/rsa_test.cc.o
+
+test/rsa_test.i: test/rsa_test.cc.i
+
+.PHONY : test/rsa_test.i
+
+# target to preprocess a source file
+test/rsa_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/test/rsa_test.cc.i
+.PHONY : test/rsa_test.cc.i
+
+test/rsa_test.s: test/rsa_test.cc.s
+
+.PHONY : test/rsa_test.s
+
+# target to generate assembly for a file
+test/rsa_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/test/rsa_test.cc.s
+.PHONY : test/rsa_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -353,10 +393,11 @@ help:
 	@echo "... gen_primes"
 	@echo "... install/local"
 	@echo "... test"
+	@echo "... rebuild_cache"
+	@echo "... crydi3"
+	@echo "... crydi3_rsa_bin"
 	@echo "... edit_cache"
 	@echo "... crydi3_random_bin"
-	@echo "... crydi3"
-	@echo "... rebuild_cache"
 	@echo "... primes/gen_primes.o"
 	@echo "... primes/gen_primes.i"
 	@echo "... primes/gen_primes.s"
@@ -372,6 +413,9 @@ help:
 	@echo "... test/random_ints.o"
 	@echo "... test/random_ints.i"
 	@echo "... test/random_ints.s"
+	@echo "... test/rsa_test.o"
+	@echo "... test/rsa_test.i"
+	@echo "... test/rsa_test.s"
 .PHONY : help
 
 

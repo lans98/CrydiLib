@@ -24,17 +24,21 @@
 
 #include "../src/inc/crydi3.h"
 
+using namespace NTL;
 using namespace std;
 
-int main(int argc, char *argv[]) {
-  //int prime_int = crydi::GenRandomIntPrime(10000);
-  //cout << prime_int << endl;
+int main(int argc, char* argv[]) {
+  crydi::KeyList<ZZ> rsa_keys =crydi::GenKeys(1024);
+  crydi::RSACrypto<ZZ> rsa("abcdefghijklmnopqrstuvwxyz", rsa_keys);
+  cout << "Public key (share this): " << rsa.GetPublicKey() << endl;
+  cout << "Share it with : " << rsa.GetModulus() << endl;
+  cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
+  string msg = "phimod";
 
-  //long prime_long = crydi::GenRandomLongPrime(10000000);
-  //cout << prime_long << endl;
-
-  NTL::ZZ prime_zz = crydi::GenRandomZZPrime(512);
-  cout << prime_zz << endl;
-
+  cout << "Mensaje original: " << msg << endl;
+  msg = rsa.Encrypt(msg);
+  cout << "Encrypted message: " << msg << endl;
+  msg = rsa.Decrypt(msg);
+  cout << "Decrypted message: " << msg << endl;
   return 0;
 }

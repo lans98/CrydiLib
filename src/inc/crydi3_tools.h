@@ -33,18 +33,29 @@
 #include <cmath>
 #include <vector>
 #include <deque>
+#include <chrono>
 #include <random>
 #include <limits>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <exception>
 #include <initializer_list>
 
 namespace crydi {
 
-// Defined macro by ntl lib
-NTL_CLIENT
+// Namespaces to be used
+using namespace std;
+using namespace chrono;
+using namespace NTL;
+
+class NotFoundedInAlpha : public exception {
+public:
+  const char* what() const noexcept {
+    return "Message contains a char that is not in the alphabet";
+  }
+};
 
 enum gcd_flag {
 	EUCLID_GCD = 0x01,
@@ -56,8 +67,6 @@ enum prim_test_flag {
 	EULER_TEST        = 0x02,
 	MILLER_RABIN_TEST = 0x04
 };
-
-static uintmax_t seeds[2];
 
 /**
  * Compute time for two clock_t define your start clock before calling
@@ -192,7 +201,16 @@ T CharToNumber(const char digit) {
 	return digit - '0';
 }
 
+/**
+ * Here starts generating numbers and primality tests
+ */
 static bool already_init_seed = false;
+
+struct __random__ {
+  intmax_t seed;
+  intmax_t a, c;
+};
+extern __random__ random;
 
 /**
  * Start "random" seeds, actually it creates an short int and we take

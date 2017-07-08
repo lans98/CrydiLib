@@ -16,5 +16,7 @@ CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/dynamic_int.h
 CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/keylist.h
 CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/keylist_def.h
 CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/primes_sieve.h
+CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/rsa_crypto.h
+CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../src/inc/rsa_crypto_def.h
 CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o: ../test/random_ints.cc
 
