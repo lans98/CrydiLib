@@ -428,7 +428,7 @@ bool FermatTest(const ZZ &n, uintmax_t k) {
 	vector<ZZ> used_bases;
 	for (uintmax_t i = 0; i < k; ++i) {
 		do {
-			a = RandomLen_ZZ(n.size() * 64);
+			a = GenRandomZZ(n.size() * 64);
 			a = Mod(a, n);
 		} while (
 			(a < 3) ||
@@ -498,7 +498,7 @@ bool EulerTest(const ZZ &n, uintmax_t k) {
 	vector<ZZ> used_bases;
 	for (uintmax_t i = 0; i < k; ++i) {
 		do {
-			a = RandomLen_ZZ(n.size() * 64);
+			a = GenRandomZZ(n.size() * 64);
 			a = Mod(a , n);
 		} while (
 			(a < 3)	||
@@ -605,7 +605,7 @@ bool MillerRabinTest(const ZZ &n, uintmax_t k) {
 	vector<ZZ> used_bases;
 	for (uintmax_t i = 0; i < k; ++i) {
 		do {
-			a = RandomLen_ZZ(n.size() * 64);
+			a = GenRandomZZ(n.size() * 64);
 			a = Mod(a,n);
 		} while(
 			(a < 3)	||
@@ -701,15 +701,15 @@ ZZ CRT(ZZ *a, ZZ *p, int n) {
 
 ZZ FindGenerator(ZZ prime) {
   ZZ q, posible_gen;
+  q = (prime - 1)/2;
   while (true) {
     do {
       posible_gen = GenRandomZZ(prime.size() * 64);
       posible_gen = Mod(posible_gen, prime);
     } while (posible_gen == 1 || posible_gen == prime - 1 || posible_gen <= 0);
     if (ModularExp(posible_gen, ZZ(2), prime) != 1 && ModularExp(posible_gen, q, prime) != 1)
-      break;
+      return posible_gen;
   }
-  return posible_gen;
 }
 
 }

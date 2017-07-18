@@ -112,8 +112,8 @@ string RSACrypto<T>::Encrypt(string msg) {
   };
   T encrypted_block_i;
   string encrypted_block_s;
-  for (unsigned long i = 0; i < num_form.size(); i += modulus_size - 1) {
-    encrypted_block_i = StringToNumber<T>(num_form.substr(i, modulus_size - 1));
+  for (unsigned long i = 0; i < msg.size(); i += modulus_size - 1) {
+    encrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size - 1));
     encrypted_block_i = ModularExp(
       encrypted_block_i,
       Crypto<T>::keys_[PUBLIC],

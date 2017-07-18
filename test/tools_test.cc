@@ -32,5 +32,8 @@ int main() {
   ZZ p[3] { ZZ(3), ZZ(5), ZZ(7) };
   ZZ x(crydi::CRT(a, p, 3));
   cout << x << endl;
+
+  ZZ prime(17);
+  cout << crydi::FindGenerator(prime) << endl;
   return 0;
 }
