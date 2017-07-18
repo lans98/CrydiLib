@@ -136,7 +136,7 @@ crydi3_tools.h
 crypto.h
 ../src/inc/crypto.h
 
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/rsa_test.cc
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/tools_test.cc
 crydi3.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/crydi3.h
 

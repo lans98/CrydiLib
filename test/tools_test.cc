@@ -24,21 +24,13 @@
 
 #include "crydi3.h"
 
-using namespace NTL;
 using namespace std;
+using namespace NTL;
 
-int main(int argc, char* argv[]) {
-  crydi::KeyList<ZZ> rsa_keys =crydi::GenKeys(1024);
-  crydi::RSACrypto<ZZ> rsa("abcdefghijklmnopqrstuvwxyz", rsa_keys);
-  cout << "Public key (share this): " << rsa.GetPublicKey() << endl;
-  cout << "Share it with : " << rsa.GetModulus() << endl;
-  cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
-  string msg = "hola";
-
-  cout << "Mensaje original: " << msg << endl;
-  msg = rsa.Encrypt(msg);
-  cout << "Encrypted message: " << msg << endl;
-  msg = rsa.Decrypt(msg);
-  cout << "Decrypted message: " << msg << endl;
+int main() {
+  ZZ a[3] { ZZ(2), ZZ(3), ZZ(2) };
+  ZZ p[3] { ZZ(3), ZZ(5), ZZ(7) };
+  ZZ x(crydi::CRT(a, p, 3));
+  cout << x << endl;
   return 0;
 }

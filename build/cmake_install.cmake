@@ -1,4 +1,4 @@
-# Install script for directory: /home/kevin/Documents/Programacion/Discretas3/CrydiLib
+# Install script for directory: /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -47,7 +47,7 @@ if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMP
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/usr/lib" TYPE SHARED_LIBRARY FILES "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/libcrydi3.so")
+file(INSTALL DESTINATION "/usr/lib" TYPE SHARED_LIBRARY FILES "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/libcrydi3.so")
   if(EXISTS "$ENV{DESTDIR}/usr/lib/libcrydi3.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/usr/lib/libcrydi3.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -66,23 +66,23 @@ if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMP
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
 file(INSTALL DESTINATION "/usr/include/crydi3" TYPE FILE FILES
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto_def.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array_def.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto_def.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto_def.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/div_criteria.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/dynamic_int.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist_def.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/primes_sieve.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto.h"
-    "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/afin_crypto.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/afin_crypto_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/bit_array.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/bit_array_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/cesar_crypto.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/cesar_crypto_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crydi3.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crydi3_tools.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crypto.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crypto_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/div_criteria.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/dynamic_int.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/keylist.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/keylist_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/primes_sieve.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/rsa_crypto.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/rsa_crypto_def.h"
     )
 endif()
 
@@ -95,7 +95,7 @@ if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMP
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/usr/share/crydi3" TYPE FILE FILES "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/primes.dat")
+file(INSTALL DESTINATION "/usr/share/crydi3" TYPE FILE FILES "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/primes.dat")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -106,5 +106,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

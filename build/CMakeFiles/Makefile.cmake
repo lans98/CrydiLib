@@ -45,4 +45,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/crydi3.dir/DependInfo.cmake"
   "CMakeFiles/crydi3_rsa_bin.dir/DependInfo.cmake"
   "CMakeFiles/crydi3_random_bin.dir/DependInfo.cmake"
+  "CMakeFiles/crydi3_tools_bin.dir/DependInfo.cmake"
   )

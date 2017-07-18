@@ -230,22 +230,19 @@ void EuclidExtendedGcd(ZZ a, ZZ b, ZZ &mcd, ZZ &x, ZZ &y) {
 int FindModularInverse(int a, int b) {
 	int mcd, x, y;
 	EuclidExtendedGcd(a, b, mcd, x, y);
-	if (x < 0) x = Mod(x, b);
-	return x;
+	return Mod(x,b);
 }
 
 long FindModularInverse(long a, long b) {
 	long mcd, x, y;
 	EuclidExtendedGcd(a, b, mcd, x, y);
-	if (x < 0) x = Mod(x, b);
-	return x;
+	return Mod(x,b);
 }
 
 ZZ FindModularInverse(ZZ a, ZZ b) {
 	ZZ mcd, x, y;
 	EuclidExtendedGcd(a, b, mcd, x, y);
-	if (x < 0) x = Mod(x, b);
-	return x;
+	return Mod(x,b);
 }
 
 int RandomInt(int a, int b) {
@@ -303,9 +300,9 @@ ZZ ModularExp(ZZ base, ZZ exp, ZZ mod) {
 __random__ random;
 
 void InitSeeds() {
-    if (already_init_seed) return;
+    if (__already_init_seed) return;
     short *rand_obj = new short;
-    random.seed = reinterpret_cast<intmax_t>(rand_obj) | 1L;
+    random.seed = reinterpret_cast<uintmax_t>(rand_obj) | 1UL;
 
     milliseconds time_ms {
       duration_cast<milliseconds>(
@@ -313,27 +310,35 @@ void InitSeeds() {
       )
     };
 
-    random.c = reinterpret_cast<intmax_t>((random.seed >> 11) ^ (time_ms.count() << 7)) | 1L;
-    random.a = reinterpret_cast<intmax_t>((random.seed << 11) ^ (time_ms.count() >> 7)) | 1L;
+    random.c = reinterpret_cast<uintmax_t>((random.seed >> 11) ^ (time_ms.count() << 7)) | 1UL;
+    random.a = reinterpret_cast<uintmax_t>((random.seed << 11) ^ (time_ms.count() >> 7)) | 1UL;
 
     delete rand_obj;
-    already_init_seed = true;
+    __already_init_seed = true;
 }
 
-int GenRandomInt(int max) {
-    if (!already_init_seed) InitSeeds();
-    int a = Mod(random.a, (intmax_t) max);
-    int c = Mod(random.c, (intmax_t) max);
-    int rand_num = Mod(a * random.seed + c, (intmax_t) max);
-    random.seed = rand_num;
-    return rand_num;
+uintmax_t GenRandomLong(uintmax_t max) {
+  if (!__already_init_seed) InitSeeds();
+  uintmax_t rand_num = Mod(random.a * random.seed + random.c, max);
+  random.seed = rand_num;
+  return rand_num;
 }
 
-long GenRandomLong(long max) {
-    if (!already_init_seed) InitSeeds();
-    long rand_num = Mod(random.a * random.seed + random.c, max);
-    random.seed = rand_num;
-    return rand_num;
+ZZ GenRandomZZ(int num_bits) {
+  int total_count = 0;
+  uintmax_t temp_num;
+  string num = "";
+  while (total_count < num_bits) {
+    temp_num = GenRandomLong(numeric_limits<uintmax_t>::max());
+    num += NumberToString(temp_num);
+    total_count += CountBits(temp_num);
+  }
+  NTL:ZZ final_num = StringToNumber<ZZ>(num);
+  total_count = CountBits(final_num);
+  if (total_count > num_bits) {
+    final_num >>= (total_count - num_bits);
+  }
+  return final_num;
 }
 
 int GenRandomIntPrime(int min, uintmax_t k) {
@@ -359,7 +364,7 @@ long GenRandomLongPrime(long min, uintmax_t k) {
 }
 
 ZZ GenRandomZZPrime(long num_bits, uintmax_t k) {
-	ZZ random_num = RandomLen_ZZ(num_bits);
+	ZZ random_num = GenRandomZZ(num_bits);
 	while (!MillerRabinTest(random_num, k)) {
     if ((random_num & 1) == 1)
       random_num += 2;
@@ -629,7 +634,7 @@ bool IsPrime(const int &n, uintmax_t k, prim_test_flag flag) {
 		return EulerTest(n, k);
 	if (flag & FERMAT_TEST)
 		return FermatTest(n, k);
-	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
+	throw string("Bad flag sended, unknown flag with code = " + NumberToString(flag));
 }
 
 bool IsPrime(const long &n, uintmax_t k, prim_test_flag flag) {
@@ -639,7 +644,7 @@ bool IsPrime(const long &n, uintmax_t k, prim_test_flag flag) {
 		return EulerTest(n, k);
 	if (flag & FERMAT_TEST)
 		return FermatTest(n, k);
-	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
+	throw string("Bad flag sended, unknown flag with code = " + NumberToString(flag));
 }
 
 bool IsPrime(const ZZ &n, uintmax_t k, prim_test_flag flag) {
@@ -649,7 +654,50 @@ bool IsPrime(const ZZ &n, uintmax_t k, prim_test_flag flag) {
 		return EulerTest(n, k);
 	if (flag & FERMAT_TEST)
 		return FermatTest(n, k);
-	throw string("Bad flag sended, unknown flag with code = " + NumberToString(k));
+	throw string("Bad flag sended, unknown flag with code = " + NumberToString(flag));
 }
+
+int CRT(int *a, int *p, int n) {
+  int P = 1;
+  for (int i = 0; i < n; ++i)
+    P *= p[i];
+
+  int inv_temp, p_temp, final_sol = 0;
+  for (int i = 0; i < n; ++i) {
+    p_temp = P/p[i];
+    inv_temp = FindModularInverse(p_temp, p[i]);
+    final_sol += Mod(a[i] * inv_temp * p_temp, P);
+  }
+  return Mod(final_sol, P);
+}
+
+long CRT(long *a, long *p, int n) {
+  long P = 1;
+  for (int i = 0; i < n; ++i)
+    P *= p[i];
+
+  long inv_temp, p_temp, final_sol = 0;
+  for (int i = 0; i < n; ++i) {
+    p_temp = P/p[i];
+    inv_temp = FindModularInverse(p_temp, p[i]);
+    final_sol += Mod(a[i] * inv_temp * p_temp, P);
+  }
+  return Mod(final_sol, P);
+}
+
+ZZ CRT(ZZ *a, ZZ *p, int n) {
+  ZZ P(1);
+  for (int i = 0; i < n; ++i)
+    P *= p[i];
+
+  ZZ inv_temp, p_temp, final_sol(0);
+  for (int i = 0; i < n; ++i) {
+    p_temp = P/p[i];
+    inv_temp = FindModularInverse(p_temp, p[i]);
+    final_sol += Mod(a[i] * inv_temp * p_temp, P);
+  }
+  return Mod(final_sol, P);
+}
+
 
 }

@@ -22,13 +22,19 @@ if (NTLLIB_FOUND)
 	if (CRYDI3_TEST)
 		enable_testing()
 
-    add_executable(crydi3_random_bin test/random_ints.cc)
+    include_directories(src/inc)
+
+    add_executable(crydi3_random_bin test/random_test.cc)
     target_link_libraries(crydi3_random_bin crydi3 ntl)
     add_test(crydi3_random_test crydi3_random_bin)
 
     add_executable(crydi3_rsa_bin test/rsa_test.cc)
     target_link_libraries(crydi3_rsa_bin crydi3 ntl)
     add_test(crydi3_rsa_test crydi3_rsa_bin)
+
+    add_executable(crydi3_tools_bin test/tools_test.cc)
+    target_link_libraries(crydi3_tools_bin crydi3 ntl)
+    add_test(crydi3_tools_test crydi3_tools_bin)
 
 	endif(CRYDI3_TEST)
 endif(NTLLIB_FOUND)

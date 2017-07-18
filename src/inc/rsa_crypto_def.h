@@ -30,9 +30,14 @@
 
 namespace crydi {
 
-const size_t PUBLIC  = 0;
-const size_t PRIVATE = 1;
-const size_t MODULUS = 2;
+
+enum RSAIdentifier {
+  PUBLIC  = 0,
+  PRIVATE = 1,
+  MODULUS = 2,
+  P       = 3,
+  Q       = 4
+};
 
 KeyList<ZZ> GenKeys(long num_bits);
 

@@ -1,3 +1,4 @@
-crydi3_random_test 88 0.0018571
-crydi3_rsa_test 23 0.0605761
+crydi3_random_test 16 0.0431834
+crydi3_rsa_test 16 0.0115144
+crydi3_tools_test 14 0.000154427
 ---

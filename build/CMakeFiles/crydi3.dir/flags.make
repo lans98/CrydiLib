@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -O3 -DNDEBUG -fPIC   -std=gnu++14
 
 CXX_DEFINES = -Dcrydi3_EXPORTS
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc 
 

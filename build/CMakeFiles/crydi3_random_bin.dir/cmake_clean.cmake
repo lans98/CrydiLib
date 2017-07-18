@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o"
+  "CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.o"
   "crydi3_random_bin.pdb"
   "crydi3_random_bin"
 )

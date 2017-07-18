@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kevin/Documents/Programacion/Discretas3/CrydiLib
+CMAKE_SOURCE_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build
+CMAKE_BINARY_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/gen_primes.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/gen_primes.dir/flags.make
 
 CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o: CMakeFiles/gen_primes.dir/flags.make
 CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o: ../primes/gen_primes.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o -c /home/kevin/Documents/Programacion/Discretas3/CrydiLib/primes/gen_primes.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o -c /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/primes/gen_primes.cc
 
 CMakeFiles/gen_primes.dir/primes/gen_primes.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gen_primes.dir/primes/gen_primes.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kevin/Documents/Programacion/Discretas3/CrydiLib/primes/gen_primes.cc > CMakeFiles/gen_primes.dir/primes/gen_primes.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/primes/gen_primes.cc > CMakeFiles/gen_primes.dir/primes/gen_primes.cc.i
 
 CMakeFiles/gen_primes.dir/primes/gen_primes.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gen_primes.dir/primes/gen_primes.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kevin/Documents/Programacion/Discretas3/CrydiLib/primes/gen_primes.cc -o CMakeFiles/gen_primes.dir/primes/gen_primes.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/primes/gen_primes.cc -o CMakeFiles/gen_primes.dir/primes/gen_primes.cc.s
 
 CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o.requires:
 
@@ -92,7 +92,7 @@ gen_primes: CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o
 gen_primes: CMakeFiles/gen_primes.dir/build.make
 gen_primes: libcrydi3.so
 gen_primes: CMakeFiles/gen_primes.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable gen_primes"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable gen_primes"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gen_primes.dir/link.txt --verbose=$(VERBOSE)
 	./gen_primes
 
@@ -110,6 +110,6 @@ CMakeFiles/gen_primes.dir/clean:
 .PHONY : CMakeFiles/gen_primes.dir/clean
 
 CMakeFiles/gen_primes.dir/depend:
-	cd /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kevin/Documents/Programacion/Discretas3/CrydiLib /home/kevin/Documents/Programacion/Discretas3/CrydiLib /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles/gen_primes.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/gen_primes.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/gen_primes.dir/depend
 

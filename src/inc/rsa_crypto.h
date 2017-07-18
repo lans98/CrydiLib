@@ -39,7 +39,7 @@ KeyList<ZZ> GenKeys(long num_bits) {
 
   ZZ public_key, private_key;
   do {
-    public_key = RandomLen_ZZ(num_bits);
+    public_key = GenRandomZZ(num_bits - 1);
     public_key = Mod(public_key, phi_mod);
   } while (
     (public_key >= phi_mod) ||
@@ -47,7 +47,7 @@ KeyList<ZZ> GenKeys(long num_bits) {
   );
 
   private_key = FindModularInverse(public_key, phi_mod);
-  KeyList<ZZ> keys {public_key, private_key, modulus};
+  KeyList<ZZ> keys {public_key, private_key, modulus, p, q};
   return keys;
 }
 
@@ -92,6 +92,8 @@ string RSACrypto<T>::MsgToNumericalForm(string msg) {
     if (identifier_i == string::npos)
       throw NotFoundedInAlpha();
     identifier_s = NumberToString(identifier_i);
+    // If the actual identifier has less digits than the last one
+    // add as many '0' as necessary on the front (ej. 5 -> 05, last = 25)
     if (identifier_s.size() < last.size()) {
       identifier_s = string(last.size() - identifier_s.size(),'0')
                      + identifier_s;
@@ -103,7 +105,7 @@ string RSACrypto<T>::MsgToNumericalForm(string msg) {
 
 template <class T>
 string RSACrypto<T>::Encrypt(string msg) {
-  string num_form = MsgToNumericalForm(msg);
+  msg = MsgToNumericalForm(msg);
   string encrypted = "";
   unsigned long modulus_size {
     NumberToString(Crypto<T>::keys_[MODULUS]).size()
@@ -129,6 +131,7 @@ string RSACrypto<T>::Encrypt(string msg) {
 
 template <class T>
 string RSACrypto<T>::Decrypt(string msg) {
+  string last = NumberToString(Crypto<T>::alpha_.size() - 1);
   string decrypted = "";
   unsigned long modulus_size {
     NumberToString(Crypto<T>::keys_[MODULUS]).size()
@@ -137,15 +140,15 @@ string RSACrypto<T>::Decrypt(string msg) {
   string decrypted_block_s;
   for (unsigned long i = 0; i < msg.size(); i += modulus_size) {
     decrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size));
-    cout << decrypted_block_i << endl;
     decrypted_block_i = ModularExp(
       decrypted_block_i,
       Crypto<T>::keys_[PRIVATE],
       Crypto<T>::keys_[MODULUS]
     );
     decrypted_block_s = NumberToString<T>(decrypted_block_i);
-    if ((decrypted_block_s.size() & 1) == 1) {
-      decrypted_block_s = "0" + decrypted_block_s;
+    if (Mod(decrypted_block_s.size(), last.size()) != 0) {
+      decrypted_block_s = string(Mod(decrypted_block_s.size(), last.size()), '0')
+                          + decrypted_block_s;
     }
     decrypted += decrypted_block_s;
   }

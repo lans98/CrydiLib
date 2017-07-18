@@ -22,16 +22,20 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#include "../src/inc/crydi3.h"
+#include "crydi3.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  //int prime_int = crydi::GenRandomIntPrime(10000);
-  //cout << prime_int << endl;
+  uintmax_t rand_num;
+  for (int i = 0; i < 25; ++i) {
+    rand_num = crydi::GenRandomLong(numeric_limits<uintmax_t>::max());
+    cout << rand_num << endl;
+  }
 
-  //long prime_long = crydi::GenRandomLongPrime(10000000);
-  //cout << prime_long << endl;
+  NTL::ZZ rand_zz = crydi::GenRandomZZ(1024);
+  cout << rand_zz << endl;
+  cout << crydi::CountBits(rand_zz) << endl;
 
   NTL::ZZ prime_zz = crydi::GenRandomZZPrime(512);
   cout << prime_zz << endl;

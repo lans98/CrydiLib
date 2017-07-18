@@ -89,6 +89,10 @@ template <class T>
 inline T Mod(T a, T b)
 { T q {a/b}; return (a - b * ((a < 0)? --q : q)); }
 
+template <>
+inline ZZ Mod(ZZ a, ZZ b)
+{ ZZ q {a/b}; return (a - b * q); }
+
 /**
  * Compute the gcd of a and b, using Euclid's Algorithm
  * @param a
@@ -201,14 +205,24 @@ T CharToNumber(const char digit) {
 	return digit - '0';
 }
 
+template <class T>
+int CountBits(T num) {
+  int count = 0;
+  while (num != 0) {
+    num >>= 1;
+    ++count;
+  }
+  return count;
+}
+
 /**
  * Here starts generating numbers and primality tests
  */
-static bool already_init_seed = false;
+static bool __already_init_seed = false;
 
 struct __random__ {
-  intmax_t seed;
-  intmax_t a, c;
+  uintmax_t seed;
+  uintmax_t a, c;
 };
 extern __random__ random;
 
@@ -219,20 +233,19 @@ extern __random__ random;
 void InitSeeds();
 
 /**
- * Generate Random Int/Long using Linear Congruence, seed is taken from
+ * Generate Random Long using Linear Congruence, seed is taken from
  * address memory.
- * @param n range to generate (using modulus n)
+ * @param max range to generate (using modulus n)
  */
-int  GenRandomInt(int max);
-long GenRandomLong(long max);
+uintmax_t GenRandomLong(uintmax_t max);
 
 /**
  * Generate Random ZZ using Linear Congruence, seed is taken from
  * address memory, we generate different random longs and then
  * we concatenate them as string, for getting a bigger number.
- * Here modulus is random.
+ * @param num_bits
  */
-ZZ GenRandomZZ(ZZ max);
+ZZ GenRandomZZ(int num_bits);
 
 /**
  * Generate a random prime with minimal value
@@ -295,6 +308,21 @@ bool MillerRabinTest(const ZZ &n, uintmax_t k = 25);
 bool IsPrime(const int &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
 bool IsPrime(const long &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
 bool IsPrime(const ZZ  &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_TEST);
+
+/**
+ * Chinese rest theorem for n equations (used in RSA)
+ * @param a pointer to list of a_i
+ * @param p pointer to list of p_i
+ * @param n number of equations (len of list of a_i and p_i)
+ */
+int CRT(int *a, int *p, int n);
+long CRT(long *a, long *p, int n);
+ZZ CRT(ZZ *a, ZZ *p, int n);
+
+/**
+ * Find a generator for Z*_p (primitive root)
+ */
+ZZ FindGenerator(ZZ min);
 
 }
 

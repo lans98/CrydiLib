@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -O3 -DNDEBUG   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc 
 

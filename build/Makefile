@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kevin/Documents/Programacion/Discretas3/CrydiLib
+CMAKE_SOURCE_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build
+CMAKE_BINARY_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -90,6 +90,17 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -124,22 +135,11 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programacion/Discretas3/CrydiLib/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -218,6 +218,19 @@ crydi3_random_bin: cmake_check_build_system
 crydi3_random_bin/fast:
 	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
 .PHONY : crydi3_random_bin/fast
+
+#=============================================================================
+# Target rules for targets named crydi3_tools_bin
+
+# Build rule for target.
+crydi3_tools_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_tools_bin
+.PHONY : crydi3_tools_bin
+
+# fast build rule for target.
+crydi3_tools_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/build
+.PHONY : crydi3_tools_bin/fast
 
 primes/gen_primes.o: primes/gen_primes.cc.o
 
@@ -327,32 +340,32 @@ src/primes_sieve.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/primes_sieve.cc.s
 .PHONY : src/primes_sieve.cc.s
 
-test/random_ints.o: test/random_ints.cc.o
+test/random_test.o: test/random_test.cc.o
 
-.PHONY : test/random_ints.o
+.PHONY : test/random_test.o
 
 # target to build an object file
-test/random_ints.cc.o:
-	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.o
-.PHONY : test/random_ints.cc.o
+test/random_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.o
+.PHONY : test/random_test.cc.o
 
-test/random_ints.i: test/random_ints.cc.i
+test/random_test.i: test/random_test.cc.i
 
-.PHONY : test/random_ints.i
+.PHONY : test/random_test.i
 
 # target to preprocess a source file
-test/random_ints.cc.i:
-	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.i
-.PHONY : test/random_ints.cc.i
+test/random_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.i
+.PHONY : test/random_test.cc.i
 
-test/random_ints.s: test/random_ints.cc.s
+test/random_test.s: test/random_test.cc.s
 
-.PHONY : test/random_ints.s
+.PHONY : test/random_test.s
 
 # target to generate assembly for a file
-test/random_ints.cc.s:
-	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_ints.cc.s
-.PHONY : test/random_ints.cc.s
+test/random_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.s
+.PHONY : test/random_test.cc.s
 
 test/rsa_test.o: test/rsa_test.cc.o
 
@@ -381,6 +394,33 @@ test/rsa_test.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/test/rsa_test.cc.s
 .PHONY : test/rsa_test.cc.s
 
+test/tools_test.o: test/tools_test.cc.o
+
+.PHONY : test/tools_test.o
+
+# target to build an object file
+test/tools_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o
+.PHONY : test/tools_test.cc.o
+
+test/tools_test.i: test/tools_test.cc.i
+
+.PHONY : test/tools_test.i
+
+# target to preprocess a source file
+test/tools_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.i
+.PHONY : test/tools_test.cc.i
+
+test/tools_test.s: test/tools_test.cc.s
+
+.PHONY : test/tools_test.s
+
+# target to generate assembly for a file
+test/tools_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.s
+.PHONY : test/tools_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -390,14 +430,15 @@ help:
 	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
+	@echo "... edit_cache"
 	@echo "... gen_primes"
 	@echo "... install/local"
 	@echo "... test"
 	@echo "... rebuild_cache"
 	@echo "... crydi3"
 	@echo "... crydi3_rsa_bin"
-	@echo "... edit_cache"
 	@echo "... crydi3_random_bin"
+	@echo "... crydi3_tools_bin"
 	@echo "... primes/gen_primes.o"
 	@echo "... primes/gen_primes.i"
 	@echo "... primes/gen_primes.s"
@@ -410,12 +451,15 @@ help:
 	@echo "... src/primes_sieve.o"
 	@echo "... src/primes_sieve.i"
 	@echo "... src/primes_sieve.s"
-	@echo "... test/random_ints.o"
-	@echo "... test/random_ints.i"
-	@echo "... test/random_ints.s"
+	@echo "... test/random_test.o"
+	@echo "... test/random_test.i"
+	@echo "... test/random_test.s"
 	@echo "... test/rsa_test.o"
 	@echo "... test/rsa_test.i"
 	@echo "... test/rsa_test.s"
+	@echo "... test/tools_test.o"
+	@echo "... test/tools_test.i"
+	@echo "... test/tools_test.s"
 .PHONY : help
 
 

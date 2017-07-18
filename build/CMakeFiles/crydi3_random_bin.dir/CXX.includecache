@@ -6,57 +6,57 @@
 
 #IncludeRegexTransform: 
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto.h
+../src/inc/afin_crypto.h
 afin_crypto_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto_def.h
+../src/inc/afin_crypto_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto_def.h
+../src/inc/afin_crypto_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
+../src/inc/crypto.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array.h
+../src/inc/bit_array.h
 bit_array_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array_def.h
+../src/inc/bit_array_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array_def.h
+../src/inc/bit_array_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto.h
+../src/inc/cesar_crypto.h
 cesar_crypto_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto_def.h
+../src/inc/cesar_crypto_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto_def.h
+../src/inc/cesar_crypto_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
+../src/inc/crypto.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3.h
+../src/inc/crydi3.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 keylist.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist.h
+../src/inc/keylist.h
 crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
+../src/inc/crypto.h
 afin_crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/afin_crypto.h
+../src/inc/afin_crypto.h
 cesar_crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/cesar_crypto.h
+../src/inc/cesar_crypto.h
 rsa_crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto.h
+../src/inc/rsa_crypto.h
 dynamic_int.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/dynamic_int.h
+../src/inc/dynamic_int.h
 div_criteria.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/div_criteria.h
+../src/inc/div_criteria.h
 bit_array.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array.h
+../src/inc/bit_array.h
 primes_sieve.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/primes_sieve.h
+../src/inc/primes_sieve.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 NTL/ZZ.h
 -
 ctime
@@ -92,51 +92,51 @@ exception
 initializer_list
 -
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
+../src/inc/crypto.h
 crypto_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto_def.h
+../src/inc/crypto_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto_def.h
+../src/inc/crypto_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 keylist.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist.h
+../src/inc/keylist.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/div_criteria.h
+../src/inc/div_criteria.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 dynamic_int.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/dynamic_int.h
+../src/inc/dynamic_int.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/dynamic_int.h
+../src/inc/dynamic_int.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist.h
+../src/inc/keylist.h
 keylist_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist_def.h
+../src/inc/keylist_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/keylist_def.h
+../src/inc/keylist_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/primes_sieve.h
+../src/inc/primes_sieve.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 bit_array.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/bit_array.h
+../src/inc/bit_array.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto.h
+../src/inc/rsa_crypto.h
 rsa_crypto_def.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto_def.h
+../src/inc/rsa_crypto_def.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/rsa_crypto_def.h
+../src/inc/rsa_crypto_def.h
 crydi3_tools.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3_tools.h
+../src/inc/crydi3_tools.h
 crypto.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crypto.h
+../src/inc/crypto.h
 
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/test/random_ints.cc
-../src/inc/crydi3.h
-/home/kevin/Documents/Programacion/Discretas3/CrydiLib/src/inc/crydi3.h
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/random_test.cc
+crydi3.h
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/crydi3.h
 
