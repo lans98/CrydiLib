@@ -321,8 +321,11 @@ ZZ CRT(ZZ *a, ZZ *p, int n);
 
 /**
  * Find a generator for Z*_p (primitive root)
+ * This function just works for prime numbers that is secure that
+ * at least they have one primitive root.
+ * @param prime
  */
-ZZ FindGenerator(ZZ min);
+ZZ FindGenerator(ZZ prime);
 
 }
 

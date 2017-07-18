@@ -699,5 +699,17 @@ ZZ CRT(ZZ *a, ZZ *p, int n) {
   return Mod(final_sol, P);
 }
 
+ZZ FindGenerator(ZZ prime) {
+  ZZ q, posible_gen;
+  while (true) {
+    do {
+      posible_gen = GenRandomZZ(prime.size() * 64);
+      posible_gen = Mod(posible_gen, prime);
+    } while (posible_gen == 1 || posible_gen == prime - 1 || posible_gen <= 0);
+    if (ModularExp(posible_gen, ZZ(2), prime) != 1 && ModularExp(posible_gen, q, prime) != 1)
+      break;
+  }
+  return posible_gen;
+}
 
 }
