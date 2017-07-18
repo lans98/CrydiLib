@@ -30,19 +30,20 @@
 
 namespace crydi {
 
-
 enum RSAIdentifier {
-  PUBLIC  = 0,
-  PRIVATE = 1,
-  MODULUS = 2,
-  P       = 3,
-  Q       = 4
+  PUBLIC_R  = 0,
+  PRIVATE_R = 1,
+  MODULUS_R = 2,
+  P_R       = 3,
+  Q_R       = 4
 };
 
-KeyList<ZZ> GenKeys(long num_bits);
+KeyList<ZZ> GenRSAKeys(long num_bits);
 
 template <class T>
 class RSACrypto : public Crypto<T> {
+private:
+  T p, q;
 public:
   string MsgToNumericalForm(string msg);
 

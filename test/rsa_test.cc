@@ -28,12 +28,12 @@ using namespace NTL;
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  crydi::KeyList<ZZ> rsa_keys =crydi::GenKeys(1024);
-  crydi::RSACrypto<ZZ> rsa("abcdefghijklmnopqrstuvwxyz", rsa_keys);
+  crydi::KeyList<ZZ> rsa_keys =crydi::GenRSAKeys(1024);
+  crydi::RSACrypto<ZZ> rsa("abcdefghijklmnopqrstuvwxyz ", rsa_keys);
   cout << "Public key (share this): " << rsa.GetPublicKey() << endl;
   cout << "Share it with : " << rsa.GetModulus() << endl;
   cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
-  string msg = "hola";
+  string msg = "vamo a jugah papu";
 
   cout << "Mensaje original: " << msg << endl;
   msg = rsa.Encrypt(msg);

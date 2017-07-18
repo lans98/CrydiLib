@@ -32,6 +32,10 @@ if (NTLLIB_FOUND)
     target_link_libraries(crydi3_rsa_bin crydi3 ntl)
     add_test(crydi3_rsa_test crydi3_rsa_bin)
 
+    add_executable(crydi3_elgammal_bin test/elgammal_test.cc)
+    target_link_libraries(crydi3_elgammal_bin crydi3 ntl)
+    add_test(crydi3_elgammal_test crydi3_elgammal_bin)
+
     add_executable(crydi3_tools_bin test/tools_test.cc)
     target_link_libraries(crydi3_tools_bin crydi3 ntl)
     add_test(crydi3_tools_test crydi3_tools_bin)

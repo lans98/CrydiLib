@@ -194,6 +194,19 @@ crydi3/fast:
 .PHONY : crydi3/fast
 
 #=============================================================================
+# Target rules for targets named crydi3_random_bin
+
+# Build rule for target.
+crydi3_random_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_random_bin
+.PHONY : crydi3_random_bin
+
+# fast build rule for target.
+crydi3_random_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
+.PHONY : crydi3_random_bin/fast
+
+#=============================================================================
 # Target rules for targets named crydi3_rsa_bin
 
 # Build rule for target.
@@ -207,17 +220,17 @@ crydi3_rsa_bin/fast:
 .PHONY : crydi3_rsa_bin/fast
 
 #=============================================================================
-# Target rules for targets named crydi3_random_bin
+# Target rules for targets named crydi3_elgammal_bin
 
 # Build rule for target.
-crydi3_random_bin: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 crydi3_random_bin
-.PHONY : crydi3_random_bin
+crydi3_elgammal_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_elgammal_bin
+.PHONY : crydi3_elgammal_bin
 
 # fast build rule for target.
-crydi3_random_bin/fast:
-	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
-.PHONY : crydi3_random_bin/fast
+crydi3_elgammal_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/build
+.PHONY : crydi3_elgammal_bin/fast
 
 #=============================================================================
 # Target rules for targets named crydi3_tools_bin
@@ -340,6 +353,33 @@ src/primes_sieve.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/primes_sieve.cc.s
 .PHONY : src/primes_sieve.cc.s
 
+test/elgammal_test.o: test/elgammal_test.cc.o
+
+.PHONY : test/elgammal_test.o
+
+# target to build an object file
+test/elgammal_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/test/elgammal_test.cc.o
+.PHONY : test/elgammal_test.cc.o
+
+test/elgammal_test.i: test/elgammal_test.cc.i
+
+.PHONY : test/elgammal_test.i
+
+# target to preprocess a source file
+test/elgammal_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/test/elgammal_test.cc.i
+.PHONY : test/elgammal_test.cc.i
+
+test/elgammal_test.s: test/elgammal_test.cc.s
+
+.PHONY : test/elgammal_test.s
+
+# target to generate assembly for a file
+test/elgammal_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/test/elgammal_test.cc.s
+.PHONY : test/elgammal_test.cc.s
+
 test/random_test.o: test/random_test.cc.o
 
 .PHONY : test/random_test.o
@@ -431,13 +471,14 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
-	@echo "... gen_primes"
 	@echo "... install/local"
 	@echo "... test"
+	@echo "... gen_primes"
 	@echo "... rebuild_cache"
 	@echo "... crydi3"
-	@echo "... crydi3_rsa_bin"
 	@echo "... crydi3_random_bin"
+	@echo "... crydi3_rsa_bin"
+	@echo "... crydi3_elgammal_bin"
 	@echo "... crydi3_tools_bin"
 	@echo "... primes/gen_primes.o"
 	@echo "... primes/gen_primes.i"
@@ -451,6 +492,9 @@ help:
 	@echo "... src/primes_sieve.o"
 	@echo "... src/primes_sieve.i"
 	@echo "... src/primes_sieve.s"
+	@echo "... test/elgammal_test.o"
+	@echo "... test/elgammal_test.i"
+	@echo "... test/elgammal_test.s"
 	@echo "... test/random_test.o"
 	@echo "... test/random_test.i"
 	@echo "... test/random_test.s"

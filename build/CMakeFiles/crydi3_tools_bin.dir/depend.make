@@ -13,6 +13,8 @@ CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crypto.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crypto_def.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/div_criteria.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/dynamic_int.h
+CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/elgammal_crypto.h
+CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/elgammal_crypto_def.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/keylist.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/keylist_def.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/primes_sieve.h

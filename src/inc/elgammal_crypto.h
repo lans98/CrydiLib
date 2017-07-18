@@ -22,73 +22,45 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_RSA_CRYPTO_H
-#define CRYDI3_RSA_CRYPTO_H
+#ifndef CRYDI3_ELGAMMAL_H
+#define CRYDI3_ELGAMMAL_H
 
-#include "rsa_crypto_def.h"
+#include "elgammal_crypto_def.h"
 
 namespace crydi {
 
-KeyList<ZZ> GenRSAKeys(long num_bits) {
-  ZZ p = GenRandomZZPrime(num_bits >> 1);
-  ZZ q = GenRandomZZPrime(num_bits >> 1);
-  while (p == q)
-    q = GenRandomZZPrime(num_bits >> 1);
-  ZZ modulus = p * q;
-  ZZ phi_mod = (p - 1) * (q - 1);
-
-  ZZ public_key, private_key;
-  do {
-    public_key = GenRandomZZ(num_bits - 1);
-    public_key = Mod(public_key, phi_mod);
-  } while (
-    (public_key >= phi_mod) ||
-    (Gcd(phi_mod, public_key) != 1)
-  );
-
-  private_key = FindModularInverse(public_key, phi_mod);
-  KeyList<ZZ> keys {public_key, private_key, modulus, p, q};
+KeyList<ZZ> GenElgammalKeys(long num_bits) {
+  ZZ p { GenRandomZZPrime(num_bits) };
+  ZZ e { FindGenerator(p) };
+  ZZ d { GenRandomZZ(num_bits) };
+  d = Mod(d, p);
+  KeyList<ZZ> keys {e , ModularExp(e, d, p), d, p };
   return keys;
 }
 
 template <class T>
-RSACrypto<T>::RSACrypto(): Crypto<T>() {}
+ElGammalCrypto<T>::ElGammalCrypto(): Crypto<T>() {}
 
 template <class T>
-RSACrypto<T>::RSACrypto(const KeyList<T> &keys): Crypto<T>(keys) {
-  this->p = Crypto<T>::keys_[P_R];
-  this->q = Crypto<T>::keys_[Q_R];
-  Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
-}
+ElGammalCrypto<T>::ElGammalCrypto(const KeyList<T>& keys): Crypto<T>(keys) {}
 
 template <class T>
-RSACrypto<T>::RSACrypto(const string &alpha): Crypto<T>(alpha) {}
+ElGammalCrypto<T>::ElGammalCrypto(const string& alpha): Crypto<T>(alpha) {}
 
 template <class T>
-RSACrypto<T>::RSACrypto(const string &alpha, const KeyList<T> &keys):
-  Crypto<T>(alpha, keys) {
-    this->p = Crypto<T>::keys_[P_R];
-    this->q = Crypto<T>::keys_[Q_R];
-    Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
-  }
+ElGammalCrypto<T>::ElGammalCrypto(const string& alpha, const KeyList<T>& keys): Crypto<T>(alpha, keys) {}
 
 template <class T>
-T RSACrypto<T>::GetPublicKey() {
-  return Crypto<T>::keys_[PUBLIC_R];
-}
+T ElGammalCrypto<T>::GetFirstPublicKey() { return Crypto<T>::keys_[PUBLIC_1_E]; }
 
 template <class T>
-T RSACrypto<T>::GetPrivateKey() {
-  return Crypto<T>::keys_[PRIVATE_R];
-}
+T ElGammalCrypto<T>::GetSecondPublicKey() { return Crypto<T>::keys_[PUBLIC_2_E]; }
 
 template <class T>
-T RSACrypto<T>::GetModulus() {
-  return Crypto<T>::keys_[MODULUS_R];
-}
+T ElGammalCrypto<T>::GetModulus() { return Crypto<T>::keys_[MODULUS_E]; }
 
 template <class T>
-string RSACrypto<T>::MsgToNumericalForm(string msg) {
+string ElGammalCrypto<T>::MsgToNumericalForm(string msg) {
   string::size_type identifier_i;
   string identifier_s;
   string last = NumberToString(Crypto<T>::alpha_.size() - 1);
@@ -112,22 +84,34 @@ string RSACrypto<T>::MsgToNumericalForm(string msg) {
 }
 
 template <class T>
-string RSACrypto<T>::Encrypt(string msg) {
+string ElGammalCrypto<T>::Encrypt(string msg) {
+  ZZ r;
+  do {
+    r = GenRandomZZ(msg.size() - 1);
+    r = Mod(r, Crypto<T>::keys_[MODULUS_E]);
+  } while (r <= 1);
+  this->c = ModularExp(
+    Crypto<T>::keys_[PUBLIC_1_E],
+    r,
+    Crypto<T>::keys_[MODULUS_E]
+  );
   msg = MsgToNumericalForm(msg);
   string encrypted = "";
   unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
+    NumberToString(Crypto<T>::keys_[MODULUS_E]).size()
   };
   T encrypted_block_i;
   string encrypted_block_s;
   for (unsigned long i = 0; i < msg.size(); i += modulus_size - 1) {
     encrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size - 1));
-    encrypted_block_i = ModularExp(
-      encrypted_block_i,
-      Crypto<T>::keys_[PUBLIC_R],
-      Crypto<T>::keys_[MODULUS_R]
+    encrypted_block_i = encrypted_block_i * ModularExp(
+      Crypto<T>::keys_[PUBLIC_2_E],
+      r,
+      Crypto<T>::keys_[MODULUS_E]
     );
-    encrypted_block_s = NumberToString<T>(encrypted_block_i);
+    encrypted_block_s = NumberToString<T>(
+      Mod(encrypted_block_i, Crypto<T>::keys_[MODULUS_E])
+    );
     if (encrypted_block_s.size() < modulus_size) {
       encrypted_block_s = string(modulus_size - encrypted_block_s.size(), '0')
                           + encrypted_block_s;
@@ -138,38 +122,25 @@ string RSACrypto<T>::Encrypt(string msg) {
 }
 
 template <class T>
-string RSACrypto<T>::Decrypt(string msg) {
+string ElGammalCrypto<T>::Decrypt(string msg) {
+  T inv_c = ModularExp(
+    this->c,
+    Crypto<T>::keys_[PRIVATE_E],
+    Crypto<T>::keys_[MODULUS_E]
+  );
+  inv_c = FindModularInverse(inv_c, Crypto<T>::keys_[MODULUS_E]);
   string last = NumberToString(Crypto<T>::alpha_.size() - 1);
   string decrypted = "";
   unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
+    NumberToString(Crypto<T>::keys_[MODULUS_E]).size()
   };
   T decrypted_block_i;
   string decrypted_block_s;
-  T a[2] { T(), T() };
-  T m[2] { this->p, this->q };
   for (unsigned long i = 0; i < msg.size(); i += modulus_size) {
     decrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size));
-
-    // Deprecated in order to use CRT
-    //decrypted_block_i = ModularExp(
-    //  decrypted_block_i,
-    //  Crypto<T>::keys_[PRIVATE_R],
-    //  Crypto<T>::keys_[MODULUS_R]
-    //);
-    //
-    
-    a[0] = ModularExp(
-      Mod(decrypted_block_i, p),
-      Mod(Crypto<T>::keys_[PRIVATE_R], this->p - 1),
-      this->p
+    decrypted_block_i = Mod(
+      inv_c * decrypted_block_i, Crypto<T>::keys_[MODULUS_E]
     );
-    a[1] = ModularExp(
-      Mod(decrypted_block_i, q),
-      Mod(Crypto<T>::keys_[PRIVATE_R], this->q - 1),
-      this->q
-    );
-    decrypted_block_i = CRT(a, m, 2);
     decrypted_block_s = NumberToString<T>(decrypted_block_i);
     if (Mod(decrypted_block_s.size(), last.size()) != 0) {
       decrypted_block_s = string(Mod(decrypted_block_s.size(), last.size()), '0')
@@ -177,7 +148,6 @@ string RSACrypto<T>::Decrypt(string msg) {
     }
     decrypted += decrypted_block_s;
   }
-  return decrypted;
 }
 
 }

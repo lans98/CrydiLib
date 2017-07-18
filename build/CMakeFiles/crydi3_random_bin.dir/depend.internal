@@ -14,6 +14,8 @@ CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.o
  ../src/inc/crypto_def.h
  ../src/inc/div_criteria.h
  ../src/inc/dynamic_int.h
+ ../src/inc/elgammal_crypto.h
+ ../src/inc/elgammal_crypto_def.h
  ../src/inc/keylist.h
  ../src/inc/keylist_def.h
  ../src/inc/primes_sieve.h

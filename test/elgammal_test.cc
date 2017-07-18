@@ -22,19 +22,19 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_CRYDI3_H
-#define CRYDI3_CRYDI3_H
+#include "crydi3.h"
 
-#include "crydi3_tools.h"
-#include "keylist.h"
-#include "crypto.h"
-#include "afin_crypto.h"
-#include "cesar_crypto.h"
-#include "rsa_crypto.h"
-#include "elgammal_crypto.h"
-#include "dynamic_int.h"
-#include "div_criteria.h"
-#include "bit_array.h"
-#include "primes_sieve.h"
+using namespace std;
+using namespace NTL;
 
-#endif
+int main() {
+  crydi::KeyList<ZZ> keys = crydi::GenElgammalKeys(512);
+  crydi::ElGammalCrypto<ZZ> elgammal("abcdefghijklmnopqrstuvwxyz", keys);
+  string msg = "hola";
+  cout << "Mensaje original: " << msg << "\n";
+  msg = elgammal.Encrypt(msg);
+  cout << "Mensaje encriptado: " << msg << "\n";
+  msg = elgammal.Decrypt(msg);
+  cout << "Mensaje desencriptado: " << msg << "\n";
+  return 0;
+}

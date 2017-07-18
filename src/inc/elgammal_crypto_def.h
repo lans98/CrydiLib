@@ -22,19 +22,44 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_CRYDI3_H
-#define CRYDI3_CRYDI3_H
+#ifndef CRYDI3_ELGAMMAL_DEF_H
+#define CRYDI3_ELGAMMAL_DEF_H
 
 #include "crydi3_tools.h"
-#include "keylist.h"
 #include "crypto.h"
-#include "afin_crypto.h"
-#include "cesar_crypto.h"
-#include "rsa_crypto.h"
-#include "elgammal_crypto.h"
-#include "dynamic_int.h"
-#include "div_criteria.h"
-#include "bit_array.h"
-#include "primes_sieve.h"
+
+namespace crydi {
+
+enum ElGammalIdentifier {
+  PUBLIC_1_E = 0,
+  PUBLIC_2_E = 1,
+  PRIVATE_E  = 2,
+  MODULUS_E  = 3
+};
+
+KeyList<ZZ> GenElgammalKeys(long num_bits);
+
+template <class T>
+class ElGammalCrypto : public Crypto<T> {
+private:
+  T c;
+public:
+  string MsgToNumericalForm(string msg);
+
+  ElGammalCrypto();
+  ElGammalCrypto(const KeyList<T>& keys);
+  ElGammalCrypto(const string& alpha);
+  ElGammalCrypto(const string& alpha, const KeyList<T>& keys);
+  ~ElGammalCrypto() = default;
+
+  T GetFirstPublicKey();
+  T GetSecondPublicKey();
+  T GetModulus();
+
+  string Encrypt(string msg);
+  string Decrypt(string msg);
+};
+
+}
 
 #endif

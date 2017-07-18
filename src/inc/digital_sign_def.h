@@ -22,19 +22,38 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_CRYDI3_H
-#define CRYDI3_CRYDI3_H
+#ifndef CRYDI3_DIGITAL_SIGN_DEF_H
+#define CRYDI3_DIGITAL_SIGN_DEF_H
 
 #include "crydi3_tools.h"
-#include "keylist.h"
 #include "crypto.h"
-#include "afin_crypto.h"
-#include "cesar_crypto.h"
 #include "rsa_crypto.h"
 #include "elgammal_crypto.h"
-#include "dynamic_int.h"
-#include "div_criteria.h"
-#include "bit_array.h"
-#include "primes_sieve.h"
+
+namespace crydi {
+
+template <class T>
+class DigitalSign {
+private:
+  RSACrypto<T>      rsa;
+  ElGammalCrypto<T> elgammal;
+  string            sign;
+public:
+  DigitalSign() = default;
+  DigitalSign(const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys);
+  DigitalSign(const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys, const string& sign);
+  DigitalSign(const string& alpha);
+  DigitalSign(const string& alpha, const string& sign);
+  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys);
+  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys, const string& sign);
+  ~DigitalSign() = default;
+
+  string GetSign();
+
+  string Encrypt(string msg);
+  string Decrypt(string msg);
+};
+
+}
 
 #endif

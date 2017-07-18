@@ -47,6 +47,8 @@ cesar_crypto.h
 ../src/inc/cesar_crypto.h
 rsa_crypto.h
 ../src/inc/rsa_crypto.h
+elgammal_crypto.h
+../src/inc/elgammal_crypto.h
 dynamic_int.h
 ../src/inc/dynamic_int.h
 div_criteria.h
@@ -111,6 +113,16 @@ dynamic_int.h
 ../src/inc/dynamic_int.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
+
+../src/inc/elgammal_crypto.h
+elgammal_crypto_def.h
+../src/inc/elgammal_crypto_def.h
+
+../src/inc/elgammal_crypto_def.h
+crydi3_tools.h
+../src/inc/crydi3_tools.h
+crypto.h
+../src/inc/crypto.h
 
 ../src/inc/keylist.h
 keylist_def.h
