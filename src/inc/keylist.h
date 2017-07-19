@@ -97,6 +97,12 @@ T KeyList<T>::operator[](size_t index) {
 }
 
 template <class T>
+const T KeyList<T>::operator[](size_t index) const {
+  if (index > qkeys_) throw "Out of index";
+  return keys_[index];
+}
+
+template <class T>
 void KeyList<T>::operator=(const KeyList& other) {
 	delete[] keys_;
 	qkeys_ = other.qkeys_;
@@ -104,6 +110,18 @@ void KeyList<T>::operator=(const KeyList& other) {
 	for (size_t i = 0; i < qkeys_; ++i) {
 		keys_[i] = other.keys_[i];
 	}
+}
+
+template <class T>
+bool KeyList<T>::operator==(const KeyList& other) {
+  for (size_t i = 0; i < qkeys_; ++i)
+    if (keys_[i] == other.keys_[i]) return true;
+  return false;
+}
+
+template <class T>
+bool KeyList<T>::operator!=(const KeyList& other) {
+  return (!((*this) == other));
 }
 
 template <class U>

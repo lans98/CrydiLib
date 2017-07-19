@@ -113,7 +113,6 @@ string RSACrypto<T>::MsgToNumericalForm(string msg) {
 
 template <class T>
 string RSACrypto<T>::Encrypt(string msg) {
-  msg = MsgToNumericalForm(msg);
   string encrypted = "";
   unsigned long modulus_size {
     NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
@@ -158,7 +157,7 @@ string RSACrypto<T>::Decrypt(string msg) {
     //  Crypto<T>::keys_[MODULUS_R]
     //);
     //
-    
+
     a[0] = ModularExp(
       Mod(decrypted_block_i, p),
       Mod(Crypto<T>::keys_[PRIVATE_R], this->p - 1),

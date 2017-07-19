@@ -32,6 +32,7 @@
 #include "cesar_crypto.h"
 #include "rsa_crypto.h"
 #include "elgammal_crypto.h"
+#include "digital_sign.h"
 #include "dynamic_int.h"
 #include "div_criteria.h"
 #include "bit_array.h"

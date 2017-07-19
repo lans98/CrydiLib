@@ -44,7 +44,7 @@ class Crypto {
 	virtual ~Crypto() = default;
 
 	void        SetKeys(const KeyList<T> &keys);
-	KeyList<T>& GetKeys();
+	KeyList<T>  GetKeys();
 
 	virtual void SetAlpha(const string &alpha);
 

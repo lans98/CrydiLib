@@ -37,18 +37,28 @@ class DigitalSign {
 private:
   RSACrypto<T>      rsa;
   ElGammalCrypto<T> elgammal;
+
+  KeyList<T>        a_keys;
+  KeyList<T>        b_keys;
   string            sign;
 public:
   DigitalSign() = default;
-  DigitalSign(const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys);
-  DigitalSign(const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys, const string& sign);
+  DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys);
+  DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign);
   DigitalSign(const string& alpha);
   DigitalSign(const string& alpha, const string& sign);
-  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys);
-  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys, const KeyList<T>& elgammal_keys, const string& sign);
+  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys);
+  DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign);
   ~DigitalSign() = default;
 
   string GetSign();
+  void SetSign(const string& sign);
+
+  RSACrypto<T>&      GetRSACrypto();
+  ElGammalCrypto<T>& GetElGammalCrypto();
+
+  void       SetReceiverKeys(const KeyList<T>& rsa_keys_b);
+  KeyList<T> GetReceiverKeys();
 
   string Encrypt(string msg);
   string Decrypt(string msg);

@@ -89,13 +89,19 @@ string ElGammalCrypto<T>::Encrypt(string msg) {
   do {
     r = GenRandomZZ(msg.size() - 1);
     r = Mod(r, Crypto<T>::keys_[MODULUS_E]);
-  } while (r <= 1);
+  } while (r <= ZZ(1));
   this->c = ModularExp(
     Crypto<T>::keys_[PUBLIC_1_E],
     r,
     Crypto<T>::keys_[MODULUS_E]
   );
-  msg = MsgToNumericalForm(msg);
+  T cipher_ref {
+    ModularExp(
+      Crypto<T>::keys_[PUBLIC_2_E],
+      r,
+      Crypto<T>::keys_[MODULUS_E]
+    )
+  };
   string encrypted = "";
   unsigned long modulus_size {
     NumberToString(Crypto<T>::keys_[MODULUS_E]).size()
@@ -104,14 +110,8 @@ string ElGammalCrypto<T>::Encrypt(string msg) {
   string encrypted_block_s;
   for (unsigned long i = 0; i < msg.size(); i += modulus_size - 1) {
     encrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size - 1));
-    encrypted_block_i = encrypted_block_i * ModularExp(
-      Crypto<T>::keys_[PUBLIC_2_E],
-      r,
-      Crypto<T>::keys_[MODULUS_E]
-    );
-    encrypted_block_s = NumberToString<T>(
-      Mod(encrypted_block_i, Crypto<T>::keys_[MODULUS_E])
-    );
+    encrypted_block_i = Mod(encrypted_block_i * cipher_ref, Crypto<T>::keys_[MODULUS_E]);
+    encrypted_block_s = NumberToString<T>(encrypted_block_i);
     if (encrypted_block_s.size() < modulus_size) {
       encrypted_block_s = string(modulus_size - encrypted_block_s.size(), '0')
                           + encrypted_block_s;
@@ -148,6 +148,17 @@ string ElGammalCrypto<T>::Decrypt(string msg) {
     }
     decrypted += decrypted_block_s;
   }
+  return decrypted;
+}
+
+template <class T>
+T ElGammalCrypto<T>::GetEncryptedC() {
+  return this->c;
+}
+
+template <class T>
+void ElGammalCrypto<T>::SetEncryptedC(const T& c) {
+  this->c = c;
 }
 
 }

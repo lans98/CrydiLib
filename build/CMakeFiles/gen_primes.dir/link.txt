@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -O3 -DNDEBUG   CMakeFiles/gen_primes.dir/primes/gen_primes.cc.o  -o gen_primes -Wl,-rpath,/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build libcrydi3.so -lntl 

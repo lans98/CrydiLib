@@ -28,11 +28,12 @@ using namespace std;
 using namespace NTL;
 
 int main() {
-  crydi::KeyList<ZZ> keys = crydi::GenElgammalKeys(512);
-  crydi::ElGammalCrypto<ZZ> elgammal("abcdefghijklmnopqrstuvwxyz", keys);
-  string msg = "hola";
+  crydi::KeyList<ZZ> keys = crydi::GenElgammalKeys(1024);
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
+  crydi::ElGammalCrypto<ZZ> elgammal(alpha, keys);
+  string msg = "Hola Mundo! Vamo a juga papu! Mi nombre es Kevin del Castillo Ramirez xddddddddddd";
   cout << "Mensaje original: " << msg << "\n";
-  msg = elgammal.Encrypt(msg);
+  msg = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
   cout << "Mensaje encriptado: " << msg << "\n";
   msg = elgammal.Decrypt(msg);
   cout << "Mensaje desencriptado: " << msg << "\n";

@@ -29,14 +29,15 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   crydi::KeyList<ZZ> rsa_keys =crydi::GenRSAKeys(1024);
-  crydi::RSACrypto<ZZ> rsa("abcdefghijklmnopqrstuvwxyz ", rsa_keys);
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
+  crydi::RSACrypto<ZZ> rsa(alpha, rsa_keys);
   cout << "Public key (share this): " << rsa.GetPublicKey() << endl;
   cout << "Share it with : " << rsa.GetModulus() << endl;
   cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
-  string msg = "vamo a jugah papu";
+  string msg = "Hola Mundo! Vamo a juga papu! Mi nombre es Kevin del Castillo Ramirez xddddddddddd";
 
   cout << "Mensaje original: " << msg << endl;
-  msg = rsa.Encrypt(msg);
+  msg = rsa.Encrypt(rsa.MsgToNumericalForm(msg));
   cout << "Encrypted message: " << msg << endl;
   msg = rsa.Decrypt(msg);
   cout << "Decrypted message: " << msg << endl;

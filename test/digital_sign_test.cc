@@ -22,48 +22,24 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_ELGAMMAL_DEF_H
-#define CRYDI3_ELGAMMAL_DEF_H
+#include "crydi3.h"
 
-#include "crydi3_tools.h"
-#include "crypto.h"
+using namespace std;
+using namespace NTL;
 
-namespace crydi {
+int main() {
+  crydi::KeyList<ZZ> rsa_a = crydi::GenRSAKeys(1024);
+  crydi::KeyList<ZZ> rsa_b = crydi::GenRSAKeys(1024);
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
+  string sign  = "Kevin del Castillo Ramirez (2016319)";
+  string msg = "Hola mundo! Vamo a jugar papu!";
+  crydi::KeyList<ZZ> elgammal_keys = crydi::GenElgammalKeys(1024);
 
-enum ElGammalIdentifier {
-  PUBLIC_1_E = 0,
-  PUBLIC_2_E = 1,
-  PRIVATE_E  = 2,
-  MODULUS_E  = 3
-};
-
-KeyList<ZZ> GenElgammalKeys(long num_bits);
-
-template <class T>
-class ElGammalCrypto : public Crypto<T> {
-private:
-  T c;
-public:
-  string MsgToNumericalForm(string msg);
-
-  ElGammalCrypto();
-  ElGammalCrypto(const KeyList<T>& keys);
-  ElGammalCrypto(const string& alpha);
-  ElGammalCrypto(const string& alpha, const KeyList<T>& keys);
-  ~ElGammalCrypto() = default;
-
-  T GetFirstPublicKey();
-  T GetSecondPublicKey();
-  T GetModulus();
-
-  string Encrypt(string msg);
-  string Decrypt(string msg);
-
-  T GetEncryptedC();
-  void SetEncryptedC(const T& c);
-};
-
-
+  crydi::DigitalSign<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, sign);
+  cout << "Mensaje original: " << msg << endl;
+  msg = dig_sig.Encrypt(msg);
+  cout << "Encriptado: " << msg << endl;
+  msg = dig_sig.Decrypt(msg);
+  cout << "Desencriptado: " << msg << endl;
+  return 0;
 }
-
-#endif

@@ -57,6 +57,13 @@ public:
   }
 };
 
+class NotSignFounded : public exception {
+public:
+  const char* what() const noexcept {
+    return "This outgoing encrypted message doesn't have sign.";
+  }
+};
+
 enum gcd_flag {
 	EUCLID_GCD = 0x01,
 	STEIN_GCD  = 0x02

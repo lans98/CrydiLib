@@ -23,7 +23,7 @@
 // =========================================================================
 
 #ifndef CRYDI3_KEYLIST_DEF_H
-#define CRYDI3_KEYLIST_DEF_H 
+#define CRYDI3_KEYLIST_DEF_H
 
 #include "crydi3_tools.h"
 
@@ -52,8 +52,11 @@ class KeyList {
 		size_t Size();
 		bool	 IsEmpty();
 
-		T    operator[](size_t index);
+		T       operator[](size_t index);
+    const T operator[](size_t index) const;
 		void operator=(const KeyList& other);
+    bool operator==(const KeyList& other);
+    bool operator!=(const KeyList& other);
 
 		KeyList Sub(size_t nokeys);
 
