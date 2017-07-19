@@ -49,8 +49,8 @@ rsa_crypto.h
 ../src/inc/rsa_crypto.h
 elgammal_crypto.h
 ../src/inc/elgammal_crypto.h
-digital_sign.h
-../src/inc/digital_sign.h
+digital_firm.h
+../src/inc/digital_firm.h
 dynamic_int.h
 ../src/inc/dynamic_int.h
 div_criteria.h
@@ -106,11 +106,11 @@ crydi3_tools.h
 keylist.h
 ../src/inc/keylist.h
 
-../src/inc/digital_sign.h
-digital_sign_def.h
-../src/inc/digital_sign_def.h
+../src/inc/digital_firm.h
+digital_firm_def.h
+../src/inc/digital_firm_def.h
 
-../src/inc/digital_sign_def.h
+../src/inc/digital_firm_def.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
 crypto.h
@@ -164,7 +164,7 @@ crydi3_tools.h
 crypto.h
 ../src/inc/crypto.h
 
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/digital_sign_test.cc
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/digital_firm_test.cc
 crydi3.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/crydi3.h
 

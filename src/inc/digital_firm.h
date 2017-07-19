@@ -25,108 +25,127 @@
 #ifndef CRYDI3_DIGITAL_SIGN_H
 #define CRYDI3_DIGITAL_SIGN_H
 
-#include "digital_sign_def.h"
+#include "digital_firm_def.h"
 
 namespace crydi {
 
 template <class T>
-DigitalSign<T>::DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
+DigitalFirm<T>::DigitalFirm(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
   rsa(rsa_keys_a),
   elgammal(elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b) {}
 
 template <class T>
-DigitalSign<T>::DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign):
+DigitalFirm<T>::DigitalFirm(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& firm):
   rsa(rsa_keys_a),
   elgammal(elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b),
-  sign(sign) {}
+  firm(firm) {}
 
 template <class T>
-DigitalSign<T>::DigitalSign(const string& alpha):
+DigitalFirm<T>::DigitalFirm(const string& alpha):
   rsa(alpha),
   elgammal(alpha) {}
 
 template <class T>
-DigitalSign<T>::DigitalSign(const string& alpha, const string& sign):
+DigitalFirm<T>::DigitalFirm(const string& alpha, const string& firm):
   rsa(alpha),
   elgammal(alpha),
-  sign(sign) {}
+  firm(firm) {}
 
 template <class T>
-DigitalSign<T>::DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
+DigitalFirm<T>::DigitalFirm(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
   rsa(alpha, rsa_keys_a),
   elgammal(alpha, elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b) {}
 
 template <class T>
-DigitalSign<T>::DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign):
+DigitalFirm<T>::DigitalFirm(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& firm):
   rsa(alpha, rsa_keys_a),
   elgammal(alpha, elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b),
-  sign(sign) {}
+  firm(firm) {}
 
 template <class T>
-string DigitalSign<T>::GetSign() { return this->sign; }
+string DigitalFirm<T>::GetFirm() { return this->firm; }
 
 template <class T>
-void DigitalSign<T>::SetSign(const string& sign) { this->sign = sign; }
+void DigitalFirm<T>::SetFirm(const string& firm) { this->firm = firm; }
 
 template <class T>
-RSACrypto<T>& DigitalSign<T>::GetRSACrypto() {
+RSACrypto<T>& DigitalFirm<T>::GetRSACrypto() {
   return this->rsa;
 }
 
 template <class T>
-ElGammalCrypto<T>& DigitalSign<T>::GetElGammalCrypto() {
+ElGammalCrypto<T>& DigitalFirm<T>::GetElGammalCrypto() {
   return this->elgammal;
 }
 
 template <class T>
-void DigitalSign<T>::SetReceiverKeys(const KeyList<T>& rsa_keys_b) {
+void DigitalFirm<T>::SetReceiverKeys(const KeyList<T>& rsa_keys_b) {
   this->b_keys = rsa_keys_b;
 }
 
 template <class T>
-KeyList<T> DigitalSign<T>::GetReceiverKeys() {
+KeyList<T> DigitalFirm<T>::GetReceiverKeys() {
   return this->b_keys;
 }
 
 template <class T>
-string DigitalSign<T>::Encrypt(string msg) {
-  if (sign == "") throw NotSignFounded();
-  rsa.SetKeys(this->a_keys);
+string DigitalFirm<T>::Encrypt(string msg) {
+  if (firm == "") throw NotSignFounded();
+
+  // Encrypt original message with elgammal
   string msg_encrypted  = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
-  string sign_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->sign));
-  cout << elgammal.Decrypt(msg_encrypted) << endl;
-  cout << rsa.Encrypt(sign_encrypted) << endl;
+
+  // A is the transmitter
+  rsa.SetKeys(this->a_keys);
+  // Treat firm as a RSA encrypted message, so decrypt it with A's keys
+  string sign_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->firm));
+
+  // B is the receiver
   rsa.SetKeys(this->b_keys);
+
+  // Now encrypt both msg and firm with RSA and B's keys
   msg_encrypted  = rsa.Encrypt(msg_encrypted);
   sign_encrypted = rsa.Encrypt(sign_encrypted);
+
   return msg_encrypted + sign_encrypted;
 }
 
 template <class T>
-string DigitalSign<T>::Decrypt(string msg) {
+string DigitalFirm<T>::Decrypt(string msg) {
   unsigned long rsa_n_size {
     NumberToString(b_keys[RSA_MOD]).size()
   };
-  string sign_block = msg.substr(
-    msg.size() - rsa_n_size
-  );
-  msg = msg.substr(
-    0, msg.size() - rsa_n_size
-  );
+
+  // Separate both with rsa_n_size
+  string msg_block  = msg.substr(0, msg.size() - rsa_n_size);
+  string sign_block = msg.substr(msg.size() - rsa_n_size);
+
+  // B is the receiver
   rsa.SetKeys(this->b_keys);
-  string msg_decrypted = rsa.Decrypt(msg);
+
+  // So decrypt message and firm with RSA and B's keys
+  msg_block  = rsa.Decrypt(msg_block);
+  sign_block = rsa.Decrypt(sign_block);
+
+  // Now decrypt message with elgammal
+  msg_block = elgammal.Decrypt(msg_block);
+
+  // A is the transmitter
   rsa.SetKeys(this->a_keys);
-  sign_block    = rsa.Encrypt(sign_block);
-  msg_decrypted = elgammal.Decrypt(msg_decrypted);
-  return (msg_decrypted + " - " + sign_block);
+
+  // Do the inverse process to decrypt (encrypt) with digital firm
+  // so encrypt sign_block with RSA and A's keys
+  sign_block = rsa.Encrypt(sign_block);
+
+  return msg_block + sign_block;
 }
 
 }

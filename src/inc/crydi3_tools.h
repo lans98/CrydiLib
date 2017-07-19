@@ -60,7 +60,7 @@ public:
 class NotSignFounded : public exception {
 public:
   const char* what() const noexcept {
-    return "This outgoing encrypted message doesn't have sign.";
+    return "This outgoing encrypted message doesn't have firm.";
   }
 };
 

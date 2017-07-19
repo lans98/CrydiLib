@@ -30,12 +30,13 @@ using namespace NTL;
 int main() {
   crydi::KeyList<ZZ> rsa_a = crydi::GenRSAKeys(1024);
   crydi::KeyList<ZZ> rsa_b = crydi::GenRSAKeys(1024);
-  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
-  string sign  = "Kevin del Castillo Ramirez (2016319)";
-  string msg = "Hola mundo! Vamo a jugar papu!";
   crydi::KeyList<ZZ> elgammal_keys = crydi::GenElgammalKeys(1024);
 
-  crydi::DigitalSign<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, sign);
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
+  string firm  = "Kevin del Castillo Ramirez (2016319)";
+  string msg   = "Hola mundo! Vamo a jugar papu!";
+
+  crydi::DigitalFirm<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, firm);
   cout << "Mensaje original: " << msg << endl;
   msg = dig_sig.Encrypt(msg);
   cout << "Encriptado: " << msg << endl;

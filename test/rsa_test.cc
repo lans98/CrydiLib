@@ -36,11 +36,11 @@ int main(int argc, char* argv[]) {
   cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
   string msg = "Hola Mundo! Vamo a juga papu! Mi nombre es Kevin del Castillo Ramirez xddddddddddd";
 
-  cout << "Mensaje original: " << msg << endl;
+  cout << "Mensaje original: " << msg << "\n";
   msg = rsa.Encrypt(rsa.MsgToNumericalForm(msg));
-  cout << "Encrypted message: " << msg << endl;
+  cout << "Mensaje encriptado: " << msg << "\n";
   msg = rsa.Decrypt(msg);
-  cout << "Decrypted message: " << msg << endl;
+  cout << "Mensaje desencriptado: " << msg << "\n";
   msg = rsa.NumericalFormToMsg(msg);
   cout << "Final: " << msg << endl;
   return 0;

@@ -11,8 +11,8 @@ CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crydi3.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crydi3_tools.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crypto.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/crypto_def.h
-CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/digital_sign.h
-CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/digital_sign_def.h
+CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/digital_firm.h
+CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/digital_firm_def.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/div_criteria.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/dynamic_int.h
 CMakeFiles/crydi3_tools_bin.dir/test/tools_test.cc.o: ../src/inc/elgammal_crypto.h
