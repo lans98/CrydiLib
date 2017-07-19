@@ -31,10 +31,10 @@
 namespace crydi {
 
 enum ElGammalIdentifier {
-  PUBLIC_1_E = 0,
-  PUBLIC_2_E = 1,
-  PRIVATE_E  = 2,
-  MODULUS_E  = 3
+  EG_PUB_1 = 0,
+  EG_PUB_2 = 1,
+  EG_PRI   = 2,
+  EG_MOD   = 3
 };
 
 KeyList<ZZ> GenElgammalKeys(long num_bits);
@@ -45,6 +45,7 @@ private:
   T c;
 public:
   string MsgToNumericalForm(string msg);
+  string NumericalFormToMsg(string msg);
 
   ElGammalCrypto();
   ElGammalCrypto(const KeyList<T>& keys);
@@ -54,6 +55,7 @@ public:
 
   T GetFirstPublicKey();
   T GetSecondPublicKey();
+  T GetPrivateKey();
   T GetModulus();
 
   string Encrypt(string msg);

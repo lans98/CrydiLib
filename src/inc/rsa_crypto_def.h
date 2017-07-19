@@ -31,11 +31,11 @@
 namespace crydi {
 
 enum RSAIdentifier {
-  PUBLIC_R  = 0,
-  PRIVATE_R = 1,
-  MODULUS_R = 2,
-  P_R       = 3,
-  Q_R       = 4
+  RSA_PUB = 0,
+  RSA_PRI = 1,
+  RSA_MOD = 2,
+  RSA_MOD_P = 3,
+  RSA_MOD_Q = 4
 };
 
 KeyList<ZZ> GenRSAKeys(long num_bits);
@@ -46,6 +46,7 @@ private:
   T p, q;
 public:
   string MsgToNumericalForm(string msg);
+  string NumericalFormToMsg(string msg);
 
   RSACrypto();
   RSACrypto(const KeyList<T> &keys);

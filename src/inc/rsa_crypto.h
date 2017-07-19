@@ -56,8 +56,8 @@ RSACrypto<T>::RSACrypto(): Crypto<T>() {}
 
 template <class T>
 RSACrypto<T>::RSACrypto(const KeyList<T> &keys): Crypto<T>(keys) {
-  this->p = Crypto<T>::keys_[P_R];
-  this->q = Crypto<T>::keys_[Q_R];
+  this->p = Crypto<T>::keys_[RSA_MOD_P];
+  this->q = Crypto<T>::keys_[RSA_MOD_Q];
   Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
 }
 
@@ -67,24 +67,24 @@ RSACrypto<T>::RSACrypto(const string &alpha): Crypto<T>(alpha) {}
 template <class T>
 RSACrypto<T>::RSACrypto(const string &alpha, const KeyList<T> &keys):
   Crypto<T>(alpha, keys) {
-    this->p = Crypto<T>::keys_[P_R];
-    this->q = Crypto<T>::keys_[Q_R];
+    this->p = Crypto<T>::keys_[RSA_MOD_P];
+    this->q = Crypto<T>::keys_[RSA_MOD_Q];
     Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
   }
 
 template <class T>
 T RSACrypto<T>::GetPublicKey() {
-  return Crypto<T>::keys_[PUBLIC_R];
+  return Crypto<T>::keys_[RSA_PUB];
 }
 
 template <class T>
 T RSACrypto<T>::GetPrivateKey() {
-  return Crypto<T>::keys_[PRIVATE_R];
+  return Crypto<T>::keys_[RSA_PRI];
 }
 
 template <class T>
 T RSACrypto<T>::GetModulus() {
-  return Crypto<T>::keys_[MODULUS_R];
+  return Crypto<T>::keys_[RSA_MOD];
 }
 
 template <class T>
@@ -112,68 +112,115 @@ string RSACrypto<T>::MsgToNumericalForm(string msg) {
 }
 
 template <class T>
+string RSACrypto<T>::NumericalFormToMsg(string msg) {
+  string            block_str;
+  string::size_type block_int;
+
+  string last = NumberToString(Crypto<T>::alpha_.size() - 1);
+  string final_msg = "";
+  for (unsigned long i = 0; i < msg.size(); i += last.size()) {
+    block_str = msg.substr(i, last.size());
+    block_int = StringToNumber<string::size_type>(block_str);
+    final_msg += Crypto<T>::alpha_[block_int];
+  }
+  return final_msg;
+}
+
+template <class T>
 string RSACrypto<T>::Encrypt(string msg) {
-  string encrypted = "";
-  unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
+  unsigned long n_size {
+    NumberToString(Crypto<T>::keys_[RSA_MOD]).size()
   };
-  T encrypted_block_i;
-  string encrypted_block_s;
-  for (unsigned long i = 0; i < msg.size(); i += modulus_size - 1) {
-    encrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size - 1));
-    encrypted_block_i = ModularExp(
-      encrypted_block_i,
-      Crypto<T>::keys_[PUBLIC_R],
-      Crypto<T>::keys_[MODULUS_R]
+
+  // Variables to use temporal blocks
+  T      block_int;
+  string block_str;
+
+  // Final encrypted message
+  string encrypted = "";
+
+  // Less important character is space = ' '
+  // Add as many ' ' as necessary to the end of message
+  // until msg.size() is divided by n_size - 1 (needed for
+  // n - 1 sized exact blocks)
+  string::size_type space = Crypto<T>::alpha_.find(' ');
+  while (Mod(msg.size(), n_size - 1) != 0)
+    msg += NumberToString(space);
+
+  // Start encrypting message
+  for (unsigned long i = 0; i < msg.size(); i += n_size - 1) {
+    block_int = StringToNumber<T>(msg.substr(i, n_size - 1));
+    block_int = ModularExp(
+      block_int,
+      Crypto<T>::keys_[RSA_PUB],
+      Crypto<T>::keys_[RSA_MOD]
     );
-    encrypted_block_s = NumberToString<T>(encrypted_block_i);
-    if (encrypted_block_s.size() < modulus_size) {
-      encrypted_block_s = string(modulus_size - encrypted_block_s.size(), '0')
-                          + encrypted_block_s;
-    }
-    encrypted += encrypted_block_s;
+    block_str = NumberToString<T>(block_int);
+
+    // If the size of encrypted block is less than n_size
+    // add as many '0' as needed to the start of the block
+    if (block_str.size() < n_size)
+      block_str = string(n_size - block_str.size(), '0') + block_str;
+
+    // Add the new encrypted block to the final encrypted message
+    encrypted += block_str;
   }
   return encrypted;
 }
 
 template <class T>
 string RSACrypto<T>::Decrypt(string msg) {
-  string decrypted = "";
-  unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
+  unsigned long n_size {
+    NumberToString(Crypto<T>::keys_[RSA_MOD]).size()
   };
-  T decrypted_block_i;
-  string decrypted_block_s;
+
+  // Variables to use temporal blocks
+  T      block_int;
+  string block_str;
+
+  // Used in CRT
   T a[2] { T(), T() };
   T m[2] { this->p, this->q };
-  for (unsigned long i = 0; i < msg.size(); i += modulus_size) {
-    decrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size));
+
+  // Final decrypted message
+  string decrypted = "";
+
+  // Start decrypting message
+  for (unsigned long i = 0; i < msg.size(); i += n_size) {
+    block_int = StringToNumber<T>(msg.substr(i, n_size));
 
     // Deprecated in order to use CRT
-    //decrypted_block_i = ModularExp(
-    //  decrypted_block_i,
-    //  Crypto<T>::keys_[PRIVATE_R],
-    //  Crypto<T>::keys_[MODULUS_R]
+    //block_int = ModularExp(
+    //  block_int,
+    //  Crypto<T>::keys_[RSA_PRI],
+    //  Crypto<T>::keys_[RSA_MOD]
     //);
     //
 
+    // Prepare both 'a' for CRT
     a[0] = ModularExp(
-      Mod(decrypted_block_i, p),
-      Mod(Crypto<T>::keys_[PRIVATE_R], this->p - 1),
+      Mod(block_int, p),
+      Mod(Crypto<T>::keys_[RSA_PRI], this->p - 1),
       this->p
     );
+
     a[1] = ModularExp(
-      Mod(decrypted_block_i, q),
-      Mod(Crypto<T>::keys_[PRIVATE_R], this->q - 1),
+      Mod(block_int, q),
+      Mod(Crypto<T>::keys_[RSA_PRI], this->q - 1),
       this->q
     );
-    decrypted_block_i = CRT(a, m, 2);
-    decrypted_block_s = NumberToString<T>(decrypted_block_i);
-    if (decrypted_block_s.size() < modulus_size - 1) {
-      decrypted_block_s = string(modulus_size - 1 - decrypted_block_s.size(), '0')
-                          + decrypted_block_s;
-    }
-    decrypted += decrypted_block_s;
+
+    // Decrypt with CRT
+    block_int = CRT(a, m, 2);
+    block_str = NumberToString<T>(block_int);
+
+    // If the size of the decrypted block is less than n_size - 1
+    // add as many '0' as needed to the start of the block
+    if (block_str.size() < n_size - 1)
+      block_str = string(n_size - 1 - block_str.size(), '0') + block_str;
+
+    // Add the new decrypted block to the final decrypted message 
+    decrypted += block_str;
   }
   return decrypted;
 }

@@ -34,11 +34,7 @@ DigitalSign<T>::DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_
   rsa(rsa_keys_a),
   elgammal(elgammal_keys),
   a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b) {
-    KeyList<T> swaped { rsa_keys_a[PRIVATE_R], rsa_keys_a[PUBLIC_R], rsa_keys_a[MODULUS_R] };
-    rsa.SetKeys(swaped);
-    a_keys = swaped;
-  }
+  b_keys(rsa_keys_b) {}
 
 template <class T>
 DigitalSign<T>::DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign):
@@ -46,11 +42,7 @@ DigitalSign<T>::DigitalSign(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_
   elgammal(elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b),
-  sign(sign) {
-    KeyList<T> swaped { rsa_keys_a[PRIVATE_R], rsa_keys_a[PUBLIC_R], rsa_keys_a[MODULUS_R] };
-    rsa.SetKeys(swaped);
-    a_keys = swaped;
-  }
+  sign(sign) {}
 
 template <class T>
 DigitalSign<T>::DigitalSign(const string& alpha):
@@ -68,11 +60,7 @@ DigitalSign<T>::DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, c
   rsa(alpha, rsa_keys_a),
   elgammal(alpha, elgammal_keys),
   a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b) {
-    KeyList<T> swaped { rsa_keys_a[PRIVATE_R], rsa_keys_a[PUBLIC_R], rsa_keys_a[MODULUS_R] };
-    rsa.SetKeys(swaped);
-    a_keys = swaped;
-  }
+  b_keys(rsa_keys_b) {}
 
 template <class T>
 DigitalSign<T>::DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& sign):
@@ -80,11 +68,7 @@ DigitalSign<T>::DigitalSign(const string& alpha, const KeyList<T>& rsa_keys_a, c
   elgammal(alpha, elgammal_keys),
   a_keys(rsa_keys_a),
   b_keys(rsa_keys_b),
-  sign(sign) {
-    KeyList<T> swaped { rsa_keys_a[PRIVATE_R], rsa_keys_a[PUBLIC_R], rsa_keys_a[MODULUS_R] };
-    rsa.SetKeys(swaped);
-    a_keys = swaped;
-  }
+  sign(sign) {}
 
 template <class T>
 string DigitalSign<T>::GetSign() { return this->sign; }
@@ -117,27 +101,30 @@ string DigitalSign<T>::Encrypt(string msg) {
   if (sign == "") throw NotSignFounded();
   rsa.SetKeys(this->a_keys);
   string msg_encrypted  = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
-  string sign_encrypted = rsa.Encrypt(rsa.MsgToNumericalForm(this->sign));
+  string sign_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->sign));
+  cout << elgammal.Decrypt(msg_encrypted) << endl;
+  cout << rsa.Encrypt(sign_encrypted) << endl;
   rsa.SetKeys(this->b_keys);
-  return rsa.Encrypt(msg_encrypted + sign_encrypted);
+  msg_encrypted  = rsa.Encrypt(msg_encrypted);
+  sign_encrypted = rsa.Encrypt(sign_encrypted);
+  return msg_encrypted + sign_encrypted;
 }
 
 template <class T>
 string DigitalSign<T>::Decrypt(string msg) {
-  rsa.SetKeys(b_keys);
-  string msg_decrypted = rsa.Decrypt(msg);
-  unsigned long modulus_size {
-    NumberToString(a_keys[MODULUS_R]).size()
+  unsigned long rsa_n_size {
+    NumberToString(b_keys[RSA_MOD]).size()
   };
-  // Separate both blocks
-  string sign_block = msg_decrypted.substr(
-    msg_decrypted.size() - modulus_size
+  string sign_block = msg.substr(
+    msg.size() - rsa_n_size
   );
-  msg_decrypted = msg_decrypted.substr(
-    0, msg_decrypted.size() - modulus_size
+  msg = msg.substr(
+    0, msg.size() - rsa_n_size
   );
-  rsa.SetKeys(a_keys);
-  sign_block = rsa.Decrypt(sign_block);
+  rsa.SetKeys(this->b_keys);
+  string msg_decrypted = rsa.Decrypt(msg);
+  rsa.SetKeys(this->a_keys);
+  sign_block    = rsa.Encrypt(sign_block);
   msg_decrypted = elgammal.Decrypt(msg_decrypted);
   return (msg_decrypted + " - " + sign_block);
 }

@@ -51,13 +51,16 @@ template <class T>
 ElGammalCrypto<T>::ElGammalCrypto(const string& alpha, const KeyList<T>& keys): Crypto<T>(alpha, keys) {}
 
 template <class T>
-T ElGammalCrypto<T>::GetFirstPublicKey() { return Crypto<T>::keys_[PUBLIC_1_E]; }
+T ElGammalCrypto<T>::GetFirstPublicKey() { return Crypto<T>::keys_[EG_PUB_1]; }
 
 template <class T>
-T ElGammalCrypto<T>::GetSecondPublicKey() { return Crypto<T>::keys_[PUBLIC_2_E]; }
+T ElGammalCrypto<T>::GetSecondPublicKey() { return Crypto<T>::keys_[EG_PUB_2]; }
 
 template <class T>
-T ElGammalCrypto<T>::GetModulus() { return Crypto<T>::keys_[MODULUS_E]; }
+T ElGammalCrypto<T>::GetPrivateKey() { return this->keys_[EG_PRI]; }
+
+template <class T>
+T ElGammalCrypto<T>::GetModulus() { return Crypto<T>::keys_[EG_MOD]; }
 
 template <class T>
 string ElGammalCrypto<T>::MsgToNumericalForm(string msg) {
@@ -84,69 +87,119 @@ string ElGammalCrypto<T>::MsgToNumericalForm(string msg) {
 }
 
 template <class T>
+string ElGammalCrypto<T>::NumericalFormToMsg(string msg) {
+  string            block_str;
+  string::size_type block_int;
+
+  string last = NumberToString(Crypto<T>::alpha_.size() - 1);
+  string final_msg = "";
+  for (unsigned long i = 0; i < msg.size(); i += last.size()) {
+    block_str = msg.substr(i, last.size());
+    block_int = StringToNumber<string::size_type>(block_str);
+    final_msg += Crypto<T>::alpha_[block_int];
+  }
+  return final_msg;
+}
+
+template <class T>
 string ElGammalCrypto<T>::Encrypt(string msg) {
+  unsigned long n_size {
+    NumberToString(Crypto<T>::keys_[EG_MOD]).size()
+  };
+
+  // Choose a random 'r' to encrypt 'c'
   ZZ r;
   do {
-    r = GenRandomZZ(msg.size() - 1);
-    r = Mod(r, Crypto<T>::keys_[MODULUS_E]);
-  } while (r <= ZZ(1));
+    r = GenRandomZZ(Crypto<T>::keys_[EG_MOD].size() * 64);
+    r = Mod(r, Crypto<T>::keys_[EG_MOD] - 2);
+    this->keys_[EG_MOD];
+  } while (r <= ZZ(2));
+
+  // Encrypt 'c' later used on decrypt method
   this->c = ModularExp(
-    Crypto<T>::keys_[PUBLIC_1_E],
+    Crypto<T>::keys_[EG_PUB_1],
     r,
-    Crypto<T>::keys_[MODULUS_E]
+    Crypto<T>::keys_[EG_MOD]
   );
+
+  // Cipher_ref used on encrypt
   T cipher_ref {
     ModularExp(
-      Crypto<T>::keys_[PUBLIC_2_E],
+      Crypto<T>::keys_[EG_PUB_2],
       r,
-      Crypto<T>::keys_[MODULUS_E]
+      Crypto<T>::keys_[EG_MOD]
     )
   };
+
+  // Variables to use temporal blocks
+  T      block_int;
+  string block_str;
+
+  // Final encrypted message
   string encrypted = "";
-  unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_E]).size()
-  };
-  T encrypted_block_i;
-  string encrypted_block_s;
-  for (unsigned long i = 0; i < msg.size(); i += modulus_size - 1) {
-    encrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size - 1));
-    encrypted_block_i = Mod(encrypted_block_i * cipher_ref, Crypto<T>::keys_[MODULUS_E]);
-    encrypted_block_s = NumberToString<T>(encrypted_block_i);
-    if (encrypted_block_s.size() < modulus_size) {
-      encrypted_block_s = string(modulus_size - encrypted_block_s.size(), '0')
-                          + encrypted_block_s;
-    }
-    encrypted += encrypted_block_s;
+
+  // Less important character is space = ' '
+  // Add as many ' ' as necessary to the end of message
+  // until msg.size() is divided by n_size - 1 (needed for
+  // n - 1 sized exact blocks)
+  string::size_type space = Crypto<T>::alpha_.find(' ');
+  while (Mod(msg.size(), n_size - 1) != 0)
+    msg += NumberToString(space);
+
+  // Start encrypting message
+  for (unsigned long i = 0; i < msg.size(); i += n_size - 1) {
+    block_int = StringToNumber<T>(msg.substr(i, n_size - 1));
+    block_int = Mod(block_int * cipher_ref, Crypto<T>::keys_[EG_MOD]);
+    block_str = NumberToString<T>(block_int);
+
+    // If the size of encrypted block is less that n_size
+    // add as many '0' as needed to the start of the block
+    if (block_str.size() < n_size)
+      block_str = string(n_size - block_str.size(), '0') + block_str;
+
+    // Add the new encrypted block to the final encrypted message
+    encrypted += block_str;
   }
   return encrypted;
 }
 
 template <class T>
 string ElGammalCrypto<T>::Decrypt(string msg) {
+  unsigned long n_size {
+    NumberToString(Crypto<T>::keys_[EG_MOD]).size()
+  };
+
+  // Compute modular exponentiation of c with
+  // private key of elgammal
   T inv_c = ModularExp(
     this->c,
-    Crypto<T>::keys_[PRIVATE_E],
-    Crypto<T>::keys_[MODULUS_E]
+    Crypto<T>::keys_[EG_PRI],
+    Crypto<T>::keys_[EG_MOD]
   );
-  inv_c = FindModularInverse(inv_c, Crypto<T>::keys_[MODULUS_E]);
-  string last = NumberToString(Crypto<T>::alpha_.size() - 1);
+
+  // Then find modular inverse of the above number
+  inv_c = FindModularInverse(inv_c, Crypto<T>::keys_[EG_MOD]);
+
+  // Variables to use the temporal blocks
+  T      block_int;
+  string block_str;
+
+  // Final decrypted message
   string decrypted = "";
-  unsigned long modulus_size {
-    NumberToString(Crypto<T>::keys_[MODULUS_E]).size()
-  };
-  T decrypted_block_i;
-  string decrypted_block_s;
-  for (unsigned long i = 0; i < msg.size(); i += modulus_size) {
-    decrypted_block_i = StringToNumber<T>(msg.substr(i, modulus_size));
-    decrypted_block_i = Mod(
-      inv_c * decrypted_block_i, Crypto<T>::keys_[MODULUS_E]
-    );
-    decrypted_block_s = NumberToString<T>(decrypted_block_i);
-    if (decrypted_block_s.size() < modulus_size - 1) {
-      decrypted_block_s = string(modulus_size - 1 - decrypted_block_s.size(), '0')
-                          + decrypted_block_s;
-    }
-    decrypted += decrypted_block_s;
+
+  // Start decrypting message
+  for (unsigned long i = 0; i < msg.size(); i += n_size) {
+    block_int = StringToNumber<T>(msg.substr(i, n_size));
+    block_int = Mod(inv_c * block_int, Crypto<T>::keys_[EG_MOD]);
+    block_str = NumberToString<T>(block_int);
+
+    // If the size of the decrypted block is less than n_size - 1
+    // add as many '0' as needed to the start of the block
+    if (block_str.size() < n_size - 1)
+      block_str = string(n_size - 1 - block_str.size(), '0') + block_str;
+
+    // Add the new decrypted block to the final decrypted message
+    decrypted += block_str;
   }
   return decrypted;
 }

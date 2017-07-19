@@ -41,5 +41,7 @@ int main(int argc, char* argv[]) {
   cout << "Encrypted message: " << msg << endl;
   msg = rsa.Decrypt(msg);
   cout << "Decrypted message: " << msg << endl;
+  msg = rsa.NumericalFormToMsg(msg);
+  cout << "Final: " << msg << endl;
   return 0;
 }

@@ -31,11 +31,18 @@ int main() {
   crydi::KeyList<ZZ> keys = crydi::GenElgammalKeys(1024);
   string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
   crydi::ElGammalCrypto<ZZ> elgammal(alpha, keys);
+  cout << "Public key 1 (share this): " << elgammal.GetFirstPublicKey() << endl;
+  cout << "Public key 2 (share this): " << elgammal.GetSecondPublicKey() << endl;
+  cout << "Share them with: " << elgammal.GetModulus() << endl;
+  cout << "Private key (never share this): " << elgammal.GetPrivateKey() << endl;
   string msg = "Hola Mundo! Vamo a juga papu! Mi nombre es Kevin del Castillo Ramirez xddddddddddd";
+
   cout << "Mensaje original: " << msg << "\n";
   msg = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
   cout << "Mensaje encriptado: " << msg << "\n";
   msg = elgammal.Decrypt(msg);
   cout << "Mensaje desencriptado: " << msg << "\n";
+  msg = elgammal.NumericalFormToMsg(msg);
+  cout << "Final: " << msg << endl;
   return 0;
 }
