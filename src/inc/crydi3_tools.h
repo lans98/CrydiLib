@@ -57,10 +57,17 @@ public:
   }
 };
 
-class NotSignFounded : public exception {
+class NotFirmFounded : public exception {
 public:
   const char* what() const noexcept {
     return "This outgoing encrypted message doesn't have firm.";
+  }
+};
+
+class OutOfRange : public exception {
+public:
+  const char* what() const noexcept {
+    return "KeyList throw access to out ot range!";
   }
 };
 

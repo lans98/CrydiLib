@@ -56,8 +56,16 @@ RSACrypto<T>::RSACrypto(): Crypto<T>() {}
 
 template <class T>
 RSACrypto<T>::RSACrypto(const KeyList<T> &keys): Crypto<T>(keys) {
-  this->p = Crypto<T>::keys_[RSA_MOD_P];
-  this->q = Crypto<T>::keys_[RSA_MOD_Q];
+  try {
+    this->p = Crypto<T>::keys_[RSA_MOD_P];
+  } catch (OutOfRange e) {
+    this->p = T(0);
+  }
+  try {
+    this->q = Crypto<T>::keys_[RSA_MOD_Q];
+  } catch (OutOfRange e) {
+    this->q = T(0);
+  }
   Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
 }
 
@@ -67,8 +75,18 @@ RSACrypto<T>::RSACrypto(const string &alpha): Crypto<T>(alpha) {}
 template <class T>
 RSACrypto<T>::RSACrypto(const string &alpha, const KeyList<T> &keys):
   Crypto<T>(alpha, keys) {
-    this->p = Crypto<T>::keys_[RSA_MOD_P];
-    this->q = Crypto<T>::keys_[RSA_MOD_Q];
+    try {
+      this->p = Crypto<T>::keys_[RSA_MOD_P];
+    } catch (OutOfRange e) {
+      this->p = T(0);
+    }
+
+    try {
+      this->q = Crypto<T>::keys_[RSA_MOD_Q];
+    } catch (OutOfRange e) {
+      this->q = T(0);
+    }
+    
     Crypto<T>::keys_ = Crypto<T>::keys_.Sub(3);
   }
 
@@ -189,29 +207,29 @@ string RSACrypto<T>::Decrypt(string msg) {
   for (unsigned long i = 0; i < msg.size(); i += n_size) {
     block_int = StringToNumber<T>(msg.substr(i, n_size));
 
-    // Deprecated in order to use CRT
-    //block_int = ModularExp(
-    //  block_int,
-    //  Crypto<T>::keys_[RSA_PRI],
-    //  Crypto<T>::keys_[RSA_MOD]
-    //);
-    //
+    if (!(this->p && this->q)) {
+      block_int = ModularExp(
+        block_int,
+        Crypto<T>::keys_[RSA_PRI],
+        Crypto<T>::keys_[RSA_MOD]
+      );
+    } else {
+      // Prepare both 'a' for CRT
+      a[0] = ModularExp(
+        Mod(block_int, p),
+        Mod(Crypto<T>::keys_[RSA_PRI], this->p - 1),
+        this->p
+      );
 
-    // Prepare both 'a' for CRT
-    a[0] = ModularExp(
-      Mod(block_int, p),
-      Mod(Crypto<T>::keys_[RSA_PRI], this->p - 1),
-      this->p
-    );
+      a[1] = ModularExp(
+        Mod(block_int, q),
+        Mod(Crypto<T>::keys_[RSA_PRI], this->q - 1),
+        this->q
+      );
 
-    a[1] = ModularExp(
-      Mod(block_int, q),
-      Mod(Crypto<T>::keys_[RSA_PRI], this->q - 1),
-      this->q
-    );
-
-    // Decrypt with CRT
-    block_int = CRT(a, m, 2);
+      // Decrypt with CRT
+      block_int = CRT(a, m, 2);
+    }
     block_str = NumberToString<T>(block_int);
 
     // If the size of the decrypted block is less than n_size - 1
@@ -219,7 +237,7 @@ string RSACrypto<T>::Decrypt(string msg) {
     if (block_str.size() < n_size - 1)
       block_str = string(n_size - 1 - block_str.size(), '0') + block_str;
 
-    // Add the new decrypted block to the final decrypted message 
+    // Add the new decrypted block to the final decrypted message
     decrypted += block_str;
   }
   return decrypted;

@@ -92,13 +92,13 @@ bool KeyList<T>::IsEmpty() { return (qkeys_ == 0); }
 
 template <class T>
 T KeyList<T>::operator[](size_t index) {
-	if (index > qkeys_) throw "Out of index";
+	if (index > qkeys_) throw OutOfRange();
 	return keys_[index];
 }
 
 template <class T>
 const T KeyList<T>::operator[](size_t index) const {
-  if (index > qkeys_) throw "Out of index";
+  if (index > qkeys_) throw OutOfRange();
   return keys_[index];
 }
 

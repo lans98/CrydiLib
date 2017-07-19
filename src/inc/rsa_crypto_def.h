@@ -43,7 +43,8 @@ KeyList<ZZ> GenRSAKeys(long num_bits);
 template <class T>
 class RSACrypto : public Crypto<T> {
 private:
-  T p, q;
+  T p = T(0);
+  T q = T(0);
 public:
   string MsgToNumericalForm(string msg);
   string NumericalFormToMsg(string msg);

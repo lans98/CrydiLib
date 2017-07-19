@@ -56,18 +56,6 @@ CMAKE_BINARY_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/b
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -101,17 +89,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -134,6 +111,29 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -179,6 +179,19 @@ crydi3_random_bin: cmake_check_build_system
 crydi3_random_bin/fast:
 	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
 .PHONY : crydi3_random_bin/fast
+
+#=============================================================================
+# Target rules for targets named crydi3_dig_firm_bin
+
+# Build rule for target.
+crydi3_dig_firm_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_dig_firm_bin
+.PHONY : crydi3_dig_firm_bin
+
+# fast build rule for target.
+crydi3_dig_firm_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/build
+.PHONY : crydi3_dig_firm_bin/fast
 
 #=============================================================================
 # Target rules for targets named crydi3
@@ -313,6 +326,33 @@ src/primes_sieve.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/primes_sieve.cc.s
 .PHONY : src/primes_sieve.cc.s
 
+test/digital_firm_test.o: test/digital_firm_test.cc.o
+
+.PHONY : test/digital_firm_test.o
+
+# target to build an object file
+test/digital_firm_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o
+.PHONY : test/digital_firm_test.cc.o
+
+test/digital_firm_test.i: test/digital_firm_test.cc.i
+
+.PHONY : test/digital_firm_test.i
+
+# target to preprocess a source file
+test/digital_firm_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.i
+.PHONY : test/digital_firm_test.cc.i
+
+test/digital_firm_test.s: test/digital_firm_test.cc.s
+
+.PHONY : test/digital_firm_test.s
+
+# target to generate assembly for a file
+test/digital_firm_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.s
+.PHONY : test/digital_firm_test.cc.s
+
 test/elgammal_test.o: test/elgammal_test.cc.o
 
 .PHONY : test/elgammal_test.o
@@ -427,18 +467,19 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... install/local"
+	@echo "... test"
 	@echo "... crydi3_random_bin"
+	@echo "... install/strip"
+	@echo "... crydi3_dig_firm_bin"
 	@echo "... rebuild_cache"
 	@echo "... crydi3"
 	@echo "... crydi3_elgammal_bin"
 	@echo "... crydi3_rsa_bin"
 	@echo "... crydi3_tools_bin"
-	@echo "... install/local"
-	@echo "... test"
 	@echo "... src/crydi3_tools.o"
 	@echo "... src/crydi3_tools.i"
 	@echo "... src/crydi3_tools.s"
@@ -448,6 +489,9 @@ help:
 	@echo "... src/primes_sieve.o"
 	@echo "... src/primes_sieve.i"
 	@echo "... src/primes_sieve.s"
+	@echo "... test/digital_firm_test.o"
+	@echo "... test/digital_firm_test.i"
+	@echo "... test/digital_firm_test.s"
 	@echo "... test/elgammal_test.o"
 	@echo "... test/elgammal_test.i"
 	@echo "... test/elgammal_test.s"

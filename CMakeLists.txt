@@ -31,9 +31,9 @@ if (NTLLIB_FOUND)
     target_link_libraries(crydi3_elgammal_bin crydi3 ntl)
     add_test(crydi3_elgammal_test crydi3_elgammal_bin)
 
-    #add_executable(crydi3_dig_firm_bin test/digital_firm_test.cc)
-    #target_link_libraries(crydi3_dig_firm_bin crydi3 ntl)
-    #add_test(crydi3_digital_firm_test crydi3_dig_firm_bin)
+    add_executable(crydi3_dig_firm_bin test/digital_firm_test.cc)
+    target_link_libraries(crydi3_dig_firm_bin crydi3 ntl)
+    add_test(crydi3_digital_firm_test crydi3_dig_firm_bin)
 
     add_executable(crydi3_tools_bin test/tools_test.cc)
     target_link_libraries(crydi3_tools_bin crydi3 ntl)
@@ -43,4 +43,3 @@ endif(NTLLIB_FOUND)
 
 install(TARGETS crydi3 DESTINATION /usr/lib)
 install(FILES ${HEADERS} DESTINATION /usr/include/${PROJECT_NAME})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/primes.dat  DESTINATION /usr/share/${PROJECT_NAME})

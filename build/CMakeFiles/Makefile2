@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/b
 CMakeFiles/crydi3_random_bin.dir/all: CMakeFiles/crydi3.dir/all
 	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/depend
 	$(MAKE) -f CMakeFiles/crydi3_random_bin.dir/build.make CMakeFiles/crydi3_random_bin.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=7,8 "Built target crydi3_random_bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=9,10 "Built target crydi3_random_bin"
 .PHONY : CMakeFiles/crydi3_random_bin.dir/all
 
 # Include target in all.
@@ -93,6 +93,43 @@ CMakeFiles/crydi3_random_bin.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/crydi3_random_bin.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/crydi3_dig_firm_bin.dir
+
+# All Build rule for target.
+CMakeFiles/crydi3_dig_firm_bin.dir/all: CMakeFiles/crydi3.dir/all
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/depend
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=5,6 "Built target crydi3_dig_firm_bin"
+.PHONY : CMakeFiles/crydi3_dig_firm_bin.dir/all
+
+# Include target in all.
+all: CMakeFiles/crydi3_dig_firm_bin.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/crydi3_dig_firm_bin.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/crydi3_dig_firm_bin.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles 0
+.PHONY : CMakeFiles/crydi3_dig_firm_bin.dir/rule
+
+# Convenience name for target.
+crydi3_dig_firm_bin: CMakeFiles/crydi3_dig_firm_bin.dir/rule
+
+.PHONY : crydi3_dig_firm_bin
+
+# clean rule for target.
+CMakeFiles/crydi3_dig_firm_bin.dir/clean:
+	$(MAKE) -f CMakeFiles/crydi3_dig_firm_bin.dir/build.make CMakeFiles/crydi3_dig_firm_bin.dir/clean
+.PHONY : CMakeFiles/crydi3_dig_firm_bin.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/crydi3_dig_firm_bin.dir/clean
 
 .PHONY : clean
 
@@ -140,7 +177,7 @@ clean: CMakeFiles/crydi3.dir/clean
 CMakeFiles/crydi3_elgammal_bin.dir/all: CMakeFiles/crydi3.dir/all
 	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/depend
 	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=5,6 "Built target crydi3_elgammal_bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=7,8 "Built target crydi3_elgammal_bin"
 .PHONY : CMakeFiles/crydi3_elgammal_bin.dir/all
 
 # Include target in all.
@@ -177,7 +214,7 @@ clean: CMakeFiles/crydi3_elgammal_bin.dir/clean
 CMakeFiles/crydi3_rsa_bin.dir/all: CMakeFiles/crydi3.dir/all
 	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/depend
 	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=9,10 "Built target crydi3_rsa_bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=11,12 "Built target crydi3_rsa_bin"
 .PHONY : CMakeFiles/crydi3_rsa_bin.dir/all
 
 # Include target in all.
@@ -214,7 +251,7 @@ clean: CMakeFiles/crydi3_rsa_bin.dir/clean
 CMakeFiles/crydi3_tools_bin.dir/all: CMakeFiles/crydi3.dir/all
 	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/depend
 	$(MAKE) -f CMakeFiles/crydi3_tools_bin.dir/build.make CMakeFiles/crydi3_tools_bin.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=11,12 "Built target crydi3_tools_bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=13,14 "Built target crydi3_tools_bin"
 .PHONY : CMakeFiles/crydi3_tools_bin.dir/all
 
 # Include target in all.

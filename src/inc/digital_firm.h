@@ -98,24 +98,31 @@ KeyList<T> DigitalFirm<T>::GetReceiverKeys() {
 
 template <class T>
 string DigitalFirm<T>::Encrypt(string msg) {
-  if (firm == "") throw NotSignFounded();
+  if (firm == "") throw NotFirmFounded();
 
-  // Encrypt original message with elgammal
-  string msg_encrypted  = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
+  unsigned long rsa_n_size {
+    NumberToString(a_keys[RSA_MOD]).size()
+  };
 
   // A is the transmitter
   rsa.SetKeys(this->a_keys);
+  // Encrypt original message with elgammal
+  string msg_encrypted  = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
   // Treat firm as a RSA encrypted message, so decrypt it with A's keys
-  string sign_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->firm));
+  string firm_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->firm));
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);
 
   // Now encrypt both msg and firm with RSA and B's keys
+  cout << msg_encrypted << endl;
   msg_encrypted  = rsa.Encrypt(msg_encrypted);
-  sign_encrypted = rsa.Encrypt(sign_encrypted);
+  cout << rsa.Decrypt(msg_encrypted) << endl;
+  cout << firm_encrypted << endl;
+  firm_encrypted = rsa.Encrypt(firm_encrypted);
+  cout << rsa.Decrypt(firm_encrypted) << endl;
 
-  return msg_encrypted + sign_encrypted;
+  return msg_encrypted + firm_encrypted;
 }
 
 template <class T>
@@ -126,14 +133,14 @@ string DigitalFirm<T>::Decrypt(string msg) {
 
   // Separate both with rsa_n_size
   string msg_block  = msg.substr(0, msg.size() - rsa_n_size);
-  string sign_block = msg.substr(msg.size() - rsa_n_size);
+  string firm_block = msg.substr(msg.size() - rsa_n_size);
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);
 
   // So decrypt message and firm with RSA and B's keys
   msg_block  = rsa.Decrypt(msg_block);
-  sign_block = rsa.Decrypt(sign_block);
+  firm_block = rsa.Decrypt(firm_block);
 
   // Now decrypt message with elgammal
   msg_block = elgammal.Decrypt(msg_block);
@@ -143,9 +150,9 @@ string DigitalFirm<T>::Decrypt(string msg) {
 
   // Do the inverse process to decrypt (encrypt) with digital firm
   // so encrypt sign_block with RSA and A's keys
-  sign_block = rsa.Encrypt(sign_block);
+  firm_block = rsa.Encrypt(firm_block);
 
-  return msg_block + sign_block;
+  return msg_block + firm_block;
 }
 
 }

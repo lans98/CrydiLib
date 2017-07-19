@@ -7,4 +7,5 @@
 add_test(crydi3_random_test "crydi3_random_bin")
 add_test(crydi3_rsa_test "crydi3_rsa_bin")
 add_test(crydi3_elgammal_test "crydi3_elgammal_bin")
+add_test(crydi3_digital_firm_test "crydi3_dig_firm_bin")
 add_test(crydi3_tools_test "crydi3_tools_bin")

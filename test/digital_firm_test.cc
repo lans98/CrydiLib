@@ -33,7 +33,7 @@ int main() {
   crydi::KeyList<ZZ> elgammal_keys = crydi::GenElgammalKeys(1024);
 
   string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
-  string firm  = "Kevin del Castillo Ramirez (2016319)";
+  string firm  = "Kevin del Castillo Ramirez (20163419)";
   string msg   = "Hola mundo! Vamo a jugar papu!";
 
   crydi::DigitalFirm<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, firm);
