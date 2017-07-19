@@ -14,11 +14,6 @@ if (NTLLIB_FOUND)
 	add_library(crydi3 SHARED ${HEADERS} ${SOURCES})
 	target_link_libraries(crydi3 ntl)
 
-	add_executable(gen_primes primes/gen_primes.cc)
-	target_link_libraries(gen_primes crydi3 ntl)
-
-	add_custom_command(TARGET gen_primes POST_BUILD COMMAND gen_primes)
-
 	if (CRYDI3_TEST)
 		enable_testing()
 

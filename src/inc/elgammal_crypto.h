@@ -142,8 +142,8 @@ string ElGammalCrypto<T>::Decrypt(string msg) {
       inv_c * decrypted_block_i, Crypto<T>::keys_[MODULUS_E]
     );
     decrypted_block_s = NumberToString<T>(decrypted_block_i);
-    if (Mod(decrypted_block_s.size(), last.size()) != 0) {
-      decrypted_block_s = string(Mod(decrypted_block_s.size(), last.size()), '0')
+    if (decrypted_block_s.size() < modulus_size - 1) {
+      decrypted_block_s = string(modulus_size - 1 - decrypted_block_s.size(), '0')
                           + decrypted_block_s;
     }
     decrypted += decrypted_block_s;

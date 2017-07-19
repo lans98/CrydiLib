@@ -138,7 +138,6 @@ string RSACrypto<T>::Encrypt(string msg) {
 
 template <class T>
 string RSACrypto<T>::Decrypt(string msg) {
-  string last = NumberToString(Crypto<T>::alpha_.size() - 1);
   string decrypted = "";
   unsigned long modulus_size {
     NumberToString(Crypto<T>::keys_[MODULUS_R]).size()
@@ -170,8 +169,8 @@ string RSACrypto<T>::Decrypt(string msg) {
     );
     decrypted_block_i = CRT(a, m, 2);
     decrypted_block_s = NumberToString<T>(decrypted_block_i);
-    if (Mod(decrypted_block_s.size(), last.size()) != 0) {
-      decrypted_block_s = string(Mod(decrypted_block_s.size(), last.size()), '0')
+    if (decrypted_block_s.size() < modulus_size - 1) {
+      decrypted_block_s = string(modulus_size - 1 - decrypted_block_s.size(), '0')
                           + decrypted_block_s;
     }
     decrypted += decrypted_block_s;
