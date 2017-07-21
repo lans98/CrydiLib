@@ -34,6 +34,7 @@ using namespace std;
 
 using ssize_t = string::size_type;
 using strit_t = string::iterator;
+using cstrit_t = string::const_iterator;
 
 /**
  * Convert any number (if implemented with stream types) to string
@@ -82,28 +83,28 @@ T CharToNumber(const char digit) {
  * Get the id for a char in the desired alpha as string
  * (ex. alpha is "abcd...z" , wants to get 'b' returns "01")
  */
-string GetIdFor(const char& chr, string alpha);
+string GetIdFor(const char& chr, const string& alpha);
 
 /**
  * Function to convert any message to its representation in
  * the desired alpha identifiers
  * (ex. "hi" with alpha = "abcd....z" goes to "0708")
  */
-string MsgToNumForm(string msg, string alpha);
+string MsgToNumForm(const string& msg, const string& alpha);
 
 /**
  * Function to convert any numerical form string to its
  * normal representation in the desired alpha
  * (ex. "0708" with alpha = "abcd....z" goes to "hi")
  */
-string NumFormToMsg(string msg, string alpha);
+string NumFormToMsg(const string& msg, const string& alpha);
 
 /**
  * Clean the actual message at the end from the less significant character
  * in the given alpha.
  * (ex. "Hello     " goes to "Hello", with char ' ' and alpha "abcd...z ", note ' ' in alpha)
  */
-string CleanMsg(const char& chr, string msg, string alpha);
+string CleanMsg(const char& chr, const string& msg, const string& alpha);
 
 /**
  * Clean the numeric form at the end from the less significant character
@@ -111,7 +112,7 @@ string CleanMsg(const char& chr, string msg, string alpha);
  * (ex. "010203262626" goes to "010203", with char ' ' as "26" and alpha "abcd...z ",
  * note ' ' in alpha)
  */
-string CleanNumForm(string id, string msg, string alpha);
+string CleanNumForm(const string& id, const string& msg, const string& alpha);
 
 }
 

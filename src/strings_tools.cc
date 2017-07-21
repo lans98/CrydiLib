@@ -28,7 +28,7 @@
 namespace crydi {
 
 
-string GetIdFor(const char& chr, string alpha) {
+string GetIdFor(const char& chr, const string& alpha) {
   unsigned long last_size = NumberToString(alpha.size() - 1).size();
 
   ssize_t id_int = alpha.find(chr);
@@ -42,7 +42,7 @@ string GetIdFor(const char& chr, string alpha) {
 }
 
 
-string MsgToNumForm(string msg, string alpha) {
+string MsgToNumForm(const string& msg, const string& alpha) {
   // First get the number of digits of the representation
   // of the last character in the given alpha.
   unsigned long last_size = NumberToString(alpha.size() - 1).size();
@@ -51,7 +51,7 @@ string MsgToNumForm(string msg, string alpha) {
 
   string num_form("");
 
-  for (strit_t ch = msg.begin(); ch != msg.end(); ++ch) {
+  for (cstrit_t ch = msg.begin(); ch != msg.end(); ++ch) {
     // GetIdFor can throw an exception
     id_str = GetIdFor(*ch, alpha);
 
@@ -60,7 +60,7 @@ string MsgToNumForm(string msg, string alpha) {
   return num_form;
 }
 
-string NumFormToMsg(string msg, string alpha) {
+string NumFormToMsg(const string& msg, const string& alpha) {
   // First get the number of digits of the representation
   // of the last character in the given alpha.
   unsigned long last_size = NumberToString(alpha.size() - 1).size();
