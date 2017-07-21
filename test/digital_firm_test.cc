@@ -34,7 +34,7 @@ int main() {
 
   string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
   string firm  = "Kevin del Castillo Ramirez (20163419)";
-  string msg   = "Hola mundo! Vamo a jugar papu!";
+  string msg   = "Hola mundo!";
 
   crydi::DigitalFirm<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, firm);
   cout << "Mensaje original: " << msg << endl;

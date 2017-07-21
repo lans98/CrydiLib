@@ -26,6 +26,7 @@
 #define CRYDI3_RSA_CRYPTO_DEF_H
 
 #include "crydi3_tools.h"
+#include "strings_tools.h"
 #include "crypto.h"
 
 namespace crydi {
@@ -46,9 +47,6 @@ private:
   T p = T(0);
   T q = T(0);
 public:
-  string MsgToNumericalForm(string msg);
-  string NumericalFormToMsg(string msg);
-
   RSACrypto();
   RSACrypto(const KeyList<T> &keys);
   RSACrypto(const string &alpha);

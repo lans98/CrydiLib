@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o"
-  "CMakeFiles/crydi3.dir/src/dynamic_int.cc.o"
   "CMakeFiles/crydi3.dir/src/primes_sieve.cc.o"
+  "CMakeFiles/crydi3.dir/src/strings_tools.cc.o"
   "libcrydi3.pdb"
   "libcrydi3.so"
 )

@@ -81,33 +81,9 @@ CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o.provides: CMakeFiles/crydi3.dir/src/
 CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o.provides.build: CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o
 
 
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.o: CMakeFiles/crydi3.dir/flags.make
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.o: ../src/dynamic_int.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/crydi3.dir/src/dynamic_int.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/crydi3.dir/src/dynamic_int.cc.o -c /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/dynamic_int.cc
-
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crydi3.dir/src/dynamic_int.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/dynamic_int.cc > CMakeFiles/crydi3.dir/src/dynamic_int.cc.i
-
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crydi3.dir/src/dynamic_int.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/dynamic_int.cc -o CMakeFiles/crydi3.dir/src/dynamic_int.cc.s
-
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.requires:
-
-.PHONY : CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.requires
-
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.provides: CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.requires
-	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.provides.build
-.PHONY : CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.provides
-
-CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.provides.build: CMakeFiles/crydi3.dir/src/dynamic_int.cc.o
-
-
 CMakeFiles/crydi3.dir/src/primes_sieve.cc.o: CMakeFiles/crydi3.dir/flags.make
 CMakeFiles/crydi3.dir/src/primes_sieve.cc.o: ../src/primes_sieve.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/crydi3.dir/src/primes_sieve.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/crydi3.dir/src/primes_sieve.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/crydi3.dir/src/primes_sieve.cc.o -c /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/primes_sieve.cc
 
 CMakeFiles/crydi3.dir/src/primes_sieve.cc.i: cmake_force
@@ -129,18 +105,42 @@ CMakeFiles/crydi3.dir/src/primes_sieve.cc.o.provides: CMakeFiles/crydi3.dir/src/
 CMakeFiles/crydi3.dir/src/primes_sieve.cc.o.provides.build: CMakeFiles/crydi3.dir/src/primes_sieve.cc.o
 
 
+CMakeFiles/crydi3.dir/src/strings_tools.cc.o: CMakeFiles/crydi3.dir/flags.make
+CMakeFiles/crydi3.dir/src/strings_tools.cc.o: ../src/strings_tools.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/crydi3.dir/src/strings_tools.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/crydi3.dir/src/strings_tools.cc.o -c /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/strings_tools.cc
+
+CMakeFiles/crydi3.dir/src/strings_tools.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crydi3.dir/src/strings_tools.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/strings_tools.cc > CMakeFiles/crydi3.dir/src/strings_tools.cc.i
+
+CMakeFiles/crydi3.dir/src/strings_tools.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crydi3.dir/src/strings_tools.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/strings_tools.cc -o CMakeFiles/crydi3.dir/src/strings_tools.cc.s
+
+CMakeFiles/crydi3.dir/src/strings_tools.cc.o.requires:
+
+.PHONY : CMakeFiles/crydi3.dir/src/strings_tools.cc.o.requires
+
+CMakeFiles/crydi3.dir/src/strings_tools.cc.o.provides: CMakeFiles/crydi3.dir/src/strings_tools.cc.o.requires
+	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/strings_tools.cc.o.provides.build
+.PHONY : CMakeFiles/crydi3.dir/src/strings_tools.cc.o.provides
+
+CMakeFiles/crydi3.dir/src/strings_tools.cc.o.provides.build: CMakeFiles/crydi3.dir/src/strings_tools.cc.o
+
+
 # Object files for target crydi3
 crydi3_OBJECTS = \
 "CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o" \
-"CMakeFiles/crydi3.dir/src/dynamic_int.cc.o" \
-"CMakeFiles/crydi3.dir/src/primes_sieve.cc.o"
+"CMakeFiles/crydi3.dir/src/primes_sieve.cc.o" \
+"CMakeFiles/crydi3.dir/src/strings_tools.cc.o"
 
 # External object files for target crydi3
 crydi3_EXTERNAL_OBJECTS =
 
 libcrydi3.so: CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o
-libcrydi3.so: CMakeFiles/crydi3.dir/src/dynamic_int.cc.o
 libcrydi3.so: CMakeFiles/crydi3.dir/src/primes_sieve.cc.o
+libcrydi3.so: CMakeFiles/crydi3.dir/src/strings_tools.cc.o
 libcrydi3.so: CMakeFiles/crydi3.dir/build.make
 libcrydi3.so: CMakeFiles/crydi3.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library libcrydi3.so"
@@ -152,8 +152,8 @@ CMakeFiles/crydi3.dir/build: libcrydi3.so
 .PHONY : CMakeFiles/crydi3.dir/build
 
 CMakeFiles/crydi3.dir/requires: CMakeFiles/crydi3.dir/src/crydi3_tools.cc.o.requires
-CMakeFiles/crydi3.dir/requires: CMakeFiles/crydi3.dir/src/dynamic_int.cc.o.requires
 CMakeFiles/crydi3.dir/requires: CMakeFiles/crydi3.dir/src/primes_sieve.cc.o.requires
+CMakeFiles/crydi3.dir/requires: CMakeFiles/crydi3.dir/src/strings_tools.cc.o.requires
 
 .PHONY : CMakeFiles/crydi3.dir/requires
 

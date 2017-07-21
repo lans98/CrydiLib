@@ -28,20 +28,75 @@ using namespace NTL;
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  crydi::KeyList<ZZ> rsa_keys =crydi::GenRSAKeys(1024);
+  // Used by both RSA
   string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()!.,-’ ";
+
+  // First RSA Crypto Keys
+  crydi::KeyList<ZZ> rsa_keys = crydi::GenRSAKeys(1024);
+
+  // Create a RSA Crypto
   crydi::RSACrypto<ZZ> rsa(alpha, rsa_keys);
+
+  // Show keys
   cout << "Public key (share this): " << rsa.GetPublicKey() << endl;
   cout << "Share it with : " << rsa.GetModulus() << endl;
   cout << "Private key (never share this): " << rsa.GetPrivateKey() << endl;
+
+  // Message
   string msg = "Hello! My name is Ana. I am twenty-five years old. I live in Miami, Florida with my husband and two children. I have one son in kindergarten and one daughter in first grade. They both attend public school. My husband is a mechanic. On weekends, he works at a restaurant as a dishwasher. The restaurant usually gets more customers on weekends, so they need extra people to wash dishes. It is Rodrigo’s turn to speak. He is nervous. He doesn’t want to be here but he has no choice. He has lost his job, his home, his family and most of his friends. He takes a deep breath, gets up and walks to the podium at the front of the room. He adjusts the microphone and looks at the group of people in front of him. They begin to clap and shout words of encouragement. Rodrigo takes deep breaths to relax and grips the sides of the podium to stop his hands from shaking. When the clapping stops he summons up his courage and speaks.I have a brother and a sister. My brother is 17 and is in his last year of High School. He loves sports and going to parties. He never takes me to any parties but sometimes he takes my sister and me to the beach. My sister’s name is Jane. She is 11. She loves reading and playing soccer. She reads one or two books every week and watches every soccer game on TV. She gets into trouble at school all the time because she doesn’t do her homework. She pretends to pay attention in class but reads her books under the desk. My parents sometimes make my brother help her with her homework. Very often he just does her homework for her so that he can go out with his girlfriend.";
-  
   cout << "Mensaje original: " << msg << "\n";
-  msg = rsa.Encrypt(rsa.MsgToNumericalForm(msg));
-  cout << "Mensaje encriptado: " << msg << "\n";
-  msg = rsa.Decrypt(msg);
-  cout << "Mensaje desencriptado: " << msg << "\n";
-  msg = rsa.NumericalFormToMsg(msg);
-  cout << "Final: " << msg << endl;
+
+  // Test simple encryption
+  // Numerical Form
+  string num_form = crydi::MsgToNumericalForm(msg, alpha);
+  printf("Mensaje inicial: %s\n", num_form.c_str());
+
+  // Encrypt message
+  string encrypted = rsa.Encrypt(num_form);
+  printf("Mensaje encriptado: %s\n", encrypted.c_str());
+
+  // Decrypt message
+  string decrypted = rsa.Decrypt(encrypted);
+  cout << "Mensaje desencriptado: " << decrypted << "\n";
+
+  // Final message
+  string final = crydi::NumericalFormToMsg(decrypted, alpha);
+  cout << "Mensaje final: " << final << "\n";
+
+
+  // Second RSA Keys
+  crydi::KeyList<ZZ> keys_2 = crydi::GenRSAKeys(1024);
+
+  // Create another RSA
+  crydi::RSACrypto<ZZ> rsa_2(alpha, keys_2);
+
+  // Test double encryption
+  msg = "Hola Mundo!";
+  cout << "Mensaje original: " << msg << "\n";
+
+  // Numerical form
+  num_form = crydi::MsgToNumericalForm(msg, alpha);
+  cout << "Mensaje inicial: " << num_form << "\n";
+
+  // Encrypt message with first RSA
+  encrypted = rsa.Encrypt(num_form);
+  cout << "Mensaje encriptado (primer RSA): " << encrypted << "\n";
+
+  // Encrypt message with second RSA
+  encrypted = rsa_2.Encrypt(crydi::MsgToNumericalForm(encrypted, alpha));
+  cout << "Mensaje encriptado (segundo RSA): " << encrypted << "\n";
+
+  // Decrypt message with second RSA
+  decrypted = rsa_2.Decrypt(encrypted);
+  cout << "Mensaje desencriptado (segundo RSA): " << decrypted << "\n";
+
+  // Decrypt message with first RSA
+  decrypted = rsa.Decrypt(crydi::NumericalFormToMsg(decrypted, alpha));
+  cout << "Mensaje desencriptado (primer RSA): " << decrypted << "\n";
+
+  // Final message
+  final = crydi::NumericalFormToMsg(decrypted, alpha);
+  cout << "Mensaje final: " << final << "\n";
+
   return 0;
 }

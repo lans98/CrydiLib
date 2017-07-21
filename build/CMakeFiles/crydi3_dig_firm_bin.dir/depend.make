@@ -14,7 +14,6 @@ CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/crypt
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/digital_firm.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/digital_firm_def.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/div_criteria.h
-CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/dynamic_int.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/elgammal_crypto.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/elgammal_crypto_def.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/keylist.h
@@ -22,5 +21,6 @@ CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/keyli
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/primes_sieve.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/rsa_crypto.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/rsa_crypto_def.h
+CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../src/inc/strings_tools.h
 CMakeFiles/crydi3_dig_firm_bin.dir/test/digital_firm_test.cc.o: ../test/digital_firm_test.cc
 

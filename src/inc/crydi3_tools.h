@@ -43,6 +43,8 @@
 #include <exception>
 #include <initializer_list>
 
+#include "strings_tools.h"
+
 namespace crydi {
 
 // Namespaces to be used
@@ -81,6 +83,7 @@ enum prim_test_flag {
 	EULER_TEST        = 0x02,
 	MILLER_RABIN_TEST = 0x04
 };
+
 
 /**
  * Compute time for two clock_t define your start clock before calling
@@ -184,41 +187,11 @@ int  ModularExp(int base, int exp, int mod);
 long ModularExp(long base, long exp, long mod);
 ZZ   ModularExp(ZZ  base, ZZ  exp, ZZ  mod);
 
-/**
- * Convert any number (if implemented with stream types) to string
- * @param num
- */
-template <class T>
-string NumberToString(const T& num) {
-	stringstream sstr;
-	sstr << num;
-	string number_string;
-	sstr >> number_string;
-	return number_string;
-}
 
 /**
- * Convert string (if implemented with stream stypes) to any number type
+ * Count number of bits for any countable type
  * @param num
  */
-template <class T>
-T StringToNumber(const string& num) {
-	stringstream sstr(num);
-	T number_type;
-	sstr >> number_type;
-	return number_type;
-}
-
-template <class T>
-char NumberToChar(const T& digit) {
-	return digit + '0';
-}
-
-template <class T>
-T CharToNumber(const char digit) {
-	return digit - '0';
-}
-
 template <class T>
 int CountBits(T num) {
   int count = 0;
@@ -329,9 +302,9 @@ bool IsPrime(const ZZ  &n, uintmax_t k = 25, prim_test_flag flag = MILLER_RABIN_
  * @param p pointer to list of p_i
  * @param n number of equations (len of list of a_i and p_i)
  */
-int CRT(int *a, int *p, int n);
+int  CRT(int *a, int *p, int n);
 long CRT(long *a, long *p, int n);
-ZZ CRT(ZZ *a, ZZ *p, int n);
+ZZ   CRT(ZZ *a, ZZ *p, int n);
 
 /**
  * Find a generator for Z*_p (primitive root)

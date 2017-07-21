@@ -26,6 +26,7 @@
 #define CRYDI3_DIGITAL_SIGN_DEF_H
 
 #include "crydi3_tools.h"
+#include "strings_tools.h"
 #include "crypto.h"
 #include "rsa_crypto.h"
 #include "elgammal_crypto.h"

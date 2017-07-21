@@ -37,6 +37,8 @@ crypto.h
 ../src/inc/crydi3.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
+strings_tools.h
+../src/inc/strings_tools.h
 keylist.h
 ../src/inc/keylist.h
 crypto.h
@@ -51,8 +53,6 @@ elgammal_crypto.h
 ../src/inc/elgammal_crypto.h
 digital_firm.h
 ../src/inc/digital_firm.h
-dynamic_int.h
-../src/inc/dynamic_int.h
 div_criteria.h
 ../src/inc/div_criteria.h
 bit_array.h
@@ -95,6 +95,8 @@ exception
 -
 initializer_list
 -
+strings_tools.h
+../src/inc/strings_tools.h
 
 ../src/inc/crypto.h
 crypto_def.h
@@ -113,6 +115,8 @@ digital_firm_def.h
 ../src/inc/digital_firm_def.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
+strings_tools.h
+../src/inc/strings_tools.h
 crypto.h
 ../src/inc/crypto.h
 rsa_crypto.h
@@ -123,12 +127,6 @@ elgammal_crypto.h
 ../src/inc/div_criteria.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
-dynamic_int.h
-../src/inc/dynamic_int.h
-
-../src/inc/dynamic_int.h
-crydi3_tools.h
-../src/inc/crydi3_tools.h
 
 ../src/inc/elgammal_crypto.h
 elgammal_crypto_def.h
@@ -137,6 +135,8 @@ elgammal_crypto_def.h
 ../src/inc/elgammal_crypto_def.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
+strings_tools.h
+../src/inc/strings_tools.h
 crypto.h
 ../src/inc/crypto.h
 
@@ -161,8 +161,16 @@ rsa_crypto_def.h
 ../src/inc/rsa_crypto_def.h
 crydi3_tools.h
 ../src/inc/crydi3_tools.h
+strings_tools.h
+../src/inc/strings_tools.h
 crypto.h
 ../src/inc/crypto.h
+
+../src/inc/strings_tools.h
+string
+-
+sstream
+-
 
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/elgammal_test.cc
 crydi3.h

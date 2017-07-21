@@ -26,6 +26,7 @@
 #define CRYDI3_ELGAMMAL_DEF_H
 
 #include "crydi3_tools.h"
+#include "strings_tools.h"
 #include "crypto.h"
 
 namespace crydi {
@@ -44,9 +45,6 @@ class ElGammalCrypto : public Crypto<T> {
 private:
   T c;
 public:
-  string MsgToNumericalForm(string msg);
-  string NumericalFormToMsg(string msg);
-
   ElGammalCrypto();
   ElGammalCrypto(const KeyList<T>& keys);
   ElGammalCrypto(const string& alpha);
@@ -61,7 +59,7 @@ public:
   string Encrypt(string msg);
   string Decrypt(string msg);
 
-  T GetEncryptedC();
+  T    GetEncryptedC();
   void SetEncryptedC(const T& c);
 };
 

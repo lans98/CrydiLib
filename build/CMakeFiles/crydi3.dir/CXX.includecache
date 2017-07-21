@@ -10,10 +10,6 @@
 inc/crydi3_tools.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crydi3_tools.h
 
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/dynamic_int.cc
-inc/dynamic_int.h
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/dynamic_int.h
-
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/bit_array.h
 bit_array_def.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/bit_array_def.h
@@ -57,10 +53,8 @@ exception
 -
 initializer_list
 -
-
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/dynamic_int.h
-crydi3_tools.h
-/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crydi3_tools.h
+strings_tools.h
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/strings_tools.h
 
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/primes_sieve.h
 crydi3_tools.h
@@ -68,7 +62,19 @@ crydi3_tools.h
 bit_array.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/bit_array.h
 
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/strings_tools.h
+string
+-
+sstream
+-
+
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/primes_sieve.cc
 inc/primes_sieve.h
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/primes_sieve.h
+
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/strings_tools.cc
+inc/crydi3_tools.h
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/crydi3_tools.h
+inc/strings_tools.h
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/strings_tools.h
 

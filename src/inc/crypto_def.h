@@ -33,8 +33,8 @@ namespace crydi {
 template <class T>
 class Crypto {
  protected:
-	KeyList<T> keys_;
-	string     alpha_;
+	KeyList<T> keys;
+	string     alpha;
 
  public:
 	Crypto();
@@ -46,7 +46,8 @@ class Crypto {
 	void        SetKeys(const KeyList<T> &keys);
 	KeyList<T>  GetKeys();
 
-	virtual void SetAlpha(const string &alpha);
+	void   SetAlpha(const string &alpha);
+  string GetAlpha();
 
 	virtual string Encrypt(string msg) = 0;
 	virtual string Decrypt(string msg) = 0;

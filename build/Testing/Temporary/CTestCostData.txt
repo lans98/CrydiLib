@@ -1,6 +1,0 @@
-crydi3_random_test 16 0.0280029
-crydi3_rsa_test 15 0.0156318
-crydi3_elgammal_test 15 0.0309611
-crydi3_tools_test 16 0.0001515
-crydi3_digital_firm_test 13 0.128094
----

@@ -15,7 +15,6 @@ CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.o
  ../src/inc/digital_firm.h
  ../src/inc/digital_firm_def.h
  ../src/inc/div_criteria.h
- ../src/inc/dynamic_int.h
  ../src/inc/elgammal_crypto.h
  ../src/inc/elgammal_crypto_def.h
  ../src/inc/keylist.h
@@ -23,4 +22,5 @@ CMakeFiles/crydi3_random_bin.dir/test/random_test.cc.o
  ../src/inc/primes_sieve.h
  ../src/inc/rsa_crypto.h
  ../src/inc/rsa_crypto_def.h
+ ../src/inc/strings_tools.h
  /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/test/random_test.cc

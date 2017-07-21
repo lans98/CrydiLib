@@ -58,7 +58,7 @@ endif()
 
 if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/usr/include/crydi3/afin_crypto.h;/usr/include/crydi3/afin_crypto_def.h;/usr/include/crydi3/bit_array.h;/usr/include/crydi3/bit_array_def.h;/usr/include/crydi3/cesar_crypto.h;/usr/include/crydi3/cesar_crypto_def.h;/usr/include/crydi3/crydi3.h;/usr/include/crydi3/crydi3_tools.h;/usr/include/crydi3/crypto.h;/usr/include/crydi3/crypto_def.h;/usr/include/crydi3/digital_firm.h;/usr/include/crydi3/digital_firm_def.h;/usr/include/crydi3/div_criteria.h;/usr/include/crydi3/dynamic_int.h;/usr/include/crydi3/elgammal_crypto.h;/usr/include/crydi3/elgammal_crypto_def.h;/usr/include/crydi3/keylist.h;/usr/include/crydi3/keylist_def.h;/usr/include/crydi3/primes_sieve.h;/usr/include/crydi3/rsa_crypto.h;/usr/include/crydi3/rsa_crypto_def.h")
+   "/usr/include/crydi3/afin_crypto.h;/usr/include/crydi3/afin_crypto_def.h;/usr/include/crydi3/bit_array.h;/usr/include/crydi3/bit_array_def.h;/usr/include/crydi3/cesar_crypto.h;/usr/include/crydi3/cesar_crypto_def.h;/usr/include/crydi3/crydi3.h;/usr/include/crydi3/crydi3_tools.h;/usr/include/crydi3/crypto.h;/usr/include/crydi3/crypto_def.h;/usr/include/crydi3/digital_firm.h;/usr/include/crydi3/digital_firm_def.h;/usr/include/crydi3/div_criteria.h;/usr/include/crydi3/elgammal_crypto.h;/usr/include/crydi3/elgammal_crypto_def.h;/usr/include/crydi3/keylist.h;/usr/include/crydi3/keylist_def.h;/usr/include/crydi3/primes_sieve.h;/usr/include/crydi3/rsa_crypto.h;/usr/include/crydi3/rsa_crypto_def.h;/usr/include/crydi3/strings_tools.h")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
@@ -79,7 +79,6 @@ file(INSTALL DESTINATION "/usr/include/crydi3" TYPE FILE FILES
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/digital_firm.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/digital_firm_def.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/div_criteria.h"
-    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/dynamic_int.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/elgammal_crypto.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/elgammal_crypto_def.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/keylist.h"
@@ -87,6 +86,7 @@ file(INSTALL DESTINATION "/usr/include/crydi3" TYPE FILE FILES
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/primes_sieve.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/rsa_crypto.h"
     "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/rsa_crypto_def.h"
+    "/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/src/inc/strings_tools.h"
     )
 endif()
 

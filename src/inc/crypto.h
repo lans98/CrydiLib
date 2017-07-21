@@ -30,25 +30,28 @@
 namespace crydi {
 
 template <class T>
-Crypto<T>::Crypto(): keys_(), alpha_() {}
+Crypto<T>::Crypto(): keys(), alpha() {}
 
 template <class T>
-Crypto<T>::Crypto(const KeyList<T> &keys): keys_(keys), alpha_() {}
+Crypto<T>::Crypto(const KeyList<T> &keys): keys(keys), alpha() {}
 
 template <class T>
-Crypto<T>::Crypto(const string &alpha): keys_(), alpha_(alpha) {}
+Crypto<T>::Crypto(const string &alpha): keys(), alpha(alpha) {}
 
 template <class T>
-Crypto<T>::Crypto(const string &alpha, const KeyList<T> &keys): keys_(keys), alpha_(alpha) {}
+Crypto<T>::Crypto(const string &alpha, const KeyList<T> &keys): keys(keys), alpha(alpha) {}
 
 template <class T>
-void Crypto<T>::SetKeys(const KeyList<T> &keys) { keys_ = keys; }
+void Crypto<T>::SetKeys(const KeyList<T> &keys) { this->keys = keys; }
 
 template <class T>
-KeyList<T> Crypto<T>::GetKeys() { return keys_; }
+KeyList<T> Crypto<T>::GetKeys() { return this->keys; }
 
 template <class T>
-void Crypto<T>::SetAlpha(const string &alpha) { alpha_ = alpha; }
+void Crypto<T>::SetAlpha(const string &alpha) { this->alpha = alpha; }
+
+template <class T>
+string Crypto<T>::GetAlpha() { return this->alpha; }
 
 }
 #endif

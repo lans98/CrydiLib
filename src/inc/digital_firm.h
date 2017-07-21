@@ -100,6 +100,8 @@ template <class T>
 string DigitalFirm<T>::Encrypt(string msg) {
   if (firm == "") throw NotFirmFounded();
 
+  string alpha = elgammal.GetAlpha();
+
   unsigned long rsa_n_size {
     NumberToString(a_keys[RSA_MOD]).size()
   };
@@ -107,9 +109,9 @@ string DigitalFirm<T>::Encrypt(string msg) {
   // A is the transmitter
   rsa.SetKeys(this->a_keys);
   // Encrypt original message with elgammal
-  string msg_encrypted  = elgammal.Encrypt(elgammal.MsgToNumericalForm(msg));
+  string msg_encrypted  = elgammal.Encrypt(MsgToNumericalForm(msg, alpha));
   // Treat firm as a RSA encrypted message, so decrypt it with A's keys
-  string firm_encrypted = rsa.Decrypt(rsa.MsgToNumericalForm(this->firm));
+  string firm_encrypted = rsa.Decrypt(MsgToNumericalForm(this->firm, alpha));
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);

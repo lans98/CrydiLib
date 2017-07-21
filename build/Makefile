@@ -272,33 +272,6 @@ src/crydi3_tools.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/crydi3_tools.cc.s
 .PHONY : src/crydi3_tools.cc.s
 
-src/dynamic_int.o: src/dynamic_int.cc.o
-
-.PHONY : src/dynamic_int.o
-
-# target to build an object file
-src/dynamic_int.cc.o:
-	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/dynamic_int.cc.o
-.PHONY : src/dynamic_int.cc.o
-
-src/dynamic_int.i: src/dynamic_int.cc.i
-
-.PHONY : src/dynamic_int.i
-
-# target to preprocess a source file
-src/dynamic_int.cc.i:
-	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/dynamic_int.cc.i
-.PHONY : src/dynamic_int.cc.i
-
-src/dynamic_int.s: src/dynamic_int.cc.s
-
-.PHONY : src/dynamic_int.s
-
-# target to generate assembly for a file
-src/dynamic_int.cc.s:
-	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/dynamic_int.cc.s
-.PHONY : src/dynamic_int.cc.s
-
 src/primes_sieve.o: src/primes_sieve.cc.o
 
 .PHONY : src/primes_sieve.o
@@ -325,6 +298,33 @@ src/primes_sieve.s: src/primes_sieve.cc.s
 src/primes_sieve.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/primes_sieve.cc.s
 .PHONY : src/primes_sieve.cc.s
+
+src/strings_tools.o: src/strings_tools.cc.o
+
+.PHONY : src/strings_tools.o
+
+# target to build an object file
+src/strings_tools.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/strings_tools.cc.o
+.PHONY : src/strings_tools.cc.o
+
+src/strings_tools.i: src/strings_tools.cc.i
+
+.PHONY : src/strings_tools.i
+
+# target to preprocess a source file
+src/strings_tools.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/strings_tools.cc.i
+.PHONY : src/strings_tools.cc.i
+
+src/strings_tools.s: src/strings_tools.cc.s
+
+.PHONY : src/strings_tools.s
+
+# target to generate assembly for a file
+src/strings_tools.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3.dir/build.make CMakeFiles/crydi3.dir/src/strings_tools.cc.s
+.PHONY : src/strings_tools.cc.s
 
 test/digital_firm_test.o: test/digital_firm_test.cc.o
 
@@ -483,12 +483,12 @@ help:
 	@echo "... src/crydi3_tools.o"
 	@echo "... src/crydi3_tools.i"
 	@echo "... src/crydi3_tools.s"
-	@echo "... src/dynamic_int.o"
-	@echo "... src/dynamic_int.i"
-	@echo "... src/dynamic_int.s"
 	@echo "... src/primes_sieve.o"
 	@echo "... src/primes_sieve.i"
 	@echo "... src/primes_sieve.s"
+	@echo "... src/strings_tools.o"
+	@echo "... src/strings_tools.i"
+	@echo "... src/strings_tools.s"
 	@echo "... test/digital_firm_test.o"
 	@echo "... test/digital_firm_test.i"
 	@echo "... test/digital_firm_test.s"
