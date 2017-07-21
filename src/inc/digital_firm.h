@@ -109,9 +109,9 @@ string DigitalFirm<T>::Encrypt(string msg) {
   // A is the transmitter
   rsa.SetKeys(this->a_keys);
   // Encrypt original message with elgammal
-  string msg_encrypted  = elgammal.Encrypt(MsgToNumericalForm(msg, alpha));
+  string msg_encrypted  = elgammal.Encrypt(MsgToNumForm(msg, alpha));
   // Treat firm as a RSA encrypted message, so decrypt it with A's keys
-  string firm_encrypted = rsa.Decrypt(MsgToNumericalForm(this->firm, alpha));
+  string firm_encrypted = rsa.Decrypt(MsgToNumForm(this->firm, alpha));
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);

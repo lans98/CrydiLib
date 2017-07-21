@@ -42,7 +42,7 @@ string GetIdFor(const char& chr, string alpha) {
 }
 
 
-string MsgToNumericalForm(string msg, string alpha) {
+string MsgToNumForm(string msg, string alpha) {
   // First get the number of digits of the representation
   // of the last character in the given alpha.
   unsigned long last_size = NumberToString(alpha.size() - 1).size();
@@ -60,7 +60,7 @@ string MsgToNumericalForm(string msg, string alpha) {
   return num_form;
 }
 
-string NumericalFormToMsg(string msg, string alpha) {
+string NumFormToMsg(string msg, string alpha) {
   // First get the number of digits of the representation
   // of the last character in the given alpha.
   unsigned long last_size = NumberToString(alpha.size() - 1).size();

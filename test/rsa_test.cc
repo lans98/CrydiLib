@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 
   // Test simple encryption
   // Numerical Form
-  string num_form = crydi::MsgToNumericalForm(msg, alpha);
+  string num_form = crydi::MsgToNumForm(msg, alpha);
   printf("Mensaje inicial: %s\n", num_form.c_str());
 
   // Encrypt message
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
   cout << "Mensaje desencriptado: " << decrypted << "\n";
 
   // Final message
-  string final = crydi::NumericalFormToMsg(decrypted, alpha);
+  string final = crydi::NumFormToMsg(decrypted, alpha);
   cout << "Mensaje final: " << final << "\n";
 
 
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
   cout << "Mensaje original: " << msg << "\n";
 
   // Numerical form
-  num_form = crydi::MsgToNumericalForm(msg, alpha);
+  num_form = crydi::MsgToNumForm(msg, alpha);
   cout << "Mensaje inicial: " << num_form << "\n";
 
   // Encrypt message with first RSA
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
   cout << "Mensaje encriptado (primer RSA): " << encrypted << "\n";
 
   // Encrypt message with second RSA
-  encrypted = rsa_2.Encrypt(crydi::MsgToNumericalForm(encrypted, alpha));
+  encrypted = rsa_2.Encrypt(crydi::MsgToNumForm(encrypted, alpha));
   cout << "Mensaje encriptado (segundo RSA): " << encrypted << "\n";
 
   // Decrypt message with second RSA
@@ -91,11 +91,11 @@ int main(int argc, char* argv[]) {
   cout << "Mensaje desencriptado (segundo RSA): " << decrypted << "\n";
 
   // Decrypt message with first RSA
-  decrypted = rsa.Decrypt(crydi::NumericalFormToMsg(decrypted, alpha));
+  decrypted = rsa.Decrypt(crydi::NumFormToMsg(decrypted, alpha));
   cout << "Mensaje desencriptado (primer RSA): " << decrypted << "\n";
 
   // Final message
-  final = crydi::NumericalFormToMsg(decrypted, alpha);
+  final = crydi::NumFormToMsg(decrypted, alpha);
   cout << "Mensaje final: " << final << "\n";
 
   return 0;

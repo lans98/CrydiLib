@@ -89,15 +89,29 @@ string GetIdFor(const char& chr, string alpha);
  * the desired alpha identifiers
  * (ex. "hi" with alpha = "abcd....z" goes to "0708")
  */
-string MsgToNumericalForm(string msg, string alpha);
+string MsgToNumForm(string msg, string alpha);
 
 /**
  * Function to convert any numerical form string to its
  * normal representation in the desired alpha
  * (ex. "0708" with alpha = "abcd....z" goes to "hi")
  */
-string NumericalFormToMsg(string msg, string alpha);
+string NumFormToMsg(string msg, string alpha);
 
+/**
+ * Clean the actual message at the end from the less significant character
+ * in the given alpha.
+ * (ex. "Hello     " goes to "Hello", with char ' ' and alpha "abcd...z ", note ' ' in alpha)
+ */
+string CleanMsg(const char& chr, string msg, string alpha);
+
+/**
+ * Clean the numeric form at the end from the less significant character
+ * in the given alpha.
+ * (ex. "010203262626" goes to "010203", with char ' ' as "26" and alpha "abcd...z ",
+ * note ' ' in alpha)
+ */
+string CleanNumForm(string id, string msg, string alpha);
 
 }
 
