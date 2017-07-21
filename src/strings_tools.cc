@@ -80,5 +80,18 @@ string NumFormToMsg(const string& msg, const string& alpha) {
   return msg_form;
 }
 
+string CleanMsg(const char& chr, const string& msg, const string& alpha) {
+  // TODO
+  string cleaned("");
+
+  return cleaned;
+}
+
+string CleanNumForm(const string& id, const string& msg, const string& alpha) {
+  // TODO
+  string cleaned("");
+
+  return cleaned;
+}
 
 }
