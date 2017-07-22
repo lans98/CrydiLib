@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -O3 -DNDEBUG   CMakeFiles/crydi3_strings_bin.dir/test/strings_test.cc.o  -o crydi3_strings_bin -Wl,-rpath,/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build libcrydi3.so -lntl 

@@ -168,6 +168,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named crydi3_strings_bin
+
+# Build rule for target.
+crydi3_strings_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_strings_bin
+.PHONY : crydi3_strings_bin
+
+# fast build rule for target.
+crydi3_strings_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_strings_bin.dir/build.make CMakeFiles/crydi3_strings_bin.dir/build
+.PHONY : crydi3_strings_bin/fast
+
+#=============================================================================
 # Target rules for targets named crydi3_random_bin
 
 # Build rule for target.
@@ -434,6 +447,33 @@ test/rsa_test.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3_rsa_bin.dir/build.make CMakeFiles/crydi3_rsa_bin.dir/test/rsa_test.cc.s
 .PHONY : test/rsa_test.cc.s
 
+test/strings_test.o: test/strings_test.cc.o
+
+.PHONY : test/strings_test.o
+
+# target to build an object file
+test/strings_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_strings_bin.dir/build.make CMakeFiles/crydi3_strings_bin.dir/test/strings_test.cc.o
+.PHONY : test/strings_test.cc.o
+
+test/strings_test.i: test/strings_test.cc.i
+
+.PHONY : test/strings_test.i
+
+# target to preprocess a source file
+test/strings_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_strings_bin.dir/build.make CMakeFiles/crydi3_strings_bin.dir/test/strings_test.cc.i
+.PHONY : test/strings_test.cc.i
+
+test/strings_test.s: test/strings_test.cc.s
+
+.PHONY : test/strings_test.s
+
+# target to generate assembly for a file
+test/strings_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_strings_bin.dir/build.make CMakeFiles/crydi3_strings_bin.dir/test/strings_test.cc.s
+.PHONY : test/strings_test.cc.s
+
 test/tools_test.o: test/tools_test.cc.o
 
 .PHONY : test/tools_test.o
@@ -472,6 +512,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... test"
+	@echo "... crydi3_strings_bin"
 	@echo "... crydi3_random_bin"
 	@echo "... install/strip"
 	@echo "... crydi3_dig_firm_bin"
@@ -501,6 +542,9 @@ help:
 	@echo "... test/rsa_test.o"
 	@echo "... test/rsa_test.i"
 	@echo "... test/rsa_test.s"
+	@echo "... test/strings_test.o"
+	@echo "... test/strings_test.i"
+	@echo "... test/strings_test.s"
 	@echo "... test/tools_test.o"
 	@echo "... test/tools_test.i"
 	@echo "... test/tools_test.s"
