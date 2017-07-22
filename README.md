@@ -27,6 +27,7 @@ Library it self is called ``libcrydi3.so``, for linking with g++ use
 
 ## Examples
 You can see some examples at ``test`` folder.
+<<<<<<< HEAD
 
 ## Development branch
 You can switch to development branch easily to test new features
@@ -35,3 +36,5 @@ You can switch to development branch easily to test new features
     $ git checkout develop
 
 After that do the same to compile library
+=======
+>>>>>>> develop

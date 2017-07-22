@@ -80,5 +80,38 @@ string NumFormToMsg(const string& msg, const string& alpha) {
   return msg_form;
 }
 
+string CleanMsg(const char& chr, const string& msg, const string& alpha) {
+  unsigned long spc_idx = 0;
+
+  for (unsigned long i = 1; i < msg.size(); ++i) {
+    if (msg[i] == ' ' && msg[i - 1] != ' ')
+      spc_idx = i;
+  }
+
+  return msg.substr(0, spc_idx);
+}
+
+string CleanNumForm(const string& id, const string& msg, const string& alpha) {
+  unsigned long spc_idx = 0;
+  unsigned long last_size {
+    NumberToString(alpha.size() - 1).size()
+  };
+
+  string prev_blk = "";
+  string curr_blk = "";
+  for (unsigned long i = 0; i < msg.size(); i += last_size) {
+    curr_blk = msg.substr(i, last_size);
+    if (curr_blk == id && prev_blk != id)
+      spc_idx = i;
+
+    prev_blk = curr_blk;
+  }
+
+  return msg.substr(0, spc_idx);
+}
+
+string CleanNumForm(const char& chr, const string& msg, const string& alpha) {
+  return CleanNumForm(GetIdFor(chr, alpha), msg, alpha);
+}
 
 }

@@ -38,6 +38,11 @@ if (NTLLIB_FOUND)
     add_executable(crydi3_tools_bin test/tools_test.cc)
     target_link_libraries(crydi3_tools_bin crydi3 ntl)
     add_test(crydi3_tools_test crydi3_tools_bin)
+
+    add_executable(crydi3_strings_bin test/strings_test.cc)
+    target_link_libraries(crydi3_strings_bin crydi3 ntl)
+    add_test(crydi3_strings_test crydi3_strings_bin)
+    
 	endif(CRYDI3_TEST)
 endif(NTLLIB_FOUND)
 

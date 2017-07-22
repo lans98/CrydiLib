@@ -113,6 +113,7 @@ string CleanMsg(const char& chr, const string& msg, const string& alpha);
  * note ' ' in alpha)
  */
 string CleanNumForm(const string& id, const string& msg, const string& alpha);
+string CleanNumForm(const char& chr, const string& msg, const string& alpha);
 
 }
 

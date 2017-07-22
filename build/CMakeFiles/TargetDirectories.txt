@@ -3,6 +3,7 @@
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/edit_cache.dir
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/install/local.dir
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/test.dir
+/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/crydi3_strings_bin.dir
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/crydi3_random_bin.dir
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/install/strip.dir
 /home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build/CMakeFiles/crydi3_dig_firm_bin.dir
