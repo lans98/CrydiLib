@@ -168,6 +168,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named crydi3_multi_crypto_bin
+
+# Build rule for target.
+crydi3_multi_crypto_bin: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crydi3_multi_crypto_bin
+.PHONY : crydi3_multi_crypto_bin
+
+# fast build rule for target.
+crydi3_multi_crypto_bin/fast:
+	$(MAKE) -f CMakeFiles/crydi3_multi_crypto_bin.dir/build.make CMakeFiles/crydi3_multi_crypto_bin.dir/build
+.PHONY : crydi3_multi_crypto_bin/fast
+
+#=============================================================================
 # Target rules for targets named crydi3_strings_bin
 
 # Build rule for target.
@@ -393,6 +406,33 @@ test/elgammal_test.cc.s:
 	$(MAKE) -f CMakeFiles/crydi3_elgammal_bin.dir/build.make CMakeFiles/crydi3_elgammal_bin.dir/test/elgammal_test.cc.s
 .PHONY : test/elgammal_test.cc.s
 
+test/multi_crypto_test.o: test/multi_crypto_test.cc.o
+
+.PHONY : test/multi_crypto_test.o
+
+# target to build an object file
+test/multi_crypto_test.cc.o:
+	$(MAKE) -f CMakeFiles/crydi3_multi_crypto_bin.dir/build.make CMakeFiles/crydi3_multi_crypto_bin.dir/test/multi_crypto_test.cc.o
+.PHONY : test/multi_crypto_test.cc.o
+
+test/multi_crypto_test.i: test/multi_crypto_test.cc.i
+
+.PHONY : test/multi_crypto_test.i
+
+# target to preprocess a source file
+test/multi_crypto_test.cc.i:
+	$(MAKE) -f CMakeFiles/crydi3_multi_crypto_bin.dir/build.make CMakeFiles/crydi3_multi_crypto_bin.dir/test/multi_crypto_test.cc.i
+.PHONY : test/multi_crypto_test.cc.i
+
+test/multi_crypto_test.s: test/multi_crypto_test.cc.s
+
+.PHONY : test/multi_crypto_test.s
+
+# target to generate assembly for a file
+test/multi_crypto_test.cc.s:
+	$(MAKE) -f CMakeFiles/crydi3_multi_crypto_bin.dir/build.make CMakeFiles/crydi3_multi_crypto_bin.dir/test/multi_crypto_test.cc.s
+.PHONY : test/multi_crypto_test.cc.s
+
 test/random_test.o: test/random_test.cc.o
 
 .PHONY : test/random_test.o
@@ -512,6 +552,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... test"
+	@echo "... crydi3_multi_crypto_bin"
 	@echo "... crydi3_strings_bin"
 	@echo "... crydi3_random_bin"
 	@echo "... install/strip"
@@ -536,6 +577,9 @@ help:
 	@echo "... test/elgammal_test.o"
 	@echo "... test/elgammal_test.i"
 	@echo "... test/elgammal_test.s"
+	@echo "... test/multi_crypto_test.o"
+	@echo "... test/multi_crypto_test.i"
+	@echo "... test/multi_crypto_test.s"
 	@echo "... test/random_test.o"
 	@echo "... test/random_test.i"
 	@echo "... test/random_test.s"

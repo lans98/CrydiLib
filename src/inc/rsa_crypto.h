@@ -123,11 +123,7 @@ string RSACrypto<T>::Encrypt(string msg) {
   // Start encrypting message
   for (unsigned long i = 0; i < msg.size(); i += n_size - 1) {
     block_int = StringToNumber<T>(msg.substr(i, n_size - 1));
-    block_int = ModularExp(
-      block_int,
-      this->keys[RSA_PUB],
-      this->keys[RSA_MOD]
-    );
+    block_int = ModularExp(block_int, this->keys[RSA_PUB], this->keys[RSA_MOD]);
     block_str = NumberToString<T>(block_int);
 
     // If the size of encrypted block is less than n_size
@@ -163,11 +159,11 @@ string RSACrypto<T>::Decrypt(string msg) {
     block_int = StringToNumber<T>(msg.substr(i, n_size));
 
     if (this->p == T(0) || this->q == T(0)) {
-
+      // Generic way, if we doesn't know p and q
       block_int = ModularExp(block_int, this->keys[RSA_PRI], this->keys[RSA_MOD]);
 
     } else {
-
+      // CRT way, if we know p and q
       // Prepare both 'a' for CRT
       a[0] = ModularExp(Mod(block_int, p), Mod(this->keys[RSA_PRI], this->p - 1), this->p);
       a[1] = ModularExp(Mod(block_int, q), Mod(this->keys[RSA_PRI], this->q - 1), this->q);
@@ -186,7 +182,8 @@ string RSACrypto<T>::Decrypt(string msg) {
     // Add the new decrypted block to the final decrypted message
     decrypted += block_str;
   }
-  return decrypted;
+
+  return CleanNumForm(' ', decrypted, this->alpha);
 }
 
 }

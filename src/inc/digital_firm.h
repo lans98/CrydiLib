@@ -102,27 +102,32 @@ string DigitalFirm<T>::Encrypt(string msg) {
 
   string alpha = elgammal.GetAlpha();
 
-  unsigned long rsa_n_size {
-    NumberToString(a_keys[RSA_MOD]).size()
-  };
+  string msg_encrypted  = "";
+  string firm_encrypted = "";
 
   // A is the transmitter
-  rsa.SetKeys(this->a_keys);
-  // Encrypt original message with elgammal
-  string msg_encrypted  = elgammal.Encrypt(MsgToNumForm(msg, alpha));
-  // Treat firm as a RSA encrypted message, so decrypt it with A's keys
-  string firm_encrypted = rsa.Decrypt(MsgToNumForm(this->firm, alpha));
+  // Create KeyList with private key as public key, to encrypt
+  // firm with it
+  KeyList<T> temp_a {
+    this->a_keys[RSA_PRI],
+    this->a_keys[RSA_PUB],
+    this->a_keys[RSA_MOD],
+    T(0),
+    T(0)
+  };
+
+  rsa.SetKeys(temp_a);
+  firm_encrypted = rsa.Encrypt(MsgToNumForm(this->firm, alpha));
+
+  // Encrypt original message with ElGammal
+  msg_encrypted = elgammal.Encrypt(MsgToNumForm(msg, alpha));
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);
+  msg_encrypted  = rsa.Encrypt(MsgToNumForm(msg_encrypted, alpha));
+  firm_encrypted = rsa.Encrypt(MsgToNumForm(firm_encrypted, alpha));
 
-  // Now encrypt both msg and firm with RSA and B's keys
-  cout << msg_encrypted << endl;
-  msg_encrypted  = rsa.Encrypt(msg_encrypted);
-  cout << rsa.Decrypt(msg_encrypted) << endl;
-  cout << firm_encrypted << endl;
-  firm_encrypted = rsa.Encrypt(firm_encrypted);
-  cout << rsa.Decrypt(firm_encrypted) << endl;
+  cout << msg_encrypted << "\n" << firm_encrypted << "\n";
 
   return msg_encrypted + firm_encrypted;
 }
@@ -133,27 +138,37 @@ string DigitalFirm<T>::Decrypt(string msg) {
     NumberToString(b_keys[RSA_MOD]).size()
   };
 
-  // Separate both with rsa_n_size
+  string alpha = elgammal.GetAlpha();
+
   string msg_block  = msg.substr(0, msg.size() - rsa_n_size);
   string firm_block = msg.substr(msg.size() - rsa_n_size);
+
+  cout << msg_block << "\n" << firm_block << "\n";
 
   // B is the receiver
   rsa.SetKeys(this->b_keys);
 
-  // So decrypt message and firm with RSA and B's keys
   msg_block  = rsa.Decrypt(msg_block);
   firm_block = rsa.Decrypt(firm_block);
 
   // Now decrypt message with elgammal
-  msg_block = elgammal.Decrypt(msg_block);
+  msg_block  = elgammal.Decrypt(NumFormToMsg(msg_block, alpha));
 
   // A is the transmitter
-  rsa.SetKeys(this->a_keys);
+  KeyList<T> temp_a {
+    this->a_keys[RSA_PRI],
+    this->a_keys[RSA_PUB],
+    this->a_keys[RSA_MOD],
+    T(0),
+    T(0)
+  };
 
-  // Do the inverse process to decrypt (encrypt) with digital firm
-  // so encrypt sign_block with RSA and A's keys
-  firm_block = rsa.Encrypt(firm_block);
+  rsa.SetKeys(temp_a);
 
+  firm_block = rsa.Decrypt(NumFormToMsg(firm_block, alpha));
+
+  msg_block  = NumFormToMsg(msg_block, alpha);
+  firm_block = NumFormToMsg(firm_block, alpha);
   return msg_block + firm_block;
 }
 

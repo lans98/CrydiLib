@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
   string final = crydi::NumFormToMsg(decrypted, alpha);
   cout << "Mensaje final: " << final << "\n";
 
-
+  // ===================================================================
   // Second RSA Keys
   crydi::KeyList<ZZ> keys_2 = crydi::GenRSAKeys(1024);
 
@@ -72,31 +72,33 @@ int main(int argc, char* argv[]) {
 
   // Test double encryption
   msg = "Hola Mundo!";
-  cout << "Mensaje original: " << msg << "\n";
+  printf("Mensaje original: %s\n", msg.c_str());
 
   // Numerical form
   num_form = crydi::MsgToNumForm(msg, alpha);
-  cout << "Mensaje inicial: " << num_form << "\n";
+  printf("Mensaje inicial: %s\n", num_form.c_str());
 
   // Encrypt message with first RSA
   encrypted = rsa.Encrypt(num_form);
-  cout << "Mensaje encriptado (primer RSA): " << encrypted << "\n";
+  printf("Mensaje encriptado (primer RSA): %s\n", encrypted.c_str());
 
   // Encrypt message with second RSA
-  encrypted = rsa_2.Encrypt(crydi::MsgToNumForm(encrypted, alpha));
-  cout << "Mensaje encriptado (segundo RSA): " << encrypted << "\n";
+  encrypted = crydi::MsgToNumForm(encrypted, alpha);
+  encrypted = rsa_2.Encrypt(encrypted);
+  printf("Mensaje encriptado (segundo RSA): %s\n", encrypted.c_str());
 
   // Decrypt message with second RSA
   decrypted = rsa_2.Decrypt(encrypted);
-  cout << "Mensaje desencriptado (segundo RSA): " << decrypted << "\n";
+  printf("Mensaje desencriptado (segundo RSA): %s\n", decrypted.c_str());
 
   // Decrypt message with first RSA
-  decrypted = rsa.Decrypt(crydi::NumFormToMsg(decrypted, alpha));
-  cout << "Mensaje desencriptado (primer RSA): " << decrypted << "\n";
+  decrypted = crydi::NumFormToMsg(decrypted, alpha);
+  decrypted = rsa.Decrypt(decrypted);
+  printf("Mensaje desencriptado (primer RSA): %s\n", decrypted.c_str());
 
   // Final message
   final = crydi::NumFormToMsg(decrypted, alpha);
-  cout << "Mensaje final: " << final << "\n";
+  printf("Mensaje final: %s\n", final.c_str());
 
   return 0;
 }
