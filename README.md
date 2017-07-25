@@ -14,11 +14,15 @@ Simple (too much) library for crypto with C++
     $ cd build
     $ cmake -G "Unix Makefiles" -DCRYDI3_TEST=ON ..
     $ make
+
+It's suggested that you use ``-DCRYDI3_TEST=ON``, for later testing before installing
+
+## Installation
+If you used ``-DCRYDI3_TEST=ON`` is suggested that you use ``ctest`` before
+installing library to be sure that it works
+
     $ ctest
     $ sudo make install
-
-You can put ``-DCRYDI3_TEST=OFF`` and then avoid ``ctest`` command, this is just
-to be sure that the library is working fine.
 
 ## Using it
 Library it self is called ``libcrydi3.so``, for linking with g++ use
@@ -29,9 +33,10 @@ Library it self is called ``libcrydi3.so``, for linking with g++ use
 You can see some examples at ``test`` folder.
 
 ## Development branch
-Switch to develop branch easily to test new features under development
+You can test new features under development, just switching to ``develop``
+branch
 
     $ cd CrydiLib
     $ git checkout develop
 
-After that do the same to compile library.
+And do the same to the thing, for compilation and installation.
