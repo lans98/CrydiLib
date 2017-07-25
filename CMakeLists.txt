@@ -42,7 +42,10 @@ if (NTLLIB_FOUND)
     add_executable(crydi3_strings_bin test/strings_test.cc)
     target_link_libraries(crydi3_strings_bin crydi3 ntl)
     add_test(crydi3_strings_test crydi3_strings_bin)
-    
+
+    add_executable(crydi3_multi_crypto_bin test/multi_crypto_test.cc)
+    target_link_libraries(crydi3_multi_crypto_bin crydi3 ntl)
+    add_test(crydi3_multi_crypto_test crydi3_multi_crypto_bin)
 	endif(CRYDI3_TEST)
 endif(NTLLIB_FOUND)
 

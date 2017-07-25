@@ -32,7 +32,7 @@ namespace crydi {
 KeyList<ZZ> GenElgammalKeys(long num_bits) {
   ZZ p { GenRandomZZPrime(num_bits) };
   ZZ e { FindGenerator(p) };
-  ZZ d { GenRandomZZ(num_bits) };
+  ZZ d { GenRandomZZ(num_bits - 1) };
   d = Mod(d, p);
   KeyList<ZZ> keys {e , ModularExp(e, d, p), d, p };
   return keys;
@@ -122,6 +122,8 @@ string ElGammalCrypto<T>::Decrypt(string msg) {
     NumberToString(this->keys[EG_MOD]).size()
   };
 
+  if (this->c == 0) throw NotFoundedCForElGammal();
+
   // Compute modular exponentiation of c with
   // private key of elgammal
   T inv_c = ModularExp(this->c, this->keys[EG_PRI], this->keys[EG_MOD]);
@@ -150,7 +152,7 @@ string ElGammalCrypto<T>::Decrypt(string msg) {
     // Add the new decrypted block to the final decrypted message
     decrypted += block_str;
   }
-  return decrypted;
+  return CleanNumForm(' ', decrypted, this->alpha);
 }
 
 template <class T>

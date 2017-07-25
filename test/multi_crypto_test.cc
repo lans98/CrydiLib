@@ -22,48 +22,44 @@
 //  for creating a library (quite simple).
 // =========================================================================
 
-#ifndef CRYDI3_ELGAMMAL_DEF_H
-#define CRYDI3_ELGAMMAL_DEF_H
+#include "crydi3.h"
 
-#include "crydi3_tools.h"
-#include "strings_tools.h"
-#include "crypto.h"
+using namespace std;
+using namespace NTL;
 
-namespace crydi {
+int main() {
+  crydi::KeyList<ZZ> eg_keys(crydi::GenElgammalKeys(1024));
+  crydi::KeyList<ZZ> rsa_keys(crydi::GenRSAKeys(1024));
 
-enum ElGammalIdentifier {
-  EG_PUB_1 = 0,
-  EG_PUB_2 = 1,
-  EG_PRI   = 2,
-  EG_MOD   = 3
-};
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789! ";
 
-KeyList<ZZ> GenElgammalKeys(long num_bits);
-
-template <class T>
-class ElGammalCrypto : public Crypto<T> {
-private:
-  T c = T(0);
-public:
-  ElGammalCrypto();
-  ElGammalCrypto(const KeyList<T>& keys);
-  ElGammalCrypto(const string& alpha);
-  ElGammalCrypto(const string& alpha, const KeyList<T>& keys);
-  ~ElGammalCrypto() = default;
-
-  T GetFirstPublicKey();
-  T GetSecondPublicKey();
-  T GetPrivateKey();
-  T GetModulus();
-
-  string Encrypt(string msg);
-  string Decrypt(string msg);
-
-  T    GetEncryptedC();
-  void SetEncryptedC(const T& c);
-};
+  crydi::ElGammalCrypto<ZZ> eg(alpha, eg_keys);
+  crydi::RSACrypto<ZZ>      rsa(alpha, rsa_keys);
 
 
+  string msg = "Hola mundo!";
+  printf("Mensaje original: %s\n", msg.c_str());
+
+  msg = crydi::MsgToNumForm(msg, alpha);
+  printf("Mensaje inicial: %s\n", msg.c_str());
+
+  msg = eg.Encrypt(msg);
+  printf("Mensaje encriptado (EG): %s\n", msg.c_str());
+
+  msg = crydi::MsgToNumForm(msg, alpha);
+  msg = rsa.Encrypt(msg);
+  printf("Mensaje encriptado (RSA): %s\n", msg.c_str());
+
+  msg = rsa.Decrypt(msg);
+  printf("Mensaje desencriptado (RSA): %s\n", msg.c_str());
+
+  msg = crydi::NumFormToMsg(msg, alpha);
+  msg = eg.Decrypt(msg);
+  printf("Mensaje desencriptado (EG): %s\n", msg.c_str());
+
+  msg = crydi::NumFormToMsg(msg, alpha);
+  printf("Mensaje final: %s\n", msg.c_str());
+
+
+  return 0;
 }
-
-#endif

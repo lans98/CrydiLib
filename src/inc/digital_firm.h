@@ -31,43 +31,39 @@ namespace crydi {
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
-  rsa(rsa_keys_a),
-  elgammal(elgammal_keys),
-  a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b) {}
+  rsa_a_keys(rsa_keys_a),
+  rsa_b_keys(rsa_keys_b),
+  elg_keys(elgammal_keys) {}
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& firm):
-  rsa(rsa_keys_a),
-  elgammal(elgammal_keys),
-  a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b),
+  rsa_a_keys(rsa_keys_a),
+  rsa_b_keys(rsa_keys_b),
+  elg_keys(elgammal_keys),
   firm(firm) {}
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const string& alpha):
-  rsa(alpha),
-  elgammal(alpha) {}
+  alpha(alpha) {}
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const string& alpha, const string& firm):
-  rsa(alpha),
-  elgammal(alpha),
+  alpha(alpha),
   firm(firm) {}
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys):
-  rsa(alpha, rsa_keys_a),
-  elgammal(alpha, elgammal_keys),
-  a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b) {}
+  rsa_a_keys(rsa_keys_a),
+  rsa_b_keys(rsa_keys_b),
+  elg_keys(elgammal_keys),
+  alpha(alpha) {}
 
 template <class T>
 DigitalFirm<T>::DigitalFirm(const string& alpha, const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys, const string& firm):
-  rsa(alpha, rsa_keys_a),
-  elgammal(alpha, elgammal_keys),
-  a_keys(rsa_keys_a),
-  b_keys(rsa_keys_b),
+  rsa_a_keys(rsa_keys_a),
+  rsa_b_keys(rsa_keys_b),
+  elg_keys(elgammal_keys),
+  alpha(alpha),
   firm(firm) {}
 
 template <class T>
@@ -77,84 +73,97 @@ template <class T>
 void DigitalFirm<T>::SetFirm(const string& firm) { this->firm = firm; }
 
 template <class T>
-RSACrypto<T>& DigitalFirm<T>::GetRSACrypto() {
-  return this->rsa;
-}
+void DigitalFirm<T>::SetReceiverKeys(const KeyList<T>& keys) { this->rsa_b_keys = keys; }
 
 template <class T>
-ElGammalCrypto<T>& DigitalFirm<T>::GetElGammalCrypto() {
-  return this->elgammal;
-}
+KeyList<T> DigitalFirm<T>::GetReceiverKeys() { return this->rsa_b_keys; }
 
 template <class T>
-void DigitalFirm<T>::SetReceiverKeys(const KeyList<T>& rsa_keys_b) {
-  this->b_keys = rsa_keys_b;
-}
+void DigitalFirm<T>::SetTransmitterKeys(const KeyList<T>& keys) { this->rsa_a_keys = keys; }
 
 template <class T>
-KeyList<T> DigitalFirm<T>::GetReceiverKeys() {
-  return this->b_keys;
-}
+KeyList<T> DigitalFirm<T>::GetTransmitterKeys() { return this->rsa_a_keys; }
+
+template <class T>
+T DigitalFirm<T>::GetElGammalC() { return this->elg_c; }
+
+template <class T>
+void DigitalFirm<T>::SetElGammalC(T c) { this->elg_c = c; }
 
 template <class T>
 string DigitalFirm<T>::Encrypt(string msg) {
   if (firm == "") throw NotFirmFounded();
 
-  string alpha = elgammal.GetAlpha();
-
-  unsigned long rsa_n_size {
-    NumberToString(a_keys[RSA_MOD]).size()
+  // Swap private and public keys for
+  // transmitter
+  KeyList<T> temp_a_keys {
+    this->rsa_a_keys[RSA_PRI],
+    this->rsa_a_keys[RSA_PUB],
+    this->rsa_a_keys[RSA_MOD],
+    this->rsa_a_keys[RSA_MOD_P],
+    this->rsa_a_keys[RSA_MOD_Q]
   };
 
   // A is the transmitter
-  rsa.SetKeys(this->a_keys);
-  // Encrypt original message with elgammal
-  string msg_encrypted  = elgammal.Encrypt(MsgToNumForm(msg, alpha));
-  // Treat firm as a RSA encrypted message, so decrypt it with A's keys
-  string firm_encrypted = rsa.Decrypt(MsgToNumForm(this->firm, alpha));
-
   // B is the receiver
-  rsa.SetKeys(this->b_keys);
+  RSACrypto<T>      rsa_a(this->alpha, temp_a_keys);
+  RSACrypto<T>      rsa_b(this->alpha, this->rsa_b_keys);
+  ElGammalCrypto<T> elgml(this->alpha, this->elg_keys);
 
-  // Now encrypt both msg and firm with RSA and B's keys
-  cout << msg_encrypted << endl;
-  msg_encrypted  = rsa.Encrypt(msg_encrypted);
-  cout << rsa.Decrypt(msg_encrypted) << endl;
-  cout << firm_encrypted << endl;
-  firm_encrypted = rsa.Encrypt(firm_encrypted);
-  cout << rsa.Decrypt(firm_encrypted) << endl;
+  string msg_block = "";
+  string frm_block = "";
 
-  return msg_encrypted + firm_encrypted;
+  // Encrypt message
+  msg_block = elgml.Encrypt(MsgToNumForm(msg, this->alpha));
+  msg_block = rsa_b.Encrypt(MsgToNumForm(msg_block, this->alpha));
+
+  // Encrypt firm
+  frm_block = rsa_a.Encrypt(MsgToNumForm(this->firm, this->alpha));
+  frm_block = rsa_b.Encrypt(MsgToNumForm(frm_block, this->alpha));
+
+  this->elg_c = elgml.GetEncryptedC();
+
+  return msg_block + " " + frm_block;
 }
 
 template <class T>
 string DigitalFirm<T>::Decrypt(string msg) {
-  unsigned long rsa_n_size {
-    NumberToString(b_keys[RSA_MOD]).size()
+  // Swap private and public keys for
+  // transmitter
+  KeyList<T> temp_a_keys {
+    this->rsa_a_keys[RSA_PRI],
+    this->rsa_a_keys[RSA_PUB],
+    this->rsa_a_keys[RSA_MOD],
+    this->rsa_a_keys[RSA_MOD_P],
+    this->rsa_a_keys[RSA_MOD_Q]
   };
 
-  // Separate both with rsa_n_size
-  string msg_block  = msg.substr(0, msg.size() - rsa_n_size);
-  string firm_block = msg.substr(msg.size() - rsa_n_size);
-
-  // B is the receiver
-  rsa.SetKeys(this->b_keys);
-
-  // So decrypt message and firm with RSA and B's keys
-  msg_block  = rsa.Decrypt(msg_block);
-  firm_block = rsa.Decrypt(firm_block);
-
-  // Now decrypt message with elgammal
-  msg_block = elgammal.Decrypt(msg_block);
-
   // A is the transmitter
-  rsa.SetKeys(this->a_keys);
+  // B is the receiver
+  RSACrypto<T>      rsa_a(this->alpha, temp_a_keys);
+  RSACrypto<T>      rsa_b(this->alpha, this->rsa_b_keys);
+  ElGammalCrypto<T> elgml(this->alpha, this->elg_keys);
 
-  // Do the inverse process to decrypt (encrypt) with digital firm
-  // so encrypt sign_block with RSA and A's keys
-  firm_block = rsa.Encrypt(firm_block);
+  elgml.SetEncryptedC(this->elg_c);
 
-  return msg_block + firm_block;
+  ssize_t separator = msg.find(' ');
+
+  string msg_block = msg.substr(0, separator);
+  string frm_block = msg.substr(separator +1);
+
+  // Decrypt message
+  msg_block = rsa_b.Decrypt(msg_block);
+  msg_block = NumFormToMsg(msg_block, this->alpha);
+  msg_block = elgml.Decrypt(msg_block);
+  msg_block = NumFormToMsg(msg_block, this->alpha);
+
+  // Decrypt firm
+  frm_block = rsa_b.Decrypt(frm_block);
+  frm_block = NumFormToMsg(frm_block, this->alpha);
+  frm_block = rsa_a.Decrypt(frm_block);
+  frm_block = NumFormToMsg(frm_block, this->alpha);
+
+  return msg_block + ", " + frm_block;
 }
 
 }

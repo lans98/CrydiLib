@@ -73,6 +73,13 @@ public:
   }
 };
 
+class NotFoundedCForElGammal : public exception {
+public:
+  const char* what() const noexcept {
+    return "ElGammal can't be decrypted, not founded \'c\' from encrypted message.";
+  }
+};
+
 enum gcd_flag {
 	EUCLID_GCD = 0x01,
 	STEIN_GCD  = 0x02

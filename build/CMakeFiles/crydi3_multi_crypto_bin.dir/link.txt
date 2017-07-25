@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -O3 -DNDEBUG   CMakeFiles/crydi3_multi_crypto_bin.dir/test/multi_crypto_test.cc.o  -o crydi3_multi_crypto_bin -Wl,-rpath,/home/kevin/Documents/Programming/C++/Criptografia/CrydiLib/build libcrydi3.so -lntl 

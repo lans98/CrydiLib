@@ -32,15 +32,19 @@ int main() {
   crydi::KeyList<ZZ> rsa_b = crydi::GenRSAKeys(1024);
   crydi::KeyList<ZZ> elgammal_keys = crydi::GenElgammalKeys(1024);
 
-  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()! ";
-  string firm  = "Kevin del Castillo Ramirez (20163419)";
+  string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789! ";
+  string firm  = "Kevin Del Castillo Ramirez 20163419";
   string msg   = "Hola mundo!";
 
   crydi::DigitalFirm<ZZ> dig_sig(alpha, rsa_a, rsa_b, elgammal_keys, firm);
-  cout << "Mensaje original: " << msg << endl;
+
+  printf("Mensaje inicial: %s\n", msg.c_str());
+
   msg = dig_sig.Encrypt(msg);
-  cout << "Encriptado: " << msg << endl;
+  printf("Mensaje encriptado: %s\n", msg.c_str());
+
   msg = dig_sig.Decrypt(msg);
-  cout << "Desencriptado: " << msg << endl;
+  printf("Mensaje desencriptado: %s\n", msg.c_str());
+
   return 0;
 }
