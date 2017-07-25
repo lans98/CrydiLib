@@ -43,7 +43,7 @@ KeyList<ZZ> GenElgammalKeys(long num_bits);
 template <class T>
 class ElGammalCrypto : public Crypto<T> {
 private:
-  T c;
+  T c = T(0);
 public:
   ElGammalCrypto();
   ElGammalCrypto(const KeyList<T>& keys);

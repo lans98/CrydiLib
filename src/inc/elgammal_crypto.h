@@ -122,6 +122,8 @@ string ElGammalCrypto<T>::Decrypt(string msg) {
     NumberToString(this->keys[EG_MOD]).size()
   };
 
+  if (this->c == 0) throw NotFoundedCForElGammal();
+
   // Compute modular exponentiation of c with
   // private key of elgammal
   T inv_c = ModularExp(this->c, this->keys[EG_PRI], this->keys[EG_MOD]);
