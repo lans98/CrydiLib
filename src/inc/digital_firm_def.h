@@ -36,12 +36,15 @@ namespace crydi {
 template <class T>
 class DigitalFirm {
 private:
-  RSACrypto<T>      rsa;
-  ElGammalCrypto<T> elgammal;
+  KeyList<T> rsa_a_keys;
+  KeyList<T> rsa_b_keys;
+  KeyList<T> elg_keys;
 
-  KeyList<T>        a_keys;
-  KeyList<T>        b_keys;
-  string            firm;
+  string     alpha;
+  string     firm;
+
+  T          elg_c = T(0);
+
 public:
   DigitalFirm() = default;
   DigitalFirm(const KeyList<T>& rsa_keys_a, const KeyList<T>& rsa_keys_b, const KeyList<T>& elgammal_keys);
@@ -55,14 +58,18 @@ public:
   string GetFirm();
   void   SetFirm(const string& firm);
 
-  RSACrypto<T>&      GetRSACrypto();
-  ElGammalCrypto<T>& GetElGammalCrypto();
-
-  void       SetReceiverKeys(const KeyList<T>& rsa_keys_b);
+  void       SetReceiverKeys(const KeyList<T>& keys);
   KeyList<T> GetReceiverKeys();
+
+  void       SetTransmitterKeys(const KeyList<T>& keys);
+  KeyList<T> GetTransmitterKeys();
+
+  T    GetElGammalC();
+  void SetElGammalC(T c);
 
   string Encrypt(string msg);
   string Decrypt(string msg);
+
 };
 
 }
